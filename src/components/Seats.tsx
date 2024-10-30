@@ -406,10 +406,65 @@ const Seats = () => {
         />
         <label htmlFor="isEdit">Edit</label>
       </div> */}
-      <div className="">
+      <select
+        defaultValue={countries[1].name}
+        
+        onChange={(e) => {
+          if (e.target.value === "CustomValue") {
+            setParties([]);
+            setSelectedParties([]);
+            return;
+          }
+          const country = countries.find(
+            (country) => country.name === e.target.value
+          );
+          if (country) {
+            setParties(country.parties);
+            setSelectedParties(country.parties);
+          }
+        }}
+        id="countries-datalist"
+        className="p-2 border-2 rounded-lg w-full border-gray-200 appearance-none bg-white"
+      >
+        <option value="CustomValue">Custom</option>
+        <optgroup label="Sample">
+          {countries
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map((country) => (
+              <option
+                key={country.name}
+                //   onClick={() => {
+                //     setParties(country.parties);
+                //     //   setTotalSeats(
+                //     //     country.parties.reduce((acc, party) => acc + party.seats, 0)
+                //     //   );
+                //     setSelectedParties(country.parties);
+                //   }}
+                value={country.name}
+              >
+                {country.name}
+              </option>
+            ))}
+        </optgroup>
+      </select>
+      <div className=" sticky top-0 z-50 bg-white py-4 border-b px-4 -mx-4 sm:-mx-0 sm:px-0 mb-4">
         {/* <Chart parties={selectedParites} totalSeats={totalSeats} /> */}
         <div className="flex justify-between items-center">
           <p className="flex-1">
+                 
+        {total / 2 <
+        selectedParties.reduce((acc, party) => acc + party.seats, 0) ? (
+          <span className="text-violet-500">
+            Majority
+          </span>
+        ) : (
+          <span className="text-rose-500">
+            Minority
+          </span>
+        )}
+
+        
+      
             {/* {
                sortBy === "name" ? "ABC..." : sortBy === "seats" ? "Biggest" : "Left"
             } */}
@@ -417,7 +472,12 @@ const Seats = () => {
           <div className="">
             <CaretDownIcon />
           </div>
-          <div className="flex-1 flex justify-end">
+          <div className="flex-1 flex justify-end text-end">
+            <p>
+            {
+            total % 2 === 0 ? (total / 2 + 1) : Math.ceil(total / 2)
+        } for majority
+            </p>
             {/* {
                 sortBy === "name" ? "...XYZ" : sortBy === "seats" ? "Smallest" : "Right"
             } */}
@@ -452,23 +512,10 @@ const Seats = () => {
         </div>
       </div>
 
-      {/* <p className="mb-4">
-        {total / 2 <
-        selectedParties.reduce((acc, party) => acc + party.seats, 0) ? (
-          <span className="text-violet-500">
-            More than half of the seats are filled
-          </span>
-        ) : (
-          <span className="text-rose-500">
-            Less than half of the seats are filled
-          </span>
-        )}
-      </p> */}
-
-      <div className="flex flex-wrap justify-between items-center my-4 gap-4">
+      <div className="flex flex-wrap justify-between items-center mb-4 gap-4">
         <div className="flex-1 justify-start text-nowrap sm:w-auto">
-          <p className=" text-lg">
-            {selectedParties.reduce((acc, party) => acc + party.seats, 0)} /{" "}
+          <p className=" text-lg tabular-nums ">
+            <span className="font-semibold">{selectedParties.reduce((acc, party) => acc + party.seats, 0)}</span> /{" "}
             {total}
           </p>
         </div>
@@ -551,100 +598,67 @@ const Seats = () => {
               title="Add Party"
               aria-label="Add Party"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-2/3 stroke-2 text-white m-auto">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-</svg>
-
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-2/3 stroke-2 text-white m-auto"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 4.5v15m7.5-7.5h-15"
+                />
+              </svg>
             </button>
           </li>
         )}
       </ul>
       {parties.length <= 0 && <p className="text-center">No parties</p>}
 
-        
-        <select
-        defaultValue={countries[1].name}
-        style={{
-            background: "url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjEuNDEgNC42NyAyLjQ4IDMuMTggMy41NCA0LjY3IDEuNDEgNC42NyIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIzLjU0IDUuMzMgMi40OCA2LjgyIDEuNDEgNS4zMyAzLjU0IDUuMzMiLz48L3N2Zz4=) no-repeat 100% 50%"
-        }}
-        onChange={(e) => {
-          if (e.target.value === "CustomValue") {
-            setParties([]);
-            setSelectedParties([]);
-            return;
-          }
-          const country = countries.find(
-            (country) => country.name === e.target.value
-          );
-          if (country) {
-            setParties(country.parties);
-            setSelectedParties(country.parties);
-          }
-        }}
-        id="countries-datalist"
-        className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200 appearance-none bg-white"
+      <div className="flex gap-2 flex-wrap mt-4 bg-gray-200 rounded-2xl p-4">
+        <button
+          onClick={() => setSelectedParties([...parties])}
+          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white border-gray-200 text-nowrap"
+        >
+          Select All
+        </button>
+        <button
+        onClick={() => setSelectedParties([])}
+        className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white border-gray-200 text-nowrap"
       >
-        <option value="CustomValue">Custom</option>
-        <optgroup label="Sample">
-        {countries
-          .sort((a, b) => a.name.localeCompare(b.name))
-          .map((country) => (
-            <option
-              key={country.name}
-              //   onClick={() => {
-              //     setParties(country.parties);
-              //     //   setTotalSeats(
-              //     //     country.parties.reduce((acc, party) => acc + party.seats, 0)
-              //     //   );
-              //     setSelectedParties(country.parties);
-              //   }}
-              value={country.name}
-              
-            >
-              {country.name}
-            </option>
-          ))}
-            </optgroup>
-      </select>
-
-
-      <button
-        onClick={() => setSelectedParties([...parties])}
-        className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200"
-      >
-        Select All
+        Deselect All
       </button>
-      <div className="flex gap-4">
         <button
           onClick={() => {
             const leftParties = parties.filter((party) => party.position < 0);
             setSelectedParties(leftParties);
           }}
-          className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200"
+          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white border-gray-200 text-nowrap"
           type="button"
           title="Select Left"
           aria-label="Select Left"
           aria-describedby="Select Left"
           aria-disabled={false}
         >
-          Select Left
+          Left
         </button>
         <button
           onClick={() => {
             const rightParties = parties.filter((party) => party.position > 0);
             setSelectedParties(rightParties);
           }}
-          className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200"
+          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white border-gray-200 text-nowrap"
           type="button"
           title="Select Right"
           aria-label="Select Right"
           aria-describedby="Select Right"
           aria-disabled={false}
         >
-          Select Right
+          Right
         </button>
-      </div>
-      <div className="flex gap-4">
         <button
           onClick={() => {
             const leftParties = parties.filter(
@@ -652,14 +666,14 @@ const Seats = () => {
             );
             setSelectedParties(leftParties);
           }}
-          className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200"
+          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white border-gray-200 text-nowrap"
           type="button"
           title="Select Left"
           aria-label="Select Left"
           aria-describedby="Select Left"
           aria-disabled={false}
         >
-          Select Left (without far left)
+          Left (without far left)
         </button>
         <button
           onClick={() => {
@@ -668,22 +682,86 @@ const Seats = () => {
             );
             setSelectedParties(rightParties);
           }}
-          className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200"
+          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white border-gray-200 text-nowrap"
           type="button"
           title="Select Right"
           aria-label="Select Right"
           aria-describedby="Select Right"
           aria-disabled={false}
         >
-          Select Right (without far right)
+          Right (without far right)
+        </button>
+        <button
+          onClick={() => {
+            const rightParties = parties.filter(
+              (party) => party.position <= -75
+            );
+            setSelectedParties(rightParties);
+          }}
+          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white border-gray-200 text-nowrap"
+          type="button"
+          title="Select Right"
+          aria-label="Select Right"
+          aria-describedby="Select Right"
+          aria-disabled={false}
+        >
+          Left-wing
+        </button>
+        <button
+          onClick={() => {
+            const rightParties = parties.filter(
+              (party) => party.position >= 75
+            );
+            setSelectedParties(rightParties);
+          }}
+          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white border-gray-200 text-nowrap"
+          type="button"
+          title="Select Right"
+          aria-label="Select Right"
+          aria-describedby="Select Right"
+          aria-disabled={false}
+        >
+          Right-wing
+        </button>
+        <button
+          onClick={() => {
+            const rightParties = parties.filter(
+              (party) =>
+                party.position < 75 &&
+                party.position > -75 &&
+                !party.isIndependent
+            );
+            setSelectedParties(rightParties);
+          }}
+          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white border-gray-200 text-nowrap"
+          type="button"
+          title="Select Right"
+          aria-label="Select Right"
+          aria-describedby="Select Right"
+          aria-disabled={false}
+        >
+          Grand (centre)
+        </button>
+        <button
+          onClick={() => {
+            const rightParties = parties.filter(
+              (party) =>
+                party.position > -100 &&
+                party.position < 100 &&
+                !party.isIndependent
+            );
+            setSelectedParties(rightParties);
+          }}
+          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white border-gray-200 text-nowrap"
+          type="button"
+          title="Select Right"
+          aria-label="Select Right"
+          aria-describedby="Select Right"
+          aria-disabled={false}
+        >
+          Grand (without extremists)
         </button>
       </div>
-      <button
-        onClick={() => setSelectedParties([])}
-        className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200"
-      >
-        Deselect All
-      </button>
       <button
         onClick={() => {
           setParties([]);
