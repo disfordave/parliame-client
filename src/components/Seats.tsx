@@ -571,7 +571,7 @@ const Seats = () => {
                   },
                 ]);
               }}
-              className="p-2 border-2 border-transparent rounded-full w-1/3  aspect-square m-4 bg-gray-400 transition-colors hover:bg-gray-500 "
+              className="p-2 border-2 border-transparent rounded-full w-1/3  aspect-square m-4 bg-gray-200 dark:bg-gray-700 transition-colors hover:bg-gray-300 dark:hover:bg-gray-600"
               type="button"
               title="Add Party"
               aria-label="Add Party"
@@ -582,7 +582,7 @@ const Seats = () => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="size-2/3 stroke-2 text-white m-auto"
+                className="size-2/3 stroke-2 dark:text-white text-gray-950 m-auto"
               >
                 <path
                   strokeLinecap="round"
