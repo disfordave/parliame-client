@@ -41,22 +41,24 @@ const TrashIcon = () => {
 };
 
 const getposition = (position: number) => {
-    const ranges = [
-      { min: 100, max: Infinity, full: "Far right", short: "RR" },
-      { min: 75, max: 99, full: "Right-wing", short: "Rr" },
-      { min: 50, max: 74, full: "Centre right", short: "rr" },
-      { min: 25, max: 49, full: "Lean right", short: "r" },
-      { min: -24, max: 24, full: "Centre", short: "C" },
-      { min: -49, max: -25, full: "Lean left", short: "l" },
-      { min: -74, max: -50, full: "Centre left", short: "ll" },
-      { min: -99, max: -75, full: "Left-wing", short: "Ll" },
-      { min: -Infinity, max: -100, full: "Far left", short: "LL" },
-    ];
-  
-    const match = ranges.find(range => position >= range.min && position <= range.max);
-  
-    return match || { full: "Centre", short: "C" };
-  };
+  const ranges = [
+    { min: 100, max: Infinity, full: "Far right", short: "RR" },
+    { min: 75, max: 99, full: "Right-wing", short: "Rr" },
+    { min: 50, max: 74, full: "Centre right", short: "rr" },
+    { min: 25, max: 49, full: "Lean right", short: "r" },
+    { min: -24, max: 24, full: "Centre", short: "C" },
+    { min: -49, max: -25, full: "Lean left", short: "l" },
+    { min: -74, max: -50, full: "Centre left", short: "ll" },
+    { min: -99, max: -75, full: "Left-wing", short: "Ll" },
+    { min: -Infinity, max: -100, full: "Far left", short: "LL" },
+  ];
+
+  const match = ranges.find(
+    (range) => position >= range.min && position <= range.max
+  );
+
+  return match || { full: "Centre", short: "C" };
+};
 
 const PartyButton = ({
   party,
@@ -439,7 +441,11 @@ const Seats = () => {
                     ? `${(party.seats / total) * 100}%`
                     : "0%",
                 }}
-                className="h-full transition-[width] duration-300 text-ellipsis overflow-hidden text-nowrap"
+                className={`h-full transition-[width] duration-300 r-0 text-ellipsis overflow-hidden text-nowrap`}
+
+                // ${
+                //     sortBy === "position" ? (party.position < 0 ? "" : (party.position === 0 ? "mx-auto" : ((parties[index - 1] && parties[index - 1].position < 0) ? "ml-auto" : ""))) : ""
+                // }
               ></div>
             ))}
           <div className="absolute border-l-2 border-violet-500 border-dashed h-full bg-background-elevated left-[calc(50%-1px)] "></div>
@@ -525,7 +531,7 @@ const Seats = () => {
             </li>
           ))}
         {isEditMode && (
-          <li>
+          <li className="w-full h-full justify-center flex items-center">
             <button
               onClick={() => {
                 setParties([
@@ -540,37 +546,68 @@ const Seats = () => {
                   },
                 ]);
               }}
-              className="p-2 border-2 rounded-lg w-full h-full border-gray-200"
+              className="p-2 border-2 border-transparent rounded-full w-1/3  aspect-square m-4 bg-gray-400 transition-colors hover:bg-gray-500 "
               type="button"
               title="Add Party"
               aria-label="Add Party"
             >
-              Add Party
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-2/3 stroke-2 text-white m-auto">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+</svg>
+
             </button>
           </li>
         )}
       </ul>
       {parties.length <= 0 && <p className="text-center">No parties</p>}
 
-      <div className="grid grid-cols-2 gap-4 mt-4">
+        
+        <select
+        defaultValue={countries[1].name}
+        style={{
+            background: "url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjEuNDEgNC42NyAyLjQ4IDMuMTggMy41NCA0LjY3IDEuNDEgNC42NyIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIzLjU0IDUuMzMgMi40OCA2LjgyIDEuNDEgNS4zMyAzLjU0IDUuMzMiLz48L3N2Zz4=) no-repeat 100% 50%"
+        }}
+        onChange={(e) => {
+          if (e.target.value === "CustomValue") {
+            setParties([]);
+            setSelectedParties([]);
+            return;
+          }
+          const country = countries.find(
+            (country) => country.name === e.target.value
+          );
+          if (country) {
+            setParties(country.parties);
+            setSelectedParties(country.parties);
+          }
+        }}
+        id="countries-datalist"
+        className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200 appearance-none bg-white"
+      >
+        <option value="CustomValue">Custom</option>
+        <optgroup label="Sample">
         {countries
           .sort((a, b) => a.name.localeCompare(b.name))
           .map((country) => (
-            <button
+            <option
               key={country.name}
-              onClick={() => {
-                setParties(country.parties);
-                //   setTotalSeats(
-                //     country.parties.reduce((acc, party) => acc + party.seats, 0)
-                //   );
-                setSelectedParties(country.parties);
-              }}
-              className="p-2 border-2 rounded-lg w-full border-gray-200"
+              //   onClick={() => {
+              //     setParties(country.parties);
+              //     //   setTotalSeats(
+              //     //     country.parties.reduce((acc, party) => acc + party.seats, 0)
+              //     //   );
+              //     setSelectedParties(country.parties);
+              //   }}
+              value={country.name}
+              
             >
               {country.name}
-            </button>
+            </option>
           ))}
-      </div>
+            </optgroup>
+      </select>
+
+
       <button
         onClick={() => setSelectedParties([...parties])}
         className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200"
@@ -610,7 +647,9 @@ const Seats = () => {
       <div className="flex gap-4">
         <button
           onClick={() => {
-            const leftParties = parties.filter((party) => (party.position < 0 && party.position > -100));
+            const leftParties = parties.filter(
+              (party) => party.position < 0 && party.position > -100
+            );
             setSelectedParties(leftParties);
           }}
           className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200"
@@ -624,7 +663,9 @@ const Seats = () => {
         </button>
         <button
           onClick={() => {
-            const rightParties = parties.filter((party) => (party.position > 0 && party.position < 100));
+            const rightParties = parties.filter(
+              (party) => party.position > 0 && party.position < 100
+            );
             setSelectedParties(rightParties);
           }}
           className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200"
