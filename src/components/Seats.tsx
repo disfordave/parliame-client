@@ -98,9 +98,9 @@ const PartyButton = ({
       }}
       className={`${
         isEditMode ? "" : "cursor-pointer"
-      } overflow-hidden flex gap-2 items-center border-2 hover:border-violet-300 p-2 rounded-lg w-full transition-all duration-300`}
+      } party-button overflow-hidden flex gap-2 items-center border-2 p-2 rounded-lg w-full transition-all duration-300`}
       style={{
-        borderColor: selected ? colour : "#e5e7eb",
+        borderColor: selected ? colour : "var(--border-color)", // dark mode #374151
         flexDirection: isEditMode ? "column" : "row",
       }}
       title={
@@ -121,6 +121,8 @@ const PartyButton = ({
           <input
             name="partyColour"
             type="color"
+            title="Party Colour"
+            aria-label="Party Colour"
             className="w-full cursor-pointer opacity-0 absolute"
             value={colour}
             onChange={(e) => {
@@ -137,7 +139,7 @@ const PartyButton = ({
         <div
           className={` transition-all  ${
             isEditMode
-              ? "h-6 w-full rounded-md border"
+              ? "h-6 w-full rounded-full border border-gray-200 dark:border-gray-700"
               : "size-4 aspect-square rounded-full"
           }`}
           style={{ backgroundColor: colour }}
@@ -149,7 +151,7 @@ const PartyButton = ({
             name="partyName"
             type="text"
             placeholder="Party Name"
-            className="w-full outline-none border-b"
+            className="w-full outline-none border-b border-gray-200 dark:border-gray-700 bg-transparent"
             value={party.shortName}
             onChange={(e) => {
               const newParty = { ...party, shortName: e.target.value };
@@ -174,7 +176,7 @@ const PartyButton = ({
             name="seats"
             type="number"
             placeholder="Seats"
-            className="w-full outline-none border-b"
+            className="w-full outline-none border-b border-gray-200 dark:border-gray-700 bg-transparent"
             min={0}
             max={99999}
             value={party.seats.toFixed(0)}
@@ -204,35 +206,32 @@ const PartyButton = ({
       </span>
       {isEditMode ? (
         <>
-          <div className="flex flex-col gap-2 items-center w-full">
-            <input
-              name="position"
-              dir="ltr"
-              id="position-range"
-              step={25}
-              className="w-full appearance-none rounded-full bg-gray-200"
-              type="range"
-              min="-100"
-              max="100"
-              value={party.position}
-              onChange={(e) => {
-                const newParty = {
-                  ...party,
-                  position: parseInt(e.target.value),
-                };
-                setParties(parties.map((p) => (p === party ? newParty : p)));
-                if (selected) {
-                  setSelectedParties(
-                    selectedParties.map((p) => (p === party ? newParty : p))
-                  );
-                }
-              }}
-            />
-            <label
-              htmlFor="position-range"
-              className="flex justify-between text-center"
-            >
-              <span>{getposition(party.position).full}</span>
+          <div className="flex  w-full">
+            <label className="flex flex-col gap-2 items-center w-full">
+              <input
+                name="position"
+                dir="ltr"
+                id="position-range"
+                step={25}
+                className="w-full appearance-none rounded-full bg-gray-200 dark:bg-gray-700"
+                type="range"
+                min="-100"
+                max="100"
+                value={party.position}
+                onChange={(e) => {
+                  const newParty = {
+                    ...party,
+                    position: parseInt(e.target.value),
+                  };
+                  setParties(parties.map((p) => (p === party ? newParty : p)));
+                  if (selected) {
+                    setSelectedParties(
+                      selectedParties.map((p) => (p === party ? newParty : p))
+                    );
+                  }
+                }}
+              />
+              <span className="text-center">{getposition(party.position).full}</span>
             </label>
           </div>
           <div>
@@ -269,6 +268,7 @@ const PartyButton = ({
                   setSelectedParties([...selectedParties, party]);
                 }
               }}
+              className={`hover:opacity-75 transition-opacity `}
               type="button"
               title={selected ? "Deselect party" : "Select party"}
               aria-label={selected ? "Deselect party" : "Select party"}
@@ -379,36 +379,11 @@ const Seats = () => {
   };
 
   return (
-    <>
-      {/* <div className="">
-
-
-        <input
-          type="radio"
-          name="isEditMode"
-          id="isView"
-          checked={!isEditMode}
-          onChange={() => {
-            setIsEditMode(false);
-          }}
-          value={0}
-        />
-        <label htmlFor="isView">View</label>
-        <input
-          type="radio"
-          name="isEditMode"
-          id="isEdit"
-          checked={isEditMode}
-          onChange={() => {
-            setIsEditMode(true);
-          }}
-          value={1}
-        />
-        <label htmlFor="isEdit">Edit</label>
-      </div> */}
+    <div>
       <select
         defaultValue={countries[1].name}
-        
+        title="Select Country"
+        aria-label="Select Country"
         onChange={(e) => {
           if (e.target.value === "CustomValue") {
             setParties([]);
@@ -424,7 +399,7 @@ const Seats = () => {
           }
         }}
         id="countries-datalist"
-        className="p-2 border-2 rounded-lg w-full border-gray-200 appearance-none bg-white"
+        className="p-2 border-2 rounded-lg w-full border-gray-200 dark:border-gray-700 appearance-none bg-white dark:bg-gray-900"
       >
         <option value="CustomValue">Custom</option>
         <optgroup label="Sample">
@@ -447,24 +422,19 @@ const Seats = () => {
             ))}
         </optgroup>
       </select>
-      <div className=" sticky top-0 z-50 bg-white py-4 border-b px-4 -mx-4 sm:-mx-0 sm:px-0 mb-4">
+      <div className=" sticky top-0 z-50 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 py-4 border-b px-4 -mx-4 sm:-mx-0 sm:px-0 mb-4">
         {/* <Chart parties={selectedParites} totalSeats={totalSeats} /> */}
         <div className="flex justify-between items-center">
           <p className="flex-1">
-                 
-        {total / 2 <
-        selectedParties.reduce((acc, party) => acc + party.seats, 0) ? (
-          <span className="text-violet-500">
-            Majority
-          </span>
-        ) : (
-          <span className="text-rose-500">
-            Minority
-          </span>
-        )}
+            {total / 2 <
+            selectedParties.reduce((acc, party) => acc + party.seats, 0) ? (
+              <span className="text-violet-600 dark:text-violet-400">
+                Majority
+              </span>
+            ) : (
+              <span className="text-rose-600 dark:text-rose-400">Minority</span>
+            )}
 
-        
-      
             {/* {
                sortBy === "name" ? "ABC..." : sortBy === "seats" ? "Biggest" : "Left"
             } */}
@@ -474,9 +444,8 @@ const Seats = () => {
           </div>
           <div className="flex-1 flex justify-end text-end">
             <p>
-            {
-            total % 2 === 0 ? (total / 2 + 1) : Math.ceil(total / 2)
-        } for majority
+              {total % 2 === 0 ? total / 2 + 1 : Math.ceil(total / 2)} for
+              majority
             </p>
             {/* {
                 sortBy === "name" ? "...XYZ" : sortBy === "seats" ? "Smallest" : "Right"
@@ -485,7 +454,7 @@ const Seats = () => {
           </div>
           {/* <p>{(totalSeats / 2 < selectedParties.reduce((acc, party) => acc + party.seats, 0)) ? 'Meer dan de helft van de zetels is ingevuld' : 'Minder dan de helft van de zetels is ingevuld'}</p> */}
         </div>
-        <div className="relative flex rounded-lg overflow-hidden bg-gray-200 h-12 w-full transition-all">
+        <div className="relative flex rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-700 h-12 w-full transition-all">
           {parties
             .sort((a, b) => sort(a, b))
             .map((party, index) => (
@@ -515,15 +484,19 @@ const Seats = () => {
       <div className="flex flex-wrap justify-between items-center mb-4 gap-4">
         <div className="flex-1 justify-start text-nowrap sm:w-auto">
           <p className=" text-lg tabular-nums ">
-            <span className="font-semibold">{selectedParties.reduce((acc, party) => acc + party.seats, 0)}</span> /{" "}
-            {total}
+            <span className="font-semibold">
+              {selectedParties.reduce((acc, party) => acc + party.seats, 0)}
+            </span>{" "}
+            / {total}
           </p>
         </div>
         <div className="flex sm:order-2 order-3 rounded-lg overflow-y-hidden overflow-x-scroll whitespace-nowrap sm:w-auto w-full">
           <button
             onClick={() => setSortBy("name")}
             className={`${
-              sortBy === "name" ? "bg-violet-500 text-white" : "bg-gray-200"
+              sortBy === "name"
+                ? "bg-violet-600 dark:bg-violet-400 text-white dark:text-gray-950"
+                : "bg-gray-200 dark:bg-gray-700"
             } px-2 py-1 transition-colors flex-1`}
           >
             Name
@@ -531,7 +504,9 @@ const Seats = () => {
           <button
             onClick={() => setSortBy("position")}
             className={`${
-              sortBy === "position" ? "bg-violet-500 text-white" : "bg-gray-200"
+              sortBy === "position"
+                ? "bg-violet-600 dark:bg-violet-400 text-white dark:text-gray-950"
+                : "bg-gray-200 dark:bg-gray-700"
             } px-2 py-1 transition-colors flex-1`}
           >
             Position
@@ -539,7 +514,9 @@ const Seats = () => {
           <button
             onClick={() => setSortBy("seats")}
             className={`${
-              sortBy === "seats" ? "bg-violet-500 text-white" : "bg-gray-200"
+              sortBy === "seats"
+                ? "bg-violet-600 dark:bg-violet-400 text-white dark:text-gray-950"
+                : "bg-gray-200 dark:bg-gray-700"
             } px-2 py-1 transition-colors flex-1`}
           >
             Seats
@@ -549,10 +526,10 @@ const Seats = () => {
           <span onClick={() => setIsEditMode(false)}>View</span>
           <div
             onClick={() => setIsEditMode(!isEditMode)}
-            className={` cursor-pointer rounded-full relative w-12 h-6 bg-gray-200 flex `}
+            className={` cursor-pointer rounded-full relative w-12 h-6 bg-gray-200 dark:bg-gray-700 flex `}
           >
             <div
-              className={`h-full w-6 rounded-full bg-violet-500 transition-all ${
+              className={`h-full w-6 rounded-full bg-violet-600 dark:bg-violet-400 transition-all ${
                 isEditMode ? "translate-x-full rtl:-translate-x-full" : ""
               }`}
             ></div>
@@ -618,25 +595,25 @@ const Seats = () => {
       </ul>
       {parties.length <= 0 && <p className="text-center">No parties</p>}
 
-      <div className="flex gap-2 flex-wrap mt-4 bg-gray-200 rounded-2xl p-4">
+      <div className="flex gap-2 flex-wrap mt-4 bg-gray-200 dark:bg-gray-700 rounded-2xl p-4">
         <button
           onClick={() => setSelectedParties([...parties])}
-          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white border-gray-200 text-nowrap"
+          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
         >
           Select All
         </button>
         <button
-        onClick={() => setSelectedParties([])}
-        className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white border-gray-200 text-nowrap"
-      >
-        Deselect All
-      </button>
+          onClick={() => setSelectedParties([])}
+          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
+        >
+          Deselect All
+        </button>
         <button
           onClick={() => {
             const leftParties = parties.filter((party) => party.position < 0);
             setSelectedParties(leftParties);
           }}
-          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white border-gray-200 text-nowrap"
+          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
           type="button"
           title="Select Left"
           aria-label="Select Left"
@@ -650,7 +627,7 @@ const Seats = () => {
             const rightParties = parties.filter((party) => party.position > 0);
             setSelectedParties(rightParties);
           }}
-          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white border-gray-200 text-nowrap"
+          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
           type="button"
           title="Select Right"
           aria-label="Select Right"
@@ -666,7 +643,7 @@ const Seats = () => {
             );
             setSelectedParties(leftParties);
           }}
-          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white border-gray-200 text-nowrap"
+          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
           type="button"
           title="Select Left"
           aria-label="Select Left"
@@ -682,7 +659,7 @@ const Seats = () => {
             );
             setSelectedParties(rightParties);
           }}
-          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white border-gray-200 text-nowrap"
+          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
           type="button"
           title="Select Right"
           aria-label="Select Right"
@@ -698,7 +675,7 @@ const Seats = () => {
             );
             setSelectedParties(rightParties);
           }}
-          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white border-gray-200 text-nowrap"
+          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
           type="button"
           title="Select Right"
           aria-label="Select Right"
@@ -714,7 +691,7 @@ const Seats = () => {
             );
             setSelectedParties(rightParties);
           }}
-          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white border-gray-200 text-nowrap"
+          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
           type="button"
           title="Select Right"
           aria-label="Select Right"
@@ -733,7 +710,7 @@ const Seats = () => {
             );
             setSelectedParties(rightParties);
           }}
-          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white border-gray-200 text-nowrap"
+          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
           type="button"
           title="Select Right"
           aria-label="Select Right"
@@ -752,7 +729,7 @@ const Seats = () => {
             );
             setSelectedParties(rightParties);
           }}
-          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white border-gray-200 text-nowrap"
+          className="px-4 py-2 border-2 border-transparent hover:border-violet-500 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
           type="button"
           title="Select Right"
           aria-label="Select Right"
@@ -767,9 +744,9 @@ const Seats = () => {
           setParties([]);
           setSelectedParties([]);
         }}
-        className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200"
+        className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200 dark:border-gray-700"
       >
-        Reset All
+        Clear
       </button>
       <button
         onClick={() => {
@@ -782,7 +759,7 @@ const Seats = () => {
           a.click();
           URL.revokeObjectURL(url);
         }}
-        className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200"
+        className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200 dark:border-gray-700"
         type="button"
         title="Export Parties"
         aria-label="Export Parties"
@@ -795,6 +772,8 @@ const Seats = () => {
         type="file"
         accept=".json"
         className="mt-4 max-w-full"
+        title="Import Parties"
+        aria-label="Import Parties"
         onChange={(e) => {
           const file = e.target.files?.[0];
           if (!file) return;
@@ -809,7 +788,7 @@ const Seats = () => {
           reader.readAsText(file);
         }}
       />
-    </>
+    </div>
   );
 };
 
