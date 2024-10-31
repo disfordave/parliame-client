@@ -100,7 +100,7 @@ const PartyButton = ({
         isEditMode ? "" : "cursor-pointer"
       } shadow-md party-button overflow-hidden flex gap-2 items-center border-2 p-2 rounded-lg w-full transition-all duration-300 bg-white dark:bg-gray-900`}
       style={{
-        borderColor: selected ? colour : "var(--border-color)", // dark mode #374151
+        borderColor: selected ? colour : "var(--border-colour)", // dark mode #374151
         flexDirection: isEditMode ? "column" : "row",
       }}
       title={
@@ -324,9 +324,10 @@ const PartyButton = ({
           </div>
         </>
       ) : (
-        <span className="text-nowrap font-mono">
-          {`[${getposition(party.position).short}]`}
-        </span>
+        // <span className="text-nowrap font-mono">
+        //   {`[${getposition(party.position).short}]`}
+        // </span>
+        <></>
       )}
     </div>
   );

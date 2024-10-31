@@ -2,6 +2,41 @@ import { Party } from "../App";
 
 export const countries: { name: string; parties: Party[] }[] = [
   {
+    name: "Netherlands",
+    parties: [
+      { name: "Party for Freedom", shortName: "PVV", seats: 37, colour: "#012758", position: 100,
+        isIndependent: false, },  // Far-right
+  { name: "People's Party for Freedom and Democracy", shortName: "VVD", seats: 24, colour: "#0A2CCA", position: 50,
+    isIndependent: false, },  // Centre-right
+  { name: "GroenLinks/Labour Party", shortName: "GL/PvdA", seats: 25, colour: "#DC1F26", position: -50,
+    isIndependent: false, },  // Centre-left
+  { name: "New Social Contract", shortName: "NSC", seats: 20, colour: "#F0C400", position: 25,
+    isIndependent: false, },  // Lean right
+  { name: "Democrats 66", shortName: "D66", seats: 9, colour: "#00AE41", position: -25,
+    isIndependent: false, },  // Lean left
+  { name: "Christian Democratic Appeal", shortName: "CDA", seats: 5, colour: "#2CC84D", position: 25,
+    isIndependent: false, },  // Centre
+  { name: "Farmer–Citizen Movement", shortName: "BBB", seats: 7, colour: "#94C11F", position: 50,
+    isIndependent: false, },  // Lean right
+  { name: "Volt", shortName: "Volt", seats: 2, colour: "#582c83", position: -25,
+    isIndependent: false, },  // Lean left
+  { name: "Party for the Animals", shortName: "PvdD", seats: 3, colour: "#006B2D", position: -50,
+    isIndependent: false, },  // Centre-left
+  { name: "Christian Union", shortName: "CU", seats: 3, colour: "#00A7EE", position: 25,
+    isIndependent: false, },  // Centre
+  { name: "Reformed Political Party", shortName: "SGP", seats: 3, colour: "#EA5B0B", position: 75,
+    isIndependent: false, },  // Right-wing
+  { name: "Forum for Democracy", shortName: "FvD", seats: 3, colour: "#841818", position: 100,
+    isIndependent: false, },  // Right-wing
+  { name: "Socialist Party", shortName: "SP", seats: 5, colour: "#F60000", position: -75,
+    isIndependent: false, },  // Left-wing
+  { name: "Denk", shortName: "Denk", seats: 3, colour: "#00B7B2", position: -50,
+    isIndependent: false, },  // Lean left
+  { name: "JA21", shortName: "JA21", seats: 1, colour: "#242B57", position: 75,
+    isIndependent: false, },  // Centre-right
+    ]
+  },
+  {
     name: "Germany",
     parties: [
       {
@@ -110,7 +145,7 @@ export const countries: { name: string; parties: Party[] }[] = [
         shortName: "Groen",
         seats: 6,
         colour: "#03ae5c",
-        position: -75,
+        position: -50,
         isIndependent: false,
       },
       {
@@ -142,7 +177,7 @@ export const countries: { name: string; parties: Party[] }[] = [
         shortName: "Ecolo",
         seats: 3,
         colour: "#008d40",
-        position: -75,
+        position: -50,
         isIndependent: false,
       },
       {
@@ -150,7 +185,7 @@ export const countries: { name: string; parties: Party[] }[] = [
         shortName: "DéFI",
         seats: 1,
         colour: "#dd007a",
-        position: 0,
+        position: 25,
         isIndependent: false,
       },
       {
