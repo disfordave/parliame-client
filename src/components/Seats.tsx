@@ -336,9 +336,9 @@ const PartyButton = ({
 };
 
 const Seats = () => {
-  const [parties, setParties] = useState<Party[]>(countries[1].parties);
+  const [parties, setParties] = useState<Party[]>(countries.find((country) => country.name === "Belgium")?.parties || []);
   const [selectedParties, setSelectedParties] = useState<Party[]>(
-    countries[1].parties
+    countries.find((country) => country.name === "Belgium")?.parties || []
   );
   const [isEditMode, setIsEditMode] = useState(false);
   const [sortBy, setSortBy] = useState<"name" | "seats" | "position">("seats");
@@ -389,7 +389,7 @@ const Seats = () => {
   return (
     <div>
       <select
-        defaultValue={countries[1].name}
+        defaultValue={"Belgium"}
         title="Select Country"
         aria-label="Select Country"
         onChange={(e) => {
@@ -489,12 +489,11 @@ const Seats = () => {
                 Majority
               </span>
             ) : (
-              <span className="text-rose-600 dark:text-rose-400">{
-                `${
-                  (total % 2 === 0
-                    ? total / 2 + (allowTieBreaker ? 0 : 1)
-                    : Math.ceil(total / 2)) - selectedTotal
-                } seats left
+              <span className="text-rose-600 dark:text-rose-400">{`${
+                (total % 2 === 0
+                  ? total / 2 + (allowTieBreaker ? 0 : 1)
+                  : Math.ceil(total / 2)) - selectedTotal
+              } seats left
                 `}</span>
             )}
 
