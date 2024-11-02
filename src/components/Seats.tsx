@@ -344,7 +344,10 @@ const Seats = () => {
   const [sortBy, setSortBy] = useState<"name" | "seats" | "position">("seats");
   const [allowTieBreaker, setAllowTieBreaker] = useState(false);
   const total = parties.reduce((acc, party) => acc + party.seats, 0);
-  const selectedTotal = selectedParties.reduce((acc, party) => acc + party.seats, 0)
+  const selectedTotal = selectedParties.reduce(
+    (acc, party) => acc + party.seats,
+    0
+  );
 
   const sort = (a: Party, b: Party) => {
     if (isEditMode) return 0; // Stop sorting if edit mode is on
@@ -441,13 +444,17 @@ const Seats = () => {
                 setAllowTieBreaker(!allowTieBreaker);
               }}
             />
-            <div role="checkbox"
-                aria-checked={allowTieBreaker} className={`${
-                allowTieBreaker ? "bg-violet-600 dark:bg-violet-400" : "bg-gray-200 dark:bg-gray-700"
-                } rounded-full aspect-square size-6 flex justify-center items-center overflow-hidden transition-colors`}>
+            <div
+              role="checkbox"
+              aria-checked={allowTieBreaker}
+              className={`${
+                allowTieBreaker
+                  ? "bg-violet-600 dark:bg-violet-400"
+                  : "bg-gray-200 dark:bg-gray-700"
+              } rounded-full aspect-square size-6 flex justify-center items-center overflow-hidden transition-colors`}
+            >
               {allowTieBreaker ? (
-                <div
-                 className="w-full h-full text-white dark:text-gray-950 flex justify-center items-center">
+                <div className="w-full h-full text-white dark:text-gray-950 flex justify-center items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"
@@ -462,9 +469,7 @@ const Seats = () => {
                   </svg>
                 </div>
               ) : (
-<div
-                 className="w-full h-full text-white bg-gray-200 dark:bg-gray-700 dark:text-gray-950 flex justify-center items-center">
-                  </div>
+                <div className="w-full h-full text-white bg-gray-200 dark:bg-gray-700 dark:text-gray-950 flex justify-center items-center"></div>
               )}
             </div>
           </span>
@@ -474,18 +479,23 @@ const Seats = () => {
       <div className=" sticky top-0 z-50 bg-white dark:bg-gray-900  pt-4 px-4 -mx-4  mb-4">
         {/* <Chart parties={selectedParites} totalSeats={totalSeats} /> */}
         <div className="flex justify-between items-center">
-          <p className="flex-1">
-            {selectedTotal === total || selectedTotal === 0 ? "" : (
-              (total % 2 === 0
+          <p className="flex-1 ">
+            {selectedTotal === total || selectedTotal === 0 ? (
+              ""
+            ) : (total % 2 === 0
                 ? total / 2 + (allowTieBreaker ? 0 : 1)
-                : Math.ceil(total / 2)) <=
-              selectedTotal ? (
-                <span className="text-violet-600 dark:text-violet-400">
-                  Majority
-                </span>
-              ) : (
-                <span className="text-rose-600 dark:text-rose-400">Minority</span>
-              )
+                : Math.ceil(total / 2)) <= selectedTotal ? (
+              <span className="text-violet-600 dark:text-violet-400">
+                Majority
+              </span>
+            ) : (
+              <span className="text-rose-600 dark:text-rose-400">{
+                `${
+                  (total % 2 === 0
+                    ? total / 2 + (allowTieBreaker ? 0 : 1)
+                    : Math.ceil(total / 2)) - selectedTotal
+                } seats left
+                `}</span>
             )}
 
             {/* {
@@ -496,11 +506,11 @@ const Seats = () => {
             <CaretDownIcon />
           </div>
           <div className="flex-1 flex justify-end text-end">
-            <p>
+            <p className="">
               {total % 2 === 0
                 ? total / 2 + (allowTieBreaker ? 0 : 1)
                 : Math.ceil(total / 2)}{" "}
-              for majority
+              for majority{" "}
             </p>
             {/* {
                 sortBy === "name" ? "...XYZ" : sortBy === "seats" ? "Smallest" : "Right"
@@ -540,10 +550,7 @@ const Seats = () => {
       <div className="flex flex-wrap justify-between items-center mb-4 gap-4">
         <div className="flex-1 justify-start text-nowrap sm:w-auto">
           <p className=" text-lg tabular-nums ">
-            <span className="font-semibold">
-              {selectedTotal}
-            </span>{" "}
-            / {total}
+            <span className="font-semibold">{selectedTotal}</span> / {total}
           </p>
         </div>
         <div className="flex sm:order-2 order-3 rounded-lg overflow-y-hidden overflow-x-scroll whitespace-nowrap sm:w-auto w-full">
