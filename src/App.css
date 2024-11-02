@@ -5,8 +5,11 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 :root {
-  --border-colour: #e5e7eb;
+  --border-color-light: #e5e7eb; /* Light mode color */
+  --border-color-dark: #374151; /* Dark mode color */
 }
+
+
 
 select {
   background: url('data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjEuNDEgNC42NyAyLjQ4IDMuMTggMy41NCA0LjY3IDEuNDEgNC42NyIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIzLjU0IDUuMzMgMi40OCA2LjgyIDEuNDEgNS4zMyAzLjU0IDUuMzMiLz48L3N2Zz4=') no-repeat;
@@ -26,6 +29,12 @@ select:dir(rtl) {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --border-color: #374151;
+    --border-colour: var(--border-color-dark);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --border-colour: var(--border-color-light);
   }
 }
