@@ -348,6 +348,10 @@ const Seats = () => {
     (acc, party) => acc + party.seats,
     0
   );
+  const totalPositions = selectedParties.reduce(
+    (acc, party) => acc + party.position,
+    0
+  ) / selectedParties.length;
 
   const sort = (a: Party, b: Party) => {
     if (isEditMode) return 0; // Stop sorting if edit mode is on
@@ -486,7 +490,7 @@ const Seats = () => {
                 ? total / 2 + (allowTieBreaker ? 0 : 1)
                 : Math.ceil(total / 2)) <= selectedTotal ? (
               <span className="text-violet-600 dark:text-violet-400">
-                Majority
+                {getposition(totalPositions).full} government
               </span>
             ) : (
               <span className="text-rose-600 dark:text-rose-400">{`${
