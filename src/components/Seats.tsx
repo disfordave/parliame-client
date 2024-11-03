@@ -2,9 +2,12 @@ import { useState } from "react";
 import { Party } from "../App";
 import { countries } from "./countries";
 
-const CaretDownIcon = ({
-  className = "",
-}) => {
+interface ButtonConfig {
+  label: string;
+  onClick: () => void;
+}
+
+const CaretDownIcon = ({ className = "" }) => {
   return (
     <>
       <svg
@@ -356,9 +359,11 @@ const Seats = () => {
   //   selectedParties.reduce((acc, party) => acc + party.position, 0) /
   //   selectedParties.length;
 
-  const majorityThreshold = (total % 2 === 0
-    ? total / 2 + (allowTieBreaker ? 0 : 1)
-    : Math.ceil(total / 2)) as number;
+  const majorityThreshold = (
+    total % 2 === 0
+      ? total / 2 + (allowTieBreaker ? 0 : 1)
+      : Math.ceil(total / 2)
+  ) as number;
 
   const sort = (a: Party, b: Party) => {
     if (isEditMode) return 0; // Stop sorting if edit mode is on
@@ -396,6 +401,108 @@ const Seats = () => {
     if (sortBy === "position") return a.position - b.position;
     return 0;
   };
+
+  const buttonConfigurations: ButtonConfig[] = [
+    {
+      label: "Select All",
+      onClick: () => setSelectedParties([...parties]),
+    },
+    {
+      label: "Deselect All",
+      onClick: () => setSelectedParties([]),
+    },
+    {
+      label: "Left",
+      onClick: () => {
+        const leftParties = parties.filter((party) => party.position < 0);
+        setSelectedParties(leftParties);
+      },
+    },
+    {
+      label: "Right",
+      onClick: () => {
+        const rightParties = parties.filter((party) => party.position > 0);
+        setSelectedParties(rightParties);
+      },
+    },
+    {
+      label: "Left (without far left)",
+      onClick: () => {
+        const leftParties = parties.filter(
+          (party) => party.position < 0 && party.position > -100
+        );
+        setSelectedParties(leftParties);
+      },
+    },
+    {
+      label: "Right (without far right)",
+      onClick: () => {
+        const rightParties = parties.filter(
+          (party) => party.position > 0 && party.position < 100
+        );
+        setSelectedParties(rightParties);
+      },
+    },
+    {
+      label: "Left-wing",
+      onClick: () => {
+        const leftParties = parties.filter((party) => party.position <= -75);
+        setSelectedParties(leftParties);
+      },
+    },
+    {
+      label: "Right-wing",
+      onClick: () => {
+        const rightParties = parties.filter((party) => party.position >= 75);
+        setSelectedParties(rightParties);
+      },
+    },
+    {
+      label: "Centre",
+      onClick: () => {
+        const centerParties = parties.filter(
+          (party) => party.position <= 25 && party.position >= -25
+        );
+        setSelectedParties(centerParties);
+      },
+    },
+    {
+      label: "Grand (centre)",
+      onClick: () => {
+        const centerParties = parties.filter(
+          (party) =>
+            party.position < 75 && party.position > -75 && !party.isIndependent
+        );
+        setSelectedParties(centerParties);
+      },
+    },
+    {
+      label: "Grand (without extremists)",
+      onClick: () => {
+        const grandParties = parties.filter(
+          (party) =>
+            party.position > -100 &&
+            party.position < 100 &&
+            !party.isIndependent
+        );
+        setSelectedParties(grandParties);
+      },
+    },
+  ];
+
+  const sortButtonConfigs = [
+    { label: "Name", sortByKey: "name", title: "Sort by Name" },
+    {
+      label: "Position",
+      sortByKey: "position",
+      title: "Sort by Political Position",
+    },
+    { label: "Seats", sortByKey: "seats", title: "Sort by Seats" },
+  ] as {
+    label: string;
+    sortByKey: "name" | "position" | "seats";
+    title: string;
+  }[];
 
   return (
     <div>
@@ -493,49 +600,50 @@ const Seats = () => {
           <p className="flex-1 ">
             {selectedTotal === total || selectedTotal === 0 ? (
               ""
-            ) : allowTieBreaker &&
-              (majorityThreshold) === selectedTotal ? (
+            ) : allowTieBreaker && majorityThreshold === selectedTotal ? (
               <span className="text-emerald-600 dark:text-emerald-400 line-clamp-1">
                 Tie-breaking majority
               </span>
             ) : (total % 2 === 0 ? total / 2 + 1 : Math.ceil(total / 2)) <=
               selectedTotal ? (
               <span className="text-violet-600 dark:text-violet-400 line-clamp-1">
+                {selectedTotal - majorityThreshold + (allowTieBreaker ? 0 : 1)}{" "}
                 {selectedTotal -
-                  (majorityThreshold) +
-                  (allowTieBreaker ? 0 : 1)}{" "}
-                {
-                  (selectedTotal - (majorityThreshold) + (allowTieBreaker ? 0 : 1)) === 1
-                    ? "seat"
-                    : "seats"
-                } majority
+                  majorityThreshold +
+                  (allowTieBreaker ? 0 : 1) ===
+                1
+                  ? "seat"
+                  : "seats"}{" "}
+                majority
               </span>
             ) : (
               <span className="text-rose-600 dark:text-rose-400">{`${
-                (majorityThreshold) - selectedTotal
+                majorityThreshold - selectedTotal
               } ${
-                (majorityThreshold) - selectedTotal === 1 ? "seat" : "seats"
+                majorityThreshold - selectedTotal === 1 ? "seat" : "seats"
               } left
                 `}</span>
             )}
           </p>
-          <div className="flex items-center justify-center">
-          <p className="me-1 invisible">
-              {total % 2 === 0
+          <div
+            className="flex items-center justify-center relative"
+            title={`${
+              total % 2 === 0
                 ? total / 2 + (allowTieBreaker ? 0 : 1)
-                : Math.ceil(total / 2)}{" "}
-            </p>
+                : Math.ceil(total / 2)
+            } seats for majority`}
+          >
             <CaretDownIcon />
-            <p className="ms-1">
+            <p className="absolute left-5">
               {total % 2 === 0
                 ? total / 2 + (allowTieBreaker ? 0 : 1)
                 : Math.ceil(total / 2)}{" "}
             </p>
           </div>
           <div className="flex-1 flex justify-end text-end">
-          <p className="tabular-nums ">
-            <span className="font-semibold">{selectedTotal}</span> / {total}
-          </p>
+            <p className="tabular-nums ">
+              <span className="font-semibold">{selectedTotal}</span> / {total}
+            </p>
 
             {/* {
                 sortBy === "name" ? "...XYZ" : sortBy === "seats" ? "Smallest" : "Right"
@@ -578,86 +686,78 @@ const Seats = () => {
             <span className="font-semibold">{selectedTotal}</span> / {total}
           </p> */}
           <label className="flex gap-2 items-center">
-          <span className="relative">
-            <input
-              type="checkbox"
-              name="allowTieBreaker"
-              id="allowTieBreaker"
-              className="opacity-0 absolute w-full h-full"
-              checked={allowTieBreaker}
-              onChange={() => {
-                setAllowTieBreaker(!allowTieBreaker);
-              }}
-            />
-            <div
-              role="checkbox"
-              aria-checked={allowTieBreaker}
-              className={`${
-                allowTieBreaker
-                  ? "bg-violet-600 dark:bg-violet-400"
-                  : "bg-gray-200 dark:bg-gray-700"
-              } rounded-full aspect-square size-6 flex justify-center items-center overflow-hidden transition-colors`}
-            >
-              {allowTieBreaker ? (
-                <div className="w-full h-full text-white dark:text-gray-950 flex justify-center items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 16 16"
-                    fill="currentColor"
-                    className="size-4 "
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-              ) : (
-                <div className="w-full h-full text-white bg-gray-200 dark:bg-gray-700 dark:text-gray-950 flex justify-center items-center"></div>
-              )}
-            </div>
-          </span>
-          <span className="select-none">Allow Tie Breaker</span>
-        </label>
+            <span className="relative">
+              <input
+                title="Allow Tie Breaker"
+                type="checkbox"
+                name="allowTieBreaker"
+                id="allowTieBreaker"
+                className="opacity-0 absolute w-full h-full"
+                checked={allowTieBreaker}
+                onChange={() => {
+                  setAllowTieBreaker(!allowTieBreaker);
+                }}
+              />
+              <div
+                role="checkbox"
+                aria-checked={allowTieBreaker}
+                className={`${
+                  allowTieBreaker
+                    ? "bg-violet-600 dark:bg-violet-400"
+                    : "bg-gray-200 dark:bg-gray-700"
+                } rounded-full aspect-square size-6 flex justify-center items-center overflow-hidden transition-colors`}
+              >
+                {allowTieBreaker ? (
+                  <div className="w-full h-full text-white dark:text-gray-950 flex justify-center items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 16 16"
+                      fill="currentColor"
+                      className="size-4 "
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                ) : (
+                  <div className="w-full h-full text-white bg-gray-200 dark:bg-gray-700 dark:text-gray-950 flex justify-center items-center"></div>
+                )}
+              </div>
+            </span>
+            <span className="select-none">Allow Tie Breaker</span>
+          </label>
         </div>
         <div className="flex sm:order-2 order-3 rounded-lg overflow-y-hidden overflow-x-scroll whitespace-nowrap sm:w-auto w-full">
-          <button
-            onClick={() => setSortBy("name")}
-            className={`${
-              sortBy === "name"
-                ? "bg-violet-600 dark:bg-violet-400 text-white dark:text-gray-950"
-                : "bg-gray-200 dark:bg-gray-700"
-            } px-2 py-1 transition-colors flex-1`}
-          >
-            Name
-          </button>
-          <button
-            onClick={() => setSortBy("position")}
-            className={`${
-              sortBy === "position"
-                ? "bg-violet-600 dark:bg-violet-400 text-white dark:text-gray-950"
-                : "bg-gray-200 dark:bg-gray-700"
-            } px-2 py-1 transition-colors flex-1`}
-          >
-            Position
-          </button>
-          <button
-            onClick={() => setSortBy("seats")}
-            className={`${
-              sortBy === "seats"
-                ? "bg-violet-600 dark:bg-violet-400 text-white dark:text-gray-950"
-                : "bg-gray-200 dark:bg-gray-700"
-            } px-2 py-1 transition-colors flex-1`}
-          >
-            Seats
-          </button>
+          {sortButtonConfigs.map((config, index) => (
+            <button
+              key={index}
+              onClick={() => setSortBy(config.sortByKey)}
+              className={`${
+                sortBy === config.sortByKey
+                  ? "bg-violet-600 dark:bg-violet-400 text-white dark:text-gray-950"
+                  : "bg-gray-200 dark:bg-gray-700"
+              } px-2 py-1 transition-colors flex-1`}
+              title={config.title}
+            >
+              {config.label}
+            </button>
+          ))}
         </div>
         <div className=" select-none flex sm:order-3 order-2 items-center gap-2 flex-1 justify-end">
-          <span onClick={() => setIsEditMode(false)}>View</span>
+          <span
+            title={"Switch to View Mode"}
+            className="select-none cursor-default"
+            onClick={() => setIsEditMode(false)}
+          >
+            View
+          </span>
           <div
             onClick={() => setIsEditMode(!isEditMode)}
             className={` cursor-pointer rounded-full relative w-12 h-6 bg-gray-200 dark:bg-gray-700 flex `}
+            title={isEditMode ? "Switch to View Mode" : "Switch to Edit Mode"}
           >
             <div
               className={`h-full w-6 rounded-full bg-violet-600 dark:bg-violet-400 transition-all ${
@@ -665,7 +765,13 @@ const Seats = () => {
               }`}
             ></div>
           </div>
-          <span onClick={() => setIsEditMode(true)}>Edit</span>
+          <span
+            title="Switch to Edit Mode"
+            className="select-none cursor-default"
+            onClick={() => setIsEditMode(true)}
+          >
+            Edit
+          </span>
         </div>
       </div>
       <ul
@@ -727,149 +833,22 @@ const Seats = () => {
       {parties.length <= 0 && <p className="text-center">No parties</p>}
 
       <div className="flex gap-2 flex-wrap mt-4 bg-gray-200 dark:bg-gray-700 rounded-2xl p-4 overflow-scroll">
-        <button
-          onClick={() => setSelectedParties([...parties])}
-          className="px-4 py-2 border-2 border-transparent hover:border-violet-600 dark:hover:border-violet-400 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
-        >
-          Select All
-        </button>
-        <button
-          onClick={() => setSelectedParties([])}
-          className="px-4 py-2 border-2 border-transparent hover:border-violet-600 dark:hover:border-violet-400 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
-        >
-          Deselect All
-        </button>
-        <button
-          onClick={() => {
-            const leftParties = parties.filter((party) => party.position < 0);
-            setSelectedParties(leftParties);
-          }}
-          className="px-4 py-2 border-2 border-transparent hover:border-violet-600 dark:hover:border-violet-400 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
-          type="button"
-          title="Select Left"
-          aria-label="Select Left"
-          aria-describedby="Select Left"
-          aria-disabled={false}
-        >
-          Left
-        </button>
-        <button
-          onClick={() => {
-            const rightParties = parties.filter((party) => party.position > 0);
-            setSelectedParties(rightParties);
-          }}
-          className="px-4 py-2 border-2 border-transparent hover:border-violet-600 dark:hover:border-violet-400 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
-          type="button"
-          title="Select Right"
-          aria-label="Select Right"
-          aria-describedby="Select Right"
-          aria-disabled={false}
-        >
-          Right
-        </button>
-        <button
-          onClick={() => {
-            const leftParties = parties.filter(
-              (party) => party.position < 0 && party.position > -100
-            );
-            setSelectedParties(leftParties);
-          }}
-          className="px-4 py-2 border-2 border-transparent hover:border-violet-600 dark:hover:border-violet-400 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
-          type="button"
-          title="Select Left"
-          aria-label="Select Left"
-          aria-describedby="Select Left"
-          aria-disabled={false}
-        >
-          Left (without far left)
-        </button>
-        <button
-          onClick={() => {
-            const rightParties = parties.filter(
-              (party) => party.position > 0 && party.position < 100
-            );
-            setSelectedParties(rightParties);
-          }}
-          className="px-4 py-2 border-2 border-transparent hover:border-violet-600 dark:hover:border-violet-400 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
-          type="button"
-          title="Select Right"
-          aria-label="Select Right"
-          aria-describedby="Select Right"
-          aria-disabled={false}
-        >
-          Right (without far right)
-        </button>
-        <button
-          onClick={() => {
-            const rightParties = parties.filter(
-              (party) => party.position <= -75
-            );
-            setSelectedParties(rightParties);
-          }}
-          className="px-4 py-2 border-2 border-transparent hover:border-violet-600 dark:hover:border-violet-400 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
-          type="button"
-          title="Select Right"
-          aria-label="Select Right"
-          aria-describedby="Select Right"
-          aria-disabled={false}
-        >
-          Left-wing
-        </button>
-        <button
-          onClick={() => {
-            const rightParties = parties.filter(
-              (party) => party.position >= 75
-            );
-            setSelectedParties(rightParties);
-          }}
-          className="px-4 py-2 border-2 border-transparent hover:border-violet-600 dark:hover:border-violet-400 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
-          type="button"
-          title="Select Right"
-          aria-label="Select Right"
-          aria-describedby="Select Right"
-          aria-disabled={false}
-        >
-          Right-wing
-        </button>
-        <button
-          onClick={() => {
-            const rightParties = parties.filter(
-              (party) =>
-                party.position < 75 &&
-                party.position > -75 &&
-                !party.isIndependent
-            );
-            setSelectedParties(rightParties);
-          }}
-          className="px-4 py-2 border-2 border-transparent hover:border-violet-600 dark:hover:border-violet-400 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
-          type="button"
-          title="Select Right"
-          aria-label="Select Right"
-          aria-describedby="Select Right"
-          aria-disabled={false}
-        >
-          Grand (centre)
-        </button>
-        <button
-          onClick={() => {
-            const rightParties = parties.filter(
-              (party) =>
-                party.position > -100 &&
-                party.position < 100 &&
-                !party.isIndependent
-            );
-            setSelectedParties(rightParties);
-          }}
-          className="px-4 py-2 border-2 border-transparent hover:border-violet-600 dark:hover:border-violet-400 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
-          type="button"
-          title="Select Right"
-          aria-label="Select Right"
-          aria-describedby="Select Right"
-          aria-disabled={false}
-        >
-          Grand (without extremists)
-        </button>
+        {buttonConfigurations.map((buttonConfig, index) => (
+          <button
+            key={index}
+            onClick={buttonConfig.onClick}
+            className="px-4 py-2 border-2 border-transparent hover:border-violet-600 dark:hover:border-violet-400 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
+            type="button"
+            title={buttonConfig.label}
+            aria-label={buttonConfig.label}
+            aria-describedby={buttonConfig.label}
+            aria-disabled={false}
+          >
+            {buttonConfig.label}
+          </button>
+        ))}
       </div>
+
       <button
         onClick={() => {
           setParties([]);
