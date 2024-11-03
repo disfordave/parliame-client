@@ -761,7 +761,7 @@ const Seats = () => {
                 setParties([
                   ...parties,
                   {
-                    name: "New Party",
+                    name: "",
                     shortName: "",
                     seats: 0,
                     colour: "#6B7280",
