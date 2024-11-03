@@ -648,7 +648,7 @@ const Seats = () => {
 
       <div className="flex flex-wrap justify-between items-center mb-4 gap-4">
         <div className="flex-1 justify-start text-nowrap sm:w-auto">
-          <label className="flex gap-2 items-center">
+          <label className="flex gap-2 items-center ">
             <span className="relative">
               <input
                 title="Allow Tie Breaker"
@@ -690,10 +690,10 @@ const Seats = () => {
                 )}
               </div>
             </span>
-            <span className="select-none">Allow Tie Breaker</span>
+            <span className="select-none ">Allow Tie Breaker</span>
           </label>
         </div>
-        <div className="flex sm:order-2 order-3 rounded-lg overflow-y-hidden overflow-x-scroll whitespace-nowrap sm:w-auto w-full">
+        <div className="flex sm:order-2 order-3 rounded-lg overflow-y-hidden overflow-x-auto whitespace-nowrap sm:w-auto w-full">
           {sortButtonConfigs.map((config, index) => (
             <button
               key={index}
@@ -795,7 +795,7 @@ const Seats = () => {
       </ul>
       {parties.length <= 0 && <p className="text-center">No parties</p>}
 
-      <div className="flex gap-2 flex-wrap mt-4 bg-gray-200 dark:bg-gray-700 rounded-2xl p-4 overflow-scroll">
+      <div className="flex gap-2 flex-wrap mt-4 bg-gray-200 dark:bg-gray-700 rounded-2xl p-4 overflow-auto">
         {buttonConfigurations.map((buttonConfig, index) => (
           <button
             key={index}
