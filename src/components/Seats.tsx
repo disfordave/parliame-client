@@ -489,8 +489,8 @@ const Seats = () => {
             ) : (total % 2 === 0
                 ? total / 2 + (allowTieBreaker ? 0 : 1)
                 : Math.ceil(total / 2)) <= selectedTotal ? (
-              <span className="text-violet-600 dark:text-violet-400">
-                {getposition(totalPositions).full} government
+              <span className="text-violet-600 dark:text-violet-400 line-clamp-1">
+                {getposition(totalPositions).full} majority
               </span>
             ) : (
               <span className="text-rose-600 dark:text-rose-400">{`${
