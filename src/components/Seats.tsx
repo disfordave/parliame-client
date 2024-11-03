@@ -2,7 +2,9 @@ import { useState } from "react";
 import { Party } from "../App";
 import { countries } from "./countries";
 
-const CaretDownIcon = () => {
+const CaretDownIcon = ({
+  className = "",
+}) => {
   return (
     <>
       <svg
@@ -10,7 +12,7 @@ const CaretDownIcon = () => {
         width="16"
         height="16"
         fill="currentColor"
-        className="bi bi-caret-down-fill"
+        className={"bi bi-caret-down-fill" + " " + className}
         viewBox="0 0 16 16"
       >
         <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
@@ -439,7 +441,7 @@ const Seats = () => {
             ))}
         </optgroup>
       </select>
-      <details className="mt-4">
+      {/* <details className="mt-4">
         <summary className="cursor-pointer select-none">Options</summary>
         <label className="flex gap-1 items-center">
           <span className="relative">
@@ -484,7 +486,7 @@ const Seats = () => {
           </span>
           <span className="select-none">Allow Tie Breaker</span>
         </label>
-      </details>
+      </details> */}
       <div className=" sticky top-0 z-50 bg-white dark:bg-gray-900  pt-4 px-4 -mx-4  mb-4">
         {/* <Chart parties={selectedParites} totalSeats={totalSeats} /> */}
         <div className="flex justify-between items-center">
@@ -517,16 +519,24 @@ const Seats = () => {
                 `}</span>
             )}
           </p>
-          <div className="">
-            <CaretDownIcon />
-          </div>
-          <div className="flex-1 flex justify-end text-end">
-            <p className="">
+          <div className="flex items-center justify-center">
+          <p className="me-1 invisible">
               {total % 2 === 0
                 ? total / 2 + (allowTieBreaker ? 0 : 1)
                 : Math.ceil(total / 2)}{" "}
-              for majority{" "}
             </p>
+            <CaretDownIcon />
+            <p className="ms-1">
+              {total % 2 === 0
+                ? total / 2 + (allowTieBreaker ? 0 : 1)
+                : Math.ceil(total / 2)}{" "}
+            </p>
+          </div>
+          <div className="flex-1 flex justify-end text-end">
+          <p className="tabular-nums ">
+            <span className="font-semibold">{selectedTotal}</span> / {total}
+          </p>
+
             {/* {
                 sortBy === "name" ? "...XYZ" : sortBy === "seats" ? "Smallest" : "Right"
             } */}
@@ -564,9 +574,52 @@ const Seats = () => {
 
       <div className="flex flex-wrap justify-between items-center mb-4 gap-4">
         <div className="flex-1 justify-start text-nowrap sm:w-auto">
-          <p className=" text-lg tabular-nums ">
+          {/* <p className=" text-lg tabular-nums ">
             <span className="font-semibold">{selectedTotal}</span> / {total}
-          </p>
+          </p> */}
+          <label className="flex gap-2 items-center">
+          <span className="relative">
+            <input
+              type="checkbox"
+              name="allowTieBreaker"
+              id="allowTieBreaker"
+              className="opacity-0 absolute w-full h-full"
+              checked={allowTieBreaker}
+              onChange={() => {
+                setAllowTieBreaker(!allowTieBreaker);
+              }}
+            />
+            <div
+              role="checkbox"
+              aria-checked={allowTieBreaker}
+              className={`${
+                allowTieBreaker
+                  ? "bg-violet-600 dark:bg-violet-400"
+                  : "bg-gray-200 dark:bg-gray-700"
+              } rounded-full aspect-square size-6 flex justify-center items-center overflow-hidden transition-colors`}
+            >
+              {allowTieBreaker ? (
+                <div className="w-full h-full text-white dark:text-gray-950 flex justify-center items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    className="size-4 "
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+              ) : (
+                <div className="w-full h-full text-white bg-gray-200 dark:bg-gray-700 dark:text-gray-950 flex justify-center items-center"></div>
+              )}
+            </div>
+          </span>
+          <span className="select-none">Allow Tie Breaker</span>
+        </label>
         </div>
         <div className="flex sm:order-2 order-3 rounded-lg overflow-y-hidden overflow-x-scroll whitespace-nowrap sm:w-auto w-full">
           <button
