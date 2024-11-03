@@ -817,7 +817,7 @@ const Seats = () => {
       <button
         onClick={() => {
           const data = JSON.stringify(parties);
-          const blob = new Blob([data], { type: "text/plain" });
+          const blob = new Blob([data], { type: "text/json" });
           const url = URL.createObjectURL(blob);
           const a = document.createElement("a");
           a.href = url;
