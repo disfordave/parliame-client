@@ -461,7 +461,7 @@ const Seats = () => {
       label: "Centre",
       onClick: () => {
         const centerParties = parties.filter(
-          (party) => party.position <= 25 && party.position >= -25
+          (party) => party.position <= 25 && party.position >= -25 && !party.isIndependent
         );
         setSelectedParties(centerParties);
       },
