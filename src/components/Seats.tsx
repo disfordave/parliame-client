@@ -157,9 +157,9 @@ const PartyButton = ({
             type="text"
             placeholder="Party Name"
             className="w-full outline-none border-b border-gray-200 dark:border-gray-700 bg-transparent"
-            value={party.shortName}
+            value={party.name}
             onChange={(e) => {
-              const newParty = { ...party, shortName: e.target.value };
+              const newParty = { ...party, name: e.target.value };
               setParties(parties.map((p) => (p === party ? newParty : p)));
               if (selected) {
                 setSelectedParties(
@@ -172,6 +172,28 @@ const PartyButton = ({
           partyName
         )}
       </span>
+
+      {isEditMode && (
+        <span className={isEditMode ? "w-full" : "truncate"}>
+          <input
+            name="partyShortName"
+            type="text"
+            placeholder="Party Short Name"
+            className="w-full outline-none border-b border-gray-200 dark:border-gray-700 bg-transparent"
+            value={party.shortName}
+            onChange={(e) => {
+              const newParty = { ...party, shortName: e.target.value };
+              setParties(parties.map((p) => (p === party ? newParty : p)));
+              if (selected) {
+                setSelectedParties(
+                  selectedParties.map((p) => (p === party ? newParty : p))
+                );
+              }
+            }}
+          />
+        </span>
+      )}
+
       <span
         className={` font-semibold 
             ${isEditMode ? "w-full" : "text-nowrap"}`}
@@ -461,7 +483,10 @@ const Seats = () => {
       label: "Centre",
       onClick: () => {
         const centerParties = parties.filter(
-          (party) => party.position <= 25 && party.position >= -25 && !party.isIndependent
+          (party) =>
+            party.position <= 25 &&
+            party.position >= -25 &&
+            !party.isIndependent
         );
         setSelectedParties(centerParties);
       },
@@ -658,6 +683,13 @@ const Seats = () => {
             .map((party, index) => (
               <div
                 key={index}
+                title={`${
+                  party.isIndependent
+                    ? party.shortName.length > 0
+                      ? party.shortName + " (I)"
+                      : "Independent"
+                    : party.shortName
+                } (${party.seats})`}
                 style={{
                   //   backgroundColor: party.isIndependent
                   //     ? "#6B7280"

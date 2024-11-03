@@ -122,7 +122,7 @@ export const countries: { name: string; parties: Party[] }[] = [
     name: "Netherlands",
     parties: [
       {
-        name: "Party for Freedom",
+        name: "Partij voor de Vrijheid",
         shortName: "PVV",
         seats: 37,
         colour: "#012758",
@@ -130,7 +130,7 @@ export const countries: { name: string; parties: Party[] }[] = [
         isIndependent: false,
       }, // Far-right
       {
-        name: "People's Party for Freedom and Democracy",
+        name: "Volkspartij voor Vrijheid en Democratie",
         shortName: "VVD",
         seats: 24,
         colour: "#0A2CCA",
@@ -138,7 +138,7 @@ export const countries: { name: string; parties: Party[] }[] = [
         isIndependent: false,
       }, // Centre-right
       {
-        name: "GroenLinks/Labour Party",
+        name: "GroenLinks/Partij van de Arbeid",
         shortName: "GL/PvdA",
         seats: 25,
         colour: "#DC1F26",
@@ -146,7 +146,7 @@ export const countries: { name: string; parties: Party[] }[] = [
         isIndependent: false,
       }, // Centre-left
       {
-        name: "New Social Contract",
+        name: "Nieuw Sociaal Contract",
         shortName: "NSC",
         seats: 20,
         colour: "#F0C400",
@@ -154,7 +154,7 @@ export const countries: { name: string; parties: Party[] }[] = [
         isIndependent: false,
       }, // Lean right
       {
-        name: "Democrats 66",
+        name: "Democraten 66",
         shortName: "D66",
         seats: 9,
         colour: "#00AE41",
@@ -162,7 +162,7 @@ export const countries: { name: string; parties: Party[] }[] = [
         isIndependent: false,
       }, // Lean left
       {
-        name: "Christian Democratic Appeal",
+        name: "Christen-Democratisch Appèl",
         shortName: "CDA",
         seats: 5,
         colour: "#2CC84D",
@@ -170,7 +170,7 @@ export const countries: { name: string; parties: Party[] }[] = [
         isIndependent: false,
       }, // Centre
       {
-        name: "Farmer–Citizen Movement",
+        name: "BoerBurgerBeweging",
         shortName: "BBB",
         seats: 7,
         colour: "#94C11F",
@@ -186,15 +186,15 @@ export const countries: { name: string; parties: Party[] }[] = [
         isIndependent: false,
       }, // Lean left
       {
-        name: "Party for the Animals",
+        name: "Partij voor de Dieren",
         shortName: "PvdD",
         seats: 3,
         colour: "#006B2D",
-        position: -50,
+        position: -75,
         isIndependent: false,
       }, // Centre-left
       {
-        name: "Christian Union",
+        name: "ChristenUnie",
         shortName: "CU",
         seats: 3,
         colour: "#00A7EE",
@@ -202,7 +202,7 @@ export const countries: { name: string; parties: Party[] }[] = [
         isIndependent: false,
       }, // Centre
       {
-        name: "Reformed Political Party",
+        name: "Staatkundig Gereformeerde Partij",
         shortName: "SGP",
         seats: 3,
         colour: "#EA5B0B",
@@ -210,7 +210,7 @@ export const countries: { name: string; parties: Party[] }[] = [
         isIndependent: false,
       }, // Right-wing
       {
-        name: "Forum for Democracy",
+        name: "Forum voor Democratie",
         shortName: "FvD",
         seats: 3,
         colour: "#841818",
@@ -218,7 +218,7 @@ export const countries: { name: string; parties: Party[] }[] = [
         isIndependent: false,
       }, // Right-wing
       {
-        name: "Socialist Party",
+        name: "Socialistische Partij",
         shortName: "SP",
         seats: 5,
         colour: "#F60000",
@@ -303,7 +303,7 @@ export const countries: { name: string; parties: Party[] }[] = [
         isIndependent: false,
       },
       {
-        name: "Andere",
+        name: "",
         shortName: "",
         seats: 7,
         colour: "#6B7280",
@@ -583,4 +583,82 @@ export const countries: { name: string; parties: Party[] }[] = [
       },
     ],
   },
+  // {
+  //   name: "Finland",
+  //   parties: [
+  //     {
+  //       "name": "National Coalition Party",
+  //       "shortName": "NCP",
+  //       "seats": 48,
+  //       "colour": "#003580",
+  //       "position": 75,
+  //       "isIndependent": false
+  //     },
+  //     {
+  //       "name": "Finns Party",
+  //       "shortName": "FP",
+  //       "seats": 46,
+  //       "colour": "#FFD700",
+  //       "position": 100,
+  //       "isIndependent": false
+  //     },
+  //     {
+  //       "name": "Social Democratic Party",
+  //       "shortName": "SDP",
+  //       "seats": 43,
+  //       "colour": "#E11931",
+  //       "position": 0,
+  //       "isIndependent": false
+  //     },
+  //     {
+  //       "name": "Centre Party",
+  //       "shortName": "CP",
+  //       "seats": 23,
+  //       "colour": "#01954B",
+  //       "position": 25,
+  //       "isIndependent": false
+  //     },
+  //     {
+  //       "name": "Green League",
+  //       "shortName": "GL",
+  //       "seats": 13,
+  //       "colour": "#61BF1A",
+  //       "position": -25,
+  //       "isIndependent": false
+  //     },
+  //     {
+  //       "name": "Left Alliance",
+  //       "shortName": "LA",
+  //       "seats": 11,
+  //       "colour": "#FF0000",
+  //       "position": -75,
+  //       "isIndependent": false
+  //     },
+  //     {
+  //       "name": "Swedish People's Party",
+  //       "shortName": "SPP",
+  //       "seats": 9,
+  //       "colour": "#FFDD93",
+  //       "position": 50,
+  //       "isIndependent": false
+  //     },
+  //     {
+  //       "name": "Christian Democrats",
+  //       "shortName": "CD",
+  //       "seats": 5,
+  //       "colour": "#0033A0",
+  //       "position": 50,
+  //       "isIndependent": false
+  //     },
+  //     {
+  //       "name": "Movement Now",
+  //       "shortName": "MN",
+  //       "seats": 1,
+  //       "colour": "#FF6600",
+  //       "position": 75,
+  //       "isIndependent": true
+  //     }
+  //   ]
+
+  // }
 ];
