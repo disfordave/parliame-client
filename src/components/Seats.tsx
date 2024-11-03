@@ -336,7 +336,9 @@ const PartyButton = ({
 };
 
 const Seats = () => {
-  const [parties, setParties] = useState<Party[]>(countries.find((country) => country.name === "Belgium")?.parties || []);
+  const [parties, setParties] = useState<Party[]>(
+    countries.find((country) => country.name === "Belgium")?.parties || []
+  );
   const [selectedParties, setSelectedParties] = useState<Party[]>(
     countries.find((country) => country.name === "Belgium")?.parties || []
   );
@@ -348,10 +350,13 @@ const Seats = () => {
     (acc, party) => acc + party.seats,
     0
   );
-  const totalPositions = selectedParties.reduce(
-    (acc, party) => acc + party.position,
-    0
-  ) / selectedParties.length;
+  // const totalPositions =
+  //   selectedParties.reduce((acc, party) => acc + party.position, 0) /
+  //   selectedParties.length;
+
+  const majorityThreshold = (total % 2 === 0
+    ? total / 2 + (allowTieBreaker ? 0 : 1)
+    : Math.ceil(total / 2)) as number;
 
   const sort = (a: Party, b: Party) => {
     if (isEditMode) return 0; // Stop sorting if edit mode is on
@@ -486,24 +491,31 @@ const Seats = () => {
           <p className="flex-1 ">
             {selectedTotal === total || selectedTotal === 0 ? (
               ""
-            ) : (total % 2 === 0
-                ? total / 2 + (allowTieBreaker ? 0 : 1)
-                : Math.ceil(total / 2)) <= selectedTotal ? (
+            ) : allowTieBreaker &&
+              (majorityThreshold) === selectedTotal ? (
+              <span className="text-emerald-600 dark:text-emerald-400 line-clamp-1">
+                Tie-breaking majority
+              </span>
+            ) : (total % 2 === 0 ? total / 2 + 1 : Math.ceil(total / 2)) <=
+              selectedTotal ? (
               <span className="text-violet-600 dark:text-violet-400 line-clamp-1">
-                {getposition(totalPositions).full} majority
+                {selectedTotal -
+                  (majorityThreshold) +
+                  (allowTieBreaker ? 0 : 1)}{" "}
+                {
+                  (selectedTotal - (majorityThreshold) + (allowTieBreaker ? 0 : 1)) === 1
+                    ? "seat"
+                    : "seats"
+                } majority
               </span>
             ) : (
               <span className="text-rose-600 dark:text-rose-400">{`${
-                (total % 2 === 0
-                  ? total / 2 + (allowTieBreaker ? 0 : 1)
-                  : Math.ceil(total / 2)) - selectedTotal
-              } seats left
+                (majorityThreshold) - selectedTotal
+              } ${
+                (majorityThreshold) - selectedTotal === 1 ? "seat" : "seats"
+              } left
                 `}</span>
             )}
-
-            {/* {
-               sortBy === "name" ? "ABC..." : sortBy === "seats" ? "Biggest" : "Left"
-            } */}
           </p>
           <div className="">
             <CaretDownIcon />
