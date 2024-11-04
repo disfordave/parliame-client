@@ -1,4 +1,4 @@
-import { Party } from "../App";
+import { Party } from "./Seats";
 
 export const countries: { name: string; parties: Party[] }[] = [
   {

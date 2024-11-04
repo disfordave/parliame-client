@@ -1,6 +1,14 @@
 import { useState } from "react";
-import { Party } from "../App";
 import { countries } from "./countries";
+
+export interface Party {
+  name: string;
+  shortName: string;
+  seats: number;
+  colour: string;
+  position: number;
+  isIndependent?: boolean;
+}
 
 interface ButtonConfig {
   label: string;
