@@ -53,7 +53,7 @@ const TrashIcon = () => {
   );
 };
 
-const getposition = (position: number) => {
+const getPosition = (position: number) => {
   const ranges = [
     { min: 100, max: Infinity, full: "Far right", short: "RR" },
     { min: 75, max: 99, full: "Right-wing", short: "Rr" },
@@ -267,7 +267,7 @@ const PartyButton = ({
                 }}
               />
               <span className="text-center">
-                {getposition(party.position).full}
+                {getPosition(party.position).full}
               </span>
             </label>
           </div>
@@ -362,7 +362,7 @@ const PartyButton = ({
         </>
       ) : (
         // <span className="text-nowrap font-mono">
-        //   {`[${getposition(party.position).short}]`}
+        //   {`[${getPosition(party.position).short}]`}
         // </span>
         <></>
       )}
