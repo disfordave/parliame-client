@@ -5,8 +5,8 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 :root {
-  --border-color-light: #e5e7eb; /* Light mode color */
-  --border-color-dark: #374151; /* Dark mode color */
+  --border-colour-light: #e5e7eb; /* Light mode color */
+  --border-colour-dark: #374151; /* Dark mode color */
 }
 
 select {
@@ -26,14 +26,10 @@ select:dir(rtl) {
   border-color: #f00;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --border-colour: var(--border-color-dark);
-  }
+:root {
+  --border-colour: var(--border-colour-light);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --border-colour: var(--border-color-light);
-  }
+:root.dark {
+  --border-colour: var(--border-colour-dark);
 }
