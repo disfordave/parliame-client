@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useRef} from "react";
 import {countries} from "./countries";
 
 export interface Party {
@@ -390,6 +390,8 @@ const Seats = () => {
     //   selectedParties.reduce((acc, party) => acc + party.position, 0) /
     //   selectedParties.length;
 
+    const selectRef = useRef<HTMLSelectElement | null>(null);
+
     const majorityThreshold = (
         total % 2 === 0
             ? total / 2 + (allowTieBreaker ? 0 : 1)
@@ -541,6 +543,7 @@ const Seats = () => {
     return (
         <div>
             <select
+                ref={selectRef}
                 defaultValue={"Belgium"}
                 title="Select Country"
                 aria-label="Select Country"
@@ -829,6 +832,9 @@ const Seats = () => {
                 onClick={() => {
                     setParties([]);
                     setSelectedParties([]);
+                    if (selectRef.current) {
+                        selectRef.current.value = "CustomValue";
+                    }
                 }}
                 className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200 dark:border-gray-700"
             >
@@ -870,6 +876,9 @@ const Seats = () => {
                         const parsedData = JSON.parse(data as string);
                         setParties(parsedData);
                         setSelectedParties(parsedData);
+                        if (selectRef.current) {
+                            selectRef.current.value = "CustomValue";
+                        }
                     };
                     reader.readAsText(file);
                 }}
