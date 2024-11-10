@@ -47,7 +47,7 @@ function App() {
             </div>
             <Seats/>
             <footer className={"p-8 text-center"}>
-                <p>&copy; {new Date().getFullYear()} parliament.pages.dev (beta)</p>
+                <p>&copy; {new Date().getFullYear()} <a className={"hover:underline no-underline"} href={"https://disfordave.com"} rel={"noreferrer noopener"} target={"_blank"}>@disfordave</a> </p>
             </footer>
         </div>
     </div>
