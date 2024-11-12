@@ -46,6 +46,12 @@ function App() {
 
             </div>
             <Seats/>
+            <div className={"mt-4 italic opacity-75"}>
+                <p>
+                    Feel free to reach out to me via <a className={"underline hover:no-underline"} href={"https://disfordave.com#contact"} rel={"noreferrer noopener"} target={"_blank"}>my website</a> if
+                    you have any issues or suggestions.
+                </p>
+            </div>
             <footer className={"p-8 text-center"}>
                 <p>&copy; {new Date().getFullYear()} <a className={"hover:underline no-underline"} href={"https://disfordave.com"} rel={"noreferrer noopener"} target={"_blank"}>@disfordave</a> </p>
             </footer>

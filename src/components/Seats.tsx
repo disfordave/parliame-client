@@ -811,7 +811,7 @@ const Seats = () => {
             </ul>
             {parties.length <= 0 && <p className="text-center">No parties</p>}
 
-            <div className="flex gap-2 flex-wrap mt-4 bg-gray-200 dark:bg-gray-700 rounded-2xl p-4 overflow-auto">
+            <div className="flex gap-2 flex-wrap mt-4 bg-gray-200 dark:bg-gray-700 rounded-lg p-4 overflow-auto">
                 {buttonConfigurations.map((buttonConfig, index) => (
                     <button
                         key={index}
