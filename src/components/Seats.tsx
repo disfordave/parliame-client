@@ -869,19 +869,46 @@ const Seats = () => {
                 onChange={(e) => {
                     const file = e.target.files?.[0];
                     if (!file) return;
+
                     const reader = new FileReader();
                     reader.onload = (e) => {
                         const data = e.target?.result;
                         if (!data) return;
-                        const parsedData = JSON.parse(data as string);
-                        setParties(parsedData);
-                        setSelectedParties(parsedData);
-                        if (selectRef.current) {
-                            selectRef.current.value = "CustomValue";
+
+                        try {
+                            const parsedData = JSON.parse(data as string);
+
+                            // Check if parsedData is an array and conforms to Party structure
+                            if (
+                                Array.isArray(parsedData) &&
+                                parsedData.every(
+                                    (item) =>
+                                        typeof item.name === 'string' &&
+                                        typeof item.shortName === 'string' &&
+                                        typeof item.seats === 'number' &&
+                                        typeof item.colour === 'string' &&
+                                        typeof item.position === 'number' &&
+                                        (typeof item.isIndependent === 'boolean' || item.isIndependent === undefined)
+                                )
+                            ) {
+                                setParties(parsedData as Party[]);
+                                setSelectedParties(parsedData as Party[]);
+                                if (selectRef.current) {
+                                    selectRef.current.value = "CustomValue";
+                                }
+                            } else {
+                                console.error("Uploaded JSON file has an incorrect format");
+                                alert("The uploaded file has an incorrect format. Please upload a valid JSON file.");
+                            }
+                        } catch (error) {
+                            console.error("Error parsing JSON file:", error);
+                            alert("Failed to parse the JSON file. Please ensure it's in the correct format.");
                         }
                     };
                     reader.readAsText(file);
                 }}
+
+
             />
         </div>
     );
