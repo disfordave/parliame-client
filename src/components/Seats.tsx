@@ -373,10 +373,10 @@ const PartyButton = ({
 
 const Seats = () => {
     const [parties, setParties] = useState<Party[]>(
-        countries.find((country) => country.name === "Belgium")?.parties || []
+        countries.find((country) => country.name === "Germany")?.parties || []
     );
     const [selectedParties, setSelectedParties] = useState<Party[]>(
-        countries.find((country) => country.name === "Belgium")?.parties || []
+        countries.find((country) => country.name === "Germany")?.parties || []
     );
     const [isEditMode, setIsEditMode] = useState(false);
     const [sortBy, setSortBy] = useState<"name" | "seats" | "position">("seats");
@@ -544,7 +544,7 @@ const Seats = () => {
         <div>
             <select
                 ref={selectRef}
-                defaultValue={"Belgium"}
+                defaultValue={"Germany"}
                 title="Select Country"
                 aria-label="Select Country"
                 onChange={(e) => {
