@@ -48,8 +48,7 @@ function App() {
             <Seats/>
             <div className={"mt-4 italic opacity-75"}>
                 <p>
-                    Feel free to reach out to me via <a className={"underline hover:no-underline"} href={"https://disfordave.com#contact"} rel={"noreferrer noopener"} target={"_blank"}>my website</a> if
-                    you have any issues or suggestions.
+                    Feel free to contact me through <a className={"underline hover:no-underline"} href={"https://disfordave.com#contact"} rel={"noreferrer noopener"} target={"_blank"}>my website</a> if you have any issues or suggestions.
                 </p>
             </div>
             <footer className={"p-8 text-center"}>
