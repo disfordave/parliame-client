@@ -140,7 +140,7 @@ export const countries: { name: string; emoji?: string; parties: Party[] }[] = [
             }, {
                 name: "Renew Europe",
                 shortName: "RE",
-                seats: 77,
+                seats: 75,
                 colour: "#FFD700",
                 position: 0,
                 isIndependent: false,
@@ -154,7 +154,7 @@ export const countries: { name: string; emoji?: string; parties: Party[] }[] = [
             }, {
                 name: "European Conservatives and Reformists",
                 shortName: "ECR",
-                seats: 78,
+                seats: 80,
                 colour: "#196CA8",
                 position: 75,
                 isIndependent: false,
@@ -176,14 +176,14 @@ export const countries: { name: string; emoji?: string; parties: Party[] }[] = [
             }, {
                 name: "Europe of Sovereign Nations",
                 shortName: "ESN",
-                seats: 25,
+                seats: 26,
                 colour: "#13517E",
                 position: 100,
                 isIndependent: false,
             }, {
                 name: "Others",
                 shortName: "Others",
-                seats: 30,
+                seats: 29,
                 colour: "#6B7280",
                 position: 0,
                 isIndependent: true,
