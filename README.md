@@ -1,3 +1,3 @@
 # Parliament
 
-Coalition simulator
+Parliament Coalition simulator
