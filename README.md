@@ -4,3 +4,4 @@ Parliament Coalition simulator
 
 - EU
 - Germany
+- Austria
