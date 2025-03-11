@@ -11,3 +11,5 @@ Parliament Coalition simulator
 - Custom
 
 And you can also create custom seats!
+
+Export Data!
