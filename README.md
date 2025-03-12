@@ -12,4 +12,4 @@ Parliament Coalition simulator
 
 And you can also create custom seats!
 
-Export Data!
+Export Data in JSON.
