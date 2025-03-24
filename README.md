@@ -10,5 +10,3 @@ Parliament Coalition simulator
 - Belgium
 
 And you can also create custom seats!
-
-Export Data in JSON.
