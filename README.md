@@ -2,6 +2,7 @@
 
 Parliament Coalition simulator
 
+Examples
 - EU
 - Germany
 - Austria
