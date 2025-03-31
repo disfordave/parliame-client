@@ -1,6 +1,6 @@
 # Parliament
 
-Parliament coalition simulator for all!
+Parliament coalition simulator!
 
 Examples
 - EU
