@@ -1,6 +1,6 @@
 # Parliament
 
-Parliament coalition simulator!
+Parliament coalition simulator
 
 Examples
 - EU
@@ -11,3 +11,5 @@ Examples
 - Belgium
 
 And you can also create custom seat distributions!
+
+Also you can export it.
