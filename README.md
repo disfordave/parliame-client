@@ -8,6 +8,6 @@ Parliament coalition simulator
 - Netherlands
 - United Kingdom
 - Belgium
-- And more...
+- And custom seats!
 
 And you can also create custom seat distributions!
