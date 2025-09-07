@@ -373,10 +373,10 @@ const PartyButton = ({
 
 const Seats = () => {
     const [parties, setParties] = useState<Party[]>(
-        countries.find((country) => country.name === "Germany")?.parties || []
+        countries.find((country) => country.name === "European Union")?.parties || []
     );
     const [selectedParties, setSelectedParties] = useState<Party[]>(
-        countries.find((country) => country.name === "Germany")?.parties || []
+        countries.find((country) => country.name === "European Union")?.parties || []
     );
     const [isEditMode, setIsEditMode] = useState(false);
     const [sortBy, setSortBy] = useState<"name" | "seats" | "position">("seats");
