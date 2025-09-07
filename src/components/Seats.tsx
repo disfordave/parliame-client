@@ -544,7 +544,7 @@ const Seats = () => {
         <div>
             <select
                 ref={selectRef}
-                defaultValue={"Germany"}
+                defaultValue={"European Union"}
                 title="Select Country"
                 aria-label="Select Country"
                 onChange={(e) => {
