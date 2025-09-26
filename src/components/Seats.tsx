@@ -571,7 +571,7 @@ const Seats = () => {
             .sort((a, b) => a.name.localeCompare(b.name))
             .map((country) => (
               <option key={country.name} value={country.name}>
-                {`${country.name}${country.emoji ? " " + country.emoji : ""}`}
+                <div>{`${country.name}${country.emoji ? " " + country.emoji : ""}`}</div>
               </option>
             ))}
         </optgroup>
