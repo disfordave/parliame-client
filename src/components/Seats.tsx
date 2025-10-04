@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { countries } from "./countries";
 
+
 export interface Party {
   name: string;
   shortName: string;
@@ -571,7 +572,7 @@ const Seats = () => {
             .sort((a, b) => a.name.localeCompare(b.name))
             .map((country) => (
               <option key={country.name} value={country.name}>
-                <div>{`${country.name}${country.emoji ? " " + country.emoji : ""}`}</div>
+                {`${country.name}${country.emoji ? " " + country.emoji : ""}`}
               </option>
             ))}
         </optgroup>
