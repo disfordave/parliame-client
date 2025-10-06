@@ -10,9 +10,9 @@ function translate({
     id: string
 }) {
     if (locale !== 'en' && locale !== 'fr') {
-        return dict['en'][id]
+        return dict['en'][id] || id
     } else {
-        return dict[locale][id]
+        return dict[locale][id] || id
     }
 }
 

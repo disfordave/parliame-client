@@ -7,7 +7,7 @@ type Theme = "light" | "dark" | "auto";
 
 function App() {
 
-  const i = useI18n()
+  const i = useI18n().i
 
   const [theme, setTheme] = useState<Theme>(
     (localStorage.theme as Theme) || "auto"
@@ -51,15 +51,15 @@ function App() {
     <div className="bg-white dark:bg-gray-900 text-gray-950 dark:text-white min-h-screen transition-colors duration-300">
         <div className="max-w-2xl mx-auto p-4 ">
             <div className={"flex justify-between items-center  mb-4"}>
-                <h1 className="text-2xl font-bold">{i.i('parliament')}</h1>
+                <h1 className="text-2xl font-bold">{i('parliament')}</h1>
                 <select
                     className="px-2 py-1 border-2 rounded-lg border-gray-200 dark:border-gray-700 appearance-none bg-white dark:bg-gray-900"
                     value={theme} title={"Appearance"} onChange={
                     (e) => setTheme(e.target.value as 'light' | 'dark' | 'auto')
                 }>
-                    <option value={'light'}>Light</option>
-                    <option value={'dark'}>Dark</option>
-                    <option value={'auto'}>Auto</option>
+                    <option value={'light'}>{i('light')}</option>
+                    <option value={'dark'}>{i('dark')}</option>
+                    <option value={'auto'}>{i('auto')}</option>
                 </select>
 
             </div>
