@@ -3,11 +3,12 @@ import { createSlice } from '@reduxjs/toolkit'
 export const i18nSlice = createSlice({
   name: 'i18n',
   initialState: {
-    value: 'en'
+    value: localStorage.getItem('locale') || 'en'
   },
   reducers: {
     setLocale: (state, action) => {
       state.value = action.payload
+      localStorage.setItem('locale', action.payload)
     }
   }
 })
