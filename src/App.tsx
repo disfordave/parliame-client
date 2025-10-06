@@ -53,7 +53,7 @@ function App() {
       <div className="max-w-2xl mx-auto p-4 ">
         <div className={"flex justify-between items-center  mb-4"}>
           <h1 className="text-2xl font-bold">{i("parliament")}</h1>
-          <div className="flex gap-2">
+          <div className="flex gap-2 ms-2">
             <div>
               <button
                 onClick={() => dispatch(setLocale("en"))}
@@ -77,13 +77,23 @@ function App() {
               </button>
               <button
                 onClick={() => dispatch(setLocale("de"))}
-                className={`px-2 py-1 border-2 border-s-0 rounded-lg rounded-s-none border-gray-200 dark:border-gray-700 appearance-none transition-colors duration-300 ${
+                className={`px-2 py-1 border-2 border-x-0 rounded-x-none border-gray-200 dark:border-gray-700 appearance-none transition-colors duration-300 ${
                   locale === "de"
                     ? "bg-gray-200 dark:bg-gray-700"
                     : "bg-white dark:bg-gray-900"
                 }`}
               >
                 DE
+              </button>
+              <button
+                onClick={() => dispatch(setLocale("nl"))}
+                className={`px-2 py-1 border-2 border-s-0 rounded-lg rounded-s-none border-gray-200 dark:border-gray-700 appearance-none transition-colors duration-300 ${
+                  locale === "nl"
+                    ? "bg-gray-200 dark:bg-gray-700"
+                    : "bg-white dark:bg-gray-900"
+                }`}
+              >
+                NL
               </button>
             </div>
           </div>

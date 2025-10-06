@@ -661,7 +661,7 @@ const Seats = () => {
         <hr className="border-y border-gray-200 dark:border-gray-700 mt-4 -mx-4 sm:-mx-0 duration-300 transition-colors" />
       </div>
 
-      <div className="flex flex-wrap justify-between items-center mb-4 gap-4">
+      <div className="flex flex-wrap justify-between items-center mb-4 gap-2">
         <div className="flex-1 justify-start text-nowrap sm:w-auto">
           <label className="flex gap-2 items-center ">
             <span className="relative">
@@ -706,7 +706,7 @@ const Seats = () => {
                 )}
               </div>
             </span>
-            <span className="select-none ">{i('body.allowTieBreaker')}</span>
+            <span className="select-none text-wrap">{i('body.allowTieBreaker')}</span>
           </label>
         </div>
         <div className="flex sm:order-2 order-3 rounded-lg overflow-y-hidden overflow-x-auto whitespace-nowrap sm:w-auto w-full">

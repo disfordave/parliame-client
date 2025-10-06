@@ -1,0 +1,61 @@
+{
+  "parliament": "Parlement",
+  "appearance": {
+    "light": "Licht",
+    "dark": "Donker",
+    "auto": "Automatisch"
+  },
+  "header": {
+    "majorityWithCount": "Meerderheid met {count} zetels",
+    "seatsForMajority": "{count} zetels voor de meerderheid",
+    "seat": "Zetel",
+    "seats": "Zetels",
+    "left": "resterend",
+    "majority": "Meerderheid",
+    "seatsLeft": "resterende zetels",
+    "tieBreakingMajority": "Beslissende meerderheid"
+  },
+  "body": {
+    "allowTieBreaker": "Gelijkmakende stem toestaan",
+    "name": "Naam",
+    "position": "Positie",
+    "seats": "Zetels",
+    "view": "Bekijken",
+    "edit": "Bewerken",
+    "noParties": "Geen partijen beschikbaar"
+  },
+  "controls": {
+    "selectAll": "Alles selecteren",
+    "deselectAll": "Alles deselecteren",
+    "left": "Links",
+    "right": "Rechts",
+    "leftWithoutFarLeft": "Links (zonder uiterste links)",
+    "rightWithoutFarRight": "Rechts (zonder uiterste rechts)",
+    "centre": "Midden",
+    "grandCentre": "Groot (midden)",
+    "grandWithoutExtremes": "Groot (zonder extremen)",
+    "leftWing": "Links (linkervleugel)",
+    "rightWing": "Rechts (rechtervleugel)"
+  },
+  "buttons": {
+    "clear": "Wissen",
+    "exportParties": "Partijen exporteren"
+  },
+  "spectrum": {
+    "farLeft": "Uiterste links",
+    "leftWing": "Links",
+    "centreLeft": "Centrum-links",
+    "leanLeft": "Licht links",
+    "centre": "Centrum",
+    "leanRight": "Licht rechts",
+    "centreRight": "Centrum-rechts",
+    "rightWing": "Rechts",
+    "farRight": "Uiterste rechts",
+    "independent": "Onafhankelijk"
+  },
+  "footer": {
+    "feelFree": "Neem gerust contact met mij op via",
+    "myWebsite": "mijn website",
+    "ifYouHave": "als u problemen of suggesties heeft."
+  }
+}
