@@ -16,8 +16,9 @@
         "name": "Name",
         "position": "Position",
         "seats": "Seats",
-        "View": "View",
-        "Edit": "Edit"
+        "view": "View",
+        "edit": "Edit",
+        "noParties": "No parties available"
     },
     "controls": {
         "selectAll": "Select All",
@@ -28,7 +29,7 @@
         "rightWithoutFarRight": "Right (without far-right)",
         "centre": "Centre",
         "grandCentre": "Grand (centre)",
-        "grandWithoutExtemes": "Grand (without extremes)",
+        "grandWithoutExtremes": "Grand (without extremes)",
         "leftWing": "Left-wing",
         "rightWing": "Right-wing"
     },

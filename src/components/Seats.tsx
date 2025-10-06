@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { countries } from "./countries";
+import { useI18n } from "../i18n/i18n";
 
 
 export interface Party {
@@ -99,7 +100,7 @@ const PartyButton = ({
     : party.shortName;
 
   const shortDesc = `${partyName} (${party.seats})`;
-
+  const i = useI18n()
   return (
     <div
       onClick={() => {
@@ -292,7 +293,7 @@ const PartyButton = ({
                   }
                 }}
               />
-              <span className="select-none">Independent</span>
+              <span className="select-none">{i('spectrum.independent')}</span>
             </label>
           </div>
           <div className="w-full flex justify-evenly items-center gap-2">
@@ -393,7 +394,7 @@ const Seats = () => {
   //   selectedParties.length;
 
   const selectRef = useRef<HTMLSelectElement | null>(null);
-
+  const i = useI18n()
   const majorityThreshold = (
     total % 2 === 0
       ? total / 2 + (allowTieBreaker ? 0 : 1)
@@ -439,29 +440,29 @@ const Seats = () => {
 
   const buttonConfigurations: ButtonConfig[] = [
     {
-      label: "Select All",
+      label: i('controls.selectAll'),
       onClick: () => setSelectedParties([...parties]),
     },
     {
-      label: "Deselect All",
+      label: i('controls.deselectAll'),
       onClick: () => setSelectedParties([]),
     },
     {
-      label: "Left",
+      label: i('controls.left'),
       onClick: () => {
         const leftParties = parties.filter((party) => party.position < 0);
         setSelectedParties(leftParties);
       },
     },
     {
-      label: "Right",
+      label: i('controls.right'),
       onClick: () => {
         const rightParties = parties.filter((party) => party.position > 0);
         setSelectedParties(rightParties);
       },
     },
     {
-      label: "Left (without far left)",
+      label: i('controls.leftWithoutFarLeft'),
       onClick: () => {
         const leftParties = parties.filter(
           (party) => party.position < 0 && party.position > -100
@@ -470,7 +471,7 @@ const Seats = () => {
       },
     },
     {
-      label: "Right (without far right)",
+      label: i('controls.rightWithoutFarRight'),
       onClick: () => {
         const rightParties = parties.filter(
           (party) => party.position > 0 && party.position < 100
@@ -479,21 +480,21 @@ const Seats = () => {
       },
     },
     {
-      label: "Left-wing",
+      label: i('controls.leftWing'),
       onClick: () => {
         const leftParties = parties.filter((party) => party.position <= -75);
         setSelectedParties(leftParties);
       },
     },
     {
-      label: "Right-wing",
+      label: i('controls.rightWing'),
       onClick: () => {
         const rightParties = parties.filter((party) => party.position >= 75);
         setSelectedParties(rightParties);
       },
     },
     {
-      label: "Centre",
+      label: i('controls.centre'),
       onClick: () => {
         const centerParties = parties.filter(
           (party) =>
@@ -505,7 +506,7 @@ const Seats = () => {
       },
     },
     {
-      label: "Grand (centre)",
+      label: i('controls.grandCentre'),
       onClick: () => {
         const centerParties = parties.filter(
           (party) =>
@@ -515,7 +516,7 @@ const Seats = () => {
       },
     },
     {
-      label: "Grand (without extremists)",
+      label: i('controls.grandWithoutExtremes'),
       onClick: () => {
         const grandParties = parties.filter(
           (party) =>
@@ -529,13 +530,13 @@ const Seats = () => {
   ];
 
   const sortButtonConfigs = [
-    { label: "Name", sortByKey: "name", title: "Sort by Name" },
+    { label: i('body.name'), sortByKey: "name", title: "Sort by Name" },
     {
-      label: "Position",
+      label: i('body.position'),
       sortByKey: "position",
       title: "Sort by Political Position",
     },
-    { label: "Seats", sortByKey: "seats", title: "Sort by Seats" },
+    { label: i('body.seats'), sortByKey: "seats", title: "Sort by Seats" },
   ] as {
     label: string;
     sortByKey: "name" | "position" | "seats";
@@ -705,7 +706,7 @@ const Seats = () => {
                 )}
               </div>
             </span>
-            <span className="select-none ">Allow Tie Breaker</span>
+            <span className="select-none ">{i('body.allowTieBreaker')}</span>
           </label>
         </div>
         <div className="flex sm:order-2 order-3 rounded-lg overflow-y-hidden overflow-x-auto whitespace-nowrap sm:w-auto w-full">
@@ -730,7 +731,7 @@ const Seats = () => {
             className="select-none cursor-default"
             onClick={() => setIsEditMode(false)}
           >
-            View
+            {i('body.view')}
           </span>
           <div
             onClick={() => setIsEditMode(!isEditMode)}
@@ -748,7 +749,7 @@ const Seats = () => {
             className="select-none cursor-default"
             onClick={() => setIsEditMode(true)}
           >
-            Edit
+            {i('body.edit')}
           </span>
         </div>
       </div>
@@ -808,7 +809,7 @@ const Seats = () => {
           </li>
         )}
       </ul>
-      {parties.length <= 0 && <p className="text-center">No parties</p>}
+      {parties.length <= 0 && <p className="text-center">{i('body.noParties')}</p>}
 
       <div className="flex gap-2 flex-wrap mt-4 bg-gray-200 dark:bg-gray-700 rounded-lg p-4 overflow-auto">
         {buttonConfigurations.map((buttonConfig, index) => (
@@ -837,7 +838,7 @@ const Seats = () => {
         }}
         className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200 dark:border-gray-700"
       >
-        Clear
+        {i('buttons.clear')}
       </button>
       <button
         onClick={() => {
@@ -857,7 +858,7 @@ const Seats = () => {
         aria-describedby="Export Parties"
         aria-disabled={false}
       >
-        Export Parties
+        {i('buttons.exportParties')}
       </button>
       <input
         type="file"
