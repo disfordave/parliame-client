@@ -7,7 +7,12 @@
     },
     "seats": "Seats",
     "header": {
-        "seatsMajority": "seats majority",
+        "custom": "Custom",
+        "seatsForMajority": "seats for majority",
+        "seat": "seat",
+        "seats": "seats",
+        "left": "left",
+        "majority": "majority",
         "seatsLeft": "seats left",
         "tieBreakingMajority": "Tie-breaking majority"
     },

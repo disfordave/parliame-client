@@ -567,7 +567,7 @@ const Seats = () => {
         id="countries-datalist"
         className="p-2 border-2 rounded-lg w-full border-gray-200 dark:border-gray-700 duration-300 transition-colors appearance-none bg-white dark:bg-gray-900"
       >
-        <option value="CustomValue">Custom</option>
+        <option value="CustomValue">{i('header.custom')}</option>
         <optgroup label="Sample">
           {countries
             .sort((a, b) => a.name.localeCompare(b.name))
@@ -586,7 +586,7 @@ const Seats = () => {
               ""
             ) : allowTieBreaker && majorityThreshold === selectedTotal ? (
               <span className="text-emerald-600 dark:text-emerald-400 line-clamp-1">
-                Tie-breaking majority
+                {i('body.tieBreakerEnabled')}
               </span>
             ) : (total % 2 === 0 ? total / 2 + 1 : Math.ceil(total / 2)) <=
               selectedTotal ? (
@@ -596,16 +596,16 @@ const Seats = () => {
                   majorityThreshold +
                   (allowTieBreaker ? 0 : 1) ===
                 1
-                  ? "seat"
-                  : "seats"}{" "}
-                majority
+                  ? i('header.seat')
+                  : i('header.seats')}{" "}
+                {i('header.majority')}
               </span>
             ) : (
               <span className="text-rose-600 dark:text-rose-400">{`${
                 majorityThreshold - selectedTotal
               } ${
-                majorityThreshold - selectedTotal === 1 ? "seat" : "seats"
-              } left
+                majorityThreshold - selectedTotal === 1 ? i('header.seat') : i('header.seats')
+              } ${i('header.left')}
                 `}</span>
             )}
           </p>
@@ -615,7 +615,7 @@ const Seats = () => {
               total % 2 === 0
                 ? total / 2 + (allowTieBreaker ? 0 : 1)
                 : Math.ceil(total / 2)
-            } seats for majority`}
+            } ${i('header.seatsForMajority')}`}
           >
             <CaretDownIcon />
             <p className="absolute left-5 rtl:right-5">

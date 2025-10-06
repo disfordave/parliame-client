@@ -7,7 +7,12 @@
     },
     "seats": "Sièges",
     "header": {
-        "seatsMajority": "majorité des sièges",
+        "custom": "Personnalisé",
+        "seatsForMajority": "sièges pour la majorité",
+        "seat": "siège",
+        "seats": "sièges",
+        "left": "restants",
+        "majority": "majorité",
         "seatsLeft": "sièges restants",
         "tieBreakingMajority": "majorité de bris d'égalité"
     },
