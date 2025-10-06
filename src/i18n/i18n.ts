@@ -1,7 +1,22 @@
 import en from './en.json' with { type: 'json' };
 import fr from './fr.json' with { type: 'json' };
 
-const dict = { en, fr }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function locate(obj: any, path: string) {
+
+  const pathString = path.split('.');
+  const arrayPattern = /(.+)\[(\d+)\]/;
+  for (let i = 0; i < pathString.length; i++) {
+    const match = arrayPattern.exec(pathString[i]);
+    if (match) {
+      obj = obj[match[1]][parseInt(match[2])];
+    } else {
+      obj = obj[pathString[i]];
+    }
+  }
+
+  return obj;
+}
 
 function translate({
     locale, id
@@ -10,18 +25,12 @@ function translate({
     id: string
 }) {
     if (locale !== 'en' && locale !== 'fr') {
-        return dict['en'][id] || id
+        return locate(en, id) || id
     } else {
-        return dict[locale][id] || id
+        return locate(locale === 'fr' ? fr : en, id) || id
     }
 }
 
 export const useI18n = () => {
-    return {
-        i(id: string) {
-            return translate({
-                locale: 'fr', id
-            })
-        }
-    }
+    return (id: string) => translate({ locale: 'fr', id })
 }

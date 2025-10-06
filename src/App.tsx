@@ -7,7 +7,7 @@ type Theme = "light" | "dark" | "auto";
 
 function App() {
 
-  const i = useI18n().i
+  const i = useI18n()
 
   const [theme, setTheme] = useState<Theme>(
     (localStorage.theme as Theme) || "auto"
@@ -57,9 +57,9 @@ function App() {
                     value={theme} title={"Appearance"} onChange={
                     (e) => setTheme(e.target.value as 'light' | 'dark' | 'auto')
                 }>
-                    <option value={'light'}>{i('light')}</option>
-                    <option value={'dark'}>{i('dark')}</option>
-                    <option value={'auto'}>{i('auto')}</option>
+                    <option value={'light'}>{i('appearance.light')}</option>
+                    <option value={'dark'}>{i('appearance.dark')}</option>
+                    <option value={'auto'}>{i('appearance.auto')}</option>
                 </select>
 
             </div>
