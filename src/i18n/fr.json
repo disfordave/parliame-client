@@ -48,5 +48,10 @@
         "rightWing": "Droite (right-wing)",
         "farRight": "Extrême droite",
         "independent": "Indépendant"
+    },
+    "footer": {
+        "feelFree": "N'hésitez pas à me contacter via",
+        "myWebsite": "mon site web",
+        "ifYouHave": "si vous avez des problèmes ou des suggestions."
     }
 }

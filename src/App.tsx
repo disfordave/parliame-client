@@ -76,26 +76,29 @@ function App() {
                 FR
               </button>
             </div>
-            
           </div>
         </div>
         <Seats />
         <div className={"mt-4 italic opacity-75"}>
           <p>
-            Feel free to contact me through{" "}
+            {i("footer.feelFree")}{" "}
             <a
               className={"underline hover:no-underline"}
               href={"https://disfordave.com/projects/parliament/#comments"}
               rel={"noreferrer noopener"}
               target={"_blank"}
             >
-              my website
+              {i("footer.myWebsite")}
             </a>{" "}
-            if you have any issues or suggestions.
+            {i("footer.ifYouHave")}
           </p>
         </div>
-        <footer className={"py-8 flex justify-between items-center flex-wrap text-start gap-2"}>
-                    <p>
+        <footer
+          className={
+            "py-8 flex justify-between items-center flex-wrap text-start gap-2"
+          }
+        >
+          <p>
             &copy; {new Date().getFullYear()}{" "}
             <a
               className={"hover:underline no-underline"}
@@ -107,18 +110,17 @@ function App() {
             </a>{" "}
           </p>
           <select
-              className="px-2 py-1 border-2 rounded-lg border-gray-200 dark:border-gray-700 appearance-none bg-white dark:bg-gray-900"
-              value={theme}
-              title={"Appearance"}
-              onChange={(e) =>
-                setTheme(e.target.value as "light" | "dark" | "auto")
-              }
-            >
-              <option value={"light"}>{i("appearance.light")}</option>
-              <option value={"dark"}>{i("appearance.dark")}</option>
-              <option value={"auto"}>{i("appearance.auto")}</option>
-            </select>
-
+            className="px-2 py-1 border-2 rounded-lg border-gray-200 dark:border-gray-700 appearance-none bg-white dark:bg-gray-900"
+            value={theme}
+            title={"Appearance"}
+            onChange={(e) =>
+              setTheme(e.target.value as "light" | "dark" | "auto")
+            }
+          >
+            <option value={"light"}>{i("appearance.light")}</option>
+            <option value={"dark"}>{i("appearance.dark")}</option>
+            <option value={"auto"}>{i("appearance.auto")}</option>
+          </select>
         </footer>
       </div>
     </div>
