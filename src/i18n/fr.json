@@ -1,3 +1,57 @@
 {
-    "parliament": "Parlement"
+    "parliament": "Parlement",
+    "appearance": {
+        "light": "Clair",
+        "dark": "Sombre",
+        "auto": "Auto"
+    },
+    "seats": "Sièges",
+    "header": {
+        "seatsMajority": "majorité des sièges",
+        "seatsLeft": "sièges restants",
+        "tieBreakingMajority": "majorité de bris d'égalité"
+    },
+    "body": {
+        "allowTieBreaker": "Autoriser le bris d'égalité",
+        "name": "Nom",
+        "position": "Position",
+        "seats": "Sièges",
+        "view": "Voir",
+        "edit": "Modifier",
+        "noParties": "Aucun parti disponible"
+    },
+    "controls": {
+        "selectAll": "Sélectionner tout",
+        "deselectAll": "Désélectionner tout",
+        "left": "Gauche",
+        "right": "Droite",
+        "leftWithoutFarLeft": "Gauche (sans extrême gauche)",
+        "rightWithoutFarRight": "Droite (sans extrême droite)",
+        "centre": "Centre",
+        "grandCentre": "Grand (centre)",
+        "grandWithoutExtremes": "Grand (sans extrêmes)",
+        "leftWing": "Gauche (left-wing)",
+        "rightWing": "Droite (right-wing)"
+    },
+    "buttons": {
+        "clear": "Effacer",
+        "exportParties": "Exporter les partis"
+    },
+    "spectrum": {
+        "farLeft": "Extrême gauche",
+        "leftWing": "Gauche (left-wing)",
+        "centreLeft": "Centre-gauche",
+        "leanLeft": "Léger penchant à gauche",
+        "centre": "Centre",
+        "leanRight": "Léger penchant à droite",
+        "centreRight": "Centre-droit",
+        "rightWing": "Droite (right-wing)",
+        "farRight": "Extrême droite",
+        "independent": "Indépendant"
+    },
+    "footer": {
+        "feelFree": "N'hésitez pas à me contacter via",
+        "myWebsite": "mon site web",
+        "ifYouHave": "si vous avez des problèmes ou des suggestions."
+    }
 }

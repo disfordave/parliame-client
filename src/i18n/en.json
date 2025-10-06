@@ -1,3 +1,57 @@
 {
-    "parliament": "Parliament"
+    "parliament": "Parliament",
+    "appearance": {
+        "light": "Light",
+        "dark": "Dark",
+        "auto": "Auto"
+    },
+    "seats": "Seats",
+    "header": {
+        "seatsMajority": "seats majority",
+        "seatsLeft": "seats left",
+        "tieBreakingMajority": "Tie-breaking majority"
+    },
+    "body": {
+        "allowTieBreaker": "Allow tie breaker",
+        "name": "Name",
+        "position": "Position",
+        "seats": "Seats",
+        "view": "View",
+        "edit": "Edit",
+        "noParties": "No parties available"
+    },
+    "controls": {
+        "selectAll": "Select All",
+        "deselectAll": "Deselect All",
+        "left": "Left",
+        "right": "Right",
+        "leftWithoutFarLeft": "Left (without far-left)",
+        "rightWithoutFarRight": "Right (without far-right)",
+        "centre": "Centre",
+        "grandCentre": "Grand (centre)",
+        "grandWithoutExtremes": "Grand (without extremes)",
+        "leftWing": "Left-wing",
+        "rightWing": "Right-wing"
+    },
+    "buttons": {
+        "clear": "Clear",
+        "exportParties": "Export parties"
+    },
+    "spectrum": {
+        "farLeft": "Far left",
+        "leftWing": "Left-wing",
+        "centreLeft": "Centre-left",
+        "leanLeft": "Lean left",
+        "centre": "Centre",
+        "leanRight": "Lean right",
+        "centreRight": "Centre-right",
+        "rightWing": "Right-wing",
+        "farRight": "Far right",
+        "independent": "Independent"
+    },
+    "footer": {
+        "feelFree": "Feel free to contact me through",
+        "myWebsite": "my website",
+        "ifYouHave": "if you have any issues or suggestions."
+    }
 }
