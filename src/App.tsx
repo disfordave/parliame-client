@@ -67,13 +67,23 @@ function App() {
               </button>
               <button
                 onClick={() => dispatch(setLocale("fr"))}
-                className={`px-2 py-1 border-2 border-s-0 rounded-lg rounded-s-none border-gray-200 dark:border-gray-700 appearance-none transition-colors duration-300 ${
+                className={`px-2 py-1 border-2 border-x-0 rounded-x-none border-gray-200 dark:border-gray-700 appearance-none transition-colors duration-300 ${
                   locale === "fr"
                     ? "bg-gray-200 dark:bg-gray-700"
                     : "bg-white dark:bg-gray-900"
                 }`}
               >
                 FR
+              </button>
+              <button
+                onClick={() => dispatch(setLocale("de"))}
+                className={`px-2 py-1 border-2 border-s-0 rounded-lg rounded-s-none border-gray-200 dark:border-gray-700 appearance-none transition-colors duration-300 ${
+                  locale === "de"
+                    ? "bg-gray-200 dark:bg-gray-700"
+                    : "bg-white dark:bg-gray-900"
+                }`}
+              >
+                DE
               </button>
             </div>
           </div>

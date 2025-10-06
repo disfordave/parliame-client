@@ -1,0 +1,61 @@
+{
+  "parliament": "Parlament",
+  "appearance": {
+    "light": "Hell",
+    "dark": "Dunkel",
+    "auto": "Automatisch"
+  },
+  "header": {
+    "majorityWithCount": "Mehrheit mit {count} Sitzen",
+    "seatsForMajority": "{count} Sitze für die Mehrheit",
+    "seat": "Sitz",
+    "seats": "Sitze",
+    "left": "verbleibend",
+    "majority": "Mehrheit",
+    "seatsLeft": "verbleibende Sitze",
+    "tieBreakingMajority": "Stichentscheid-Mehrheit"
+  },
+  "body": {
+    "allowTieBreaker": "Stichentscheid zulassen",
+    "name": "Name",
+    "position": "Position",
+    "seats": "Sitze",
+    "view": "Ansehen",
+    "edit": "Bearbeiten",
+    "noParties": "Keine Parteien verfügbar"
+  },
+   "controls": {
+        "selectAll": "Alle auswählen",
+        "deselectAll": "Alle abwählen",
+        "left": "Links",
+        "right": "Rechts",
+        "leftWithoutFarLeft": "Links (ohne extrem links)",
+        "rightWithoutFarRight": "Rechts (ohne extrem rechts)",
+        "centre": "Zentrum",
+        "grandCentre": "Groß (Zentrum)",
+        "grandWithoutExtremes": "Groß (ohne Extreme)",
+        "leftWing": "Links (linke Flügel)",
+        "rightWing": "Rechts (rechte Flügel)"
+    },
+  "buttons": {
+    "clear": "Löschen",
+    "exportParties": "Parteien exportieren"
+  },
+  "spectrum": {
+    "farLeft": "Äußerste Linke",
+    "leftWing": "Linke",
+    "centreLeft": "Mitte-links",
+    "leanLeft": "Leicht links",
+    "centre": "Mitte",
+    "leanRight": "Leicht rechts",
+    "centreRight": "Mitte-rechts",
+    "rightWing": "Rechte",
+    "farRight": "Äußerste Rechte",
+    "independent": "Unabhängig"
+  },
+  "footer": {
+    "feelFree": "Kontaktieren Sie mich gerne über",
+    "myWebsite": "meine Website",
+    "ifYouHave": "wenn Sie Probleme oder Vorschläge haben."
+  }
+}

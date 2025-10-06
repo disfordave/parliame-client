@@ -14,7 +14,7 @@
         "left": "restants",
         "majority": "majorité",
         "seatsLeft": "sièges restants",
-        "tieBreakingMajority": "majorité de bris d'égalité"
+        "tieBreakingMajority": "majorité avec bris d'égalité"
     },
     "body": {
         "allowTieBreaker": "Autoriser le bris d'égalité",
@@ -44,19 +44,19 @@
     },
     "spectrum": {
         "farLeft": "Extrême gauche",
-        "leftWing": "Gauche (left-wing)",
+        "leftWing": "Gauche",
         "centreLeft": "Centre-gauche",
         "leanLeft": "Léger penchant à gauche",
         "centre": "Centre",
         "leanRight": "Léger penchant à droite",
         "centreRight": "Centre-droit",
-        "rightWing": "Droite (right-wing)",
+        "rightWing": "Droite",
         "farRight": "Extrême droite",
         "independent": "Indépendant"
     },
     "footer": {
-        "feelFree": "N'hésitez pas à me contacter via",
+        "feelFree": "N'hésitez pas à me contacter sur",
         "myWebsite": "mon site web",
-        "ifYouHave": "si vous avez des problèmes ou des suggestions."
+        "ifYouHave": "si vous rencontrez des problèmes ou avez des suggestions."
     }
 }
