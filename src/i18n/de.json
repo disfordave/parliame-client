@@ -24,19 +24,19 @@
     "edit": "Bearbeiten",
     "noParties": "Keine Parteien verfügbar"
   },
-   "controls": {
-        "selectAll": "Alle auswählen",
-        "deselectAll": "Alle abwählen",
-        "left": "Links",
-        "right": "Rechts",
-        "leftWithoutFarLeft": "Links (ohne extrem links)",
-        "rightWithoutFarRight": "Rechts (ohne extrem rechts)",
-        "centre": "Zentrum",
-        "grandCentre": "Groß (Zentrum)",
-        "grandWithoutExtremes": "Groß (ohne Extreme)",
-        "leftWing": "Links (linke Flügel)",
-        "rightWing": "Rechts (rechte Flügel)"
-    },
+  "controls": {
+    "selectAll": "Alle auswählen",
+    "deselectAll": "Alle abwählen",
+    "left": "Links",
+    "right": "Rechts",
+    "leftWithoutFarLeft": "Links (ohne extrem links)",
+    "rightWithoutFarRight": "Rechts (ohne extrem rechts)",
+    "centre": "Zentrum",
+    "grandCentre": "Groß (Zentrum)",
+    "grandWithoutExtremes": "Groß (ohne Extreme)",
+    "leftWing": "Links (linke Flügel)",
+    "rightWing": "Rechts (rechte Flügel)"
+  },
   "buttons": {
     "clear": "Löschen",
     "exportParties": "Parteien exportieren"
