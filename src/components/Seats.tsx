@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { countries } from "./countries";
 import { useI18n } from "../i18n/i18n";
 
@@ -55,9 +55,7 @@ const TrashIcon = () => {
   );
 };
 
-const getPosition = (position: number) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const i = useI18n();
+const getPosition = (position: number, i: (id: string) => string) => {
   const ranges = [
     { min: 100, max: Infinity, full: i('spectrum.farRight'), short: "RR" },
     { min: 75, max: 99, full: i('spectrum.rightWing'), short: "Rr" },
@@ -271,7 +269,7 @@ const PartyButton = ({
                 }}
               />
               <span className="text-center">
-                {getPosition(party.position).full}
+                {getPosition(party.position, i).full}
               </span>
             </label>
           </div>

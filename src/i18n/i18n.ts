@@ -1,5 +1,7 @@
+import { useSelector } from 'react-redux';
 import en from './en.json' with { type: 'json' };
 import fr from './fr.json' with { type: 'json' };
+import { selectLocale } from './i18nSlice';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function locate(obj: any, path: string) {
@@ -32,5 +34,6 @@ function translate({
 }
 
 export const useI18n = () => {
-    return (id: string) => translate({ locale: 'fr', id })
+    const locale = useSelector(selectLocale);
+    return (id: string) => translate({ locale, id })
 }

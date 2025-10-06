@@ -15,4 +15,6 @@ export const i18nSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const { setLocale } = i18nSlice.actions
 
+export const selectLocale = (state: { i18n: { value: string } }) => state.i18n.value
+
 export default i18nSlice.reducer
