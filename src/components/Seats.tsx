@@ -56,16 +56,18 @@ const TrashIcon = () => {
 };
 
 const getPosition = (position: number) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const i = useI18n();
   const ranges = [
-    { min: 100, max: Infinity, full: "Far right", short: "RR" },
-    { min: 75, max: 99, full: "Right-wing", short: "Rr" },
-    { min: 50, max: 74, full: "Centre right", short: "rr" },
-    { min: 25, max: 49, full: "Lean right", short: "r" },
-    { min: -24, max: 24, full: "Centre", short: "C" },
-    { min: -49, max: -25, full: "Lean left", short: "l" },
-    { min: -74, max: -50, full: "Centre left", short: "ll" },
-    { min: -99, max: -75, full: "Left-wing", short: "Ll" },
-    { min: -Infinity, max: -100, full: "Far left", short: "LL" },
+    { min: 100, max: Infinity, full: i('spectrum.farRight'), short: "RR" },
+    { min: 75, max: 99, full: i('spectrum.rightWing'), short: "Rr" },
+    { min: 50, max: 74, full: i('spectrum.centreRight'), short: "rr" },
+    { min: 25, max: 49, full: i('spectrum.leanRight'), short: "r" },
+    { min: -24, max: 24, full: i('spectrum.centre'), short: "C" },
+    { min: -49, max: -25, full: i('spectrum.leanLeft'), short: "l" },
+    { min: -74, max: -50, full: i('spectrum.centreLeft'), short: "ll" },
+    { min: -99, max: -75, full: i('spectrum.leftWing'), short: "Ll" },
+    { min: -Infinity, max: -100, full: i('spectrum.farLeft'), short: "LL" },
   ];
 
   const match = ranges.find(
