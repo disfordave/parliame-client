@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { countries } from "./countries";
 import { useI18n } from "../i18n/i18n";
+import { useDispatch } from "react-redux";
+import { setLocale } from "../i18n/i18nSlice";
 
 export interface Party {
   name: string;
@@ -73,6 +75,7 @@ const getPosition = (position: number, i: (id: string) => string) => {
 
   return match || { full: "Centre", short: "C" };
 };
+
 
 const PartyButton = ({
   party,
@@ -395,10 +398,12 @@ const Seats = () => {
   // const totalPositions =
   //   selectedParties.reduce((acc, party) => acc + party.position, 0) /
   //   selectedParties.length;
+const langDispatch = useDispatch();
 
   useEffect(() => {
     const queryParams = new URLSearchParams(document.location.search);
     const countryName = queryParams.get("country");
+    const lang = queryParams.get("lang");
     console.log("Country from URL:", countryName);
     setDefaultCountryValue(countryName);
     const country = countries.find((country) => country.name === countryName);
@@ -413,6 +418,10 @@ const Seats = () => {
         setSelectedParties(country.parties);
         setDefaultCountryValue(country.name);
       }
+    }
+
+    if (lang && ["en", "fr", "de", "nl"].includes(lang)) {
+      langDispatch(setLocale(lang));
     }
   }, []);
 
