@@ -865,6 +865,7 @@ const Seats = () => {
           if (selectRef.current) {
             selectRef.current.value = "CustomValue";
           }
+          setDefaultCountryValue("CustomValue");
         }}
         className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200 dark:border-gray-700"
       >
@@ -924,6 +925,7 @@ const Seats = () => {
               ) {
                 setParties(parsedData as Party[]);
                 setSelectedParties(parsedData as Party[]);
+                setDefaultCountryValue("CustomValue");
                 if (selectRef.current) {
                   selectRef.current.value = "CustomValue";
                 }
