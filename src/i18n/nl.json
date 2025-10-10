@@ -6,6 +6,7 @@
     "auto": "Automatisch"
   },
   "header": {
+    "custom": "Aangepast",
     "majorityWithCount": "Meerderheid met {count} zetels",
     "seatsForMajority": "{count} zetels voor de meerderheid",
     "seat": "Zetel",

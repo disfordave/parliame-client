@@ -6,6 +6,7 @@
     "auto": "Automatisch"
   },
   "header": {
+    "custom": "Benutzerdefiniert",
     "majorityWithCount": "Mehrheit mit {count} Sitzen",
     "seatsForMajority": "{count} Sitze für die Mehrheit",
     "seat": "Sitz",

@@ -1,7 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { countries } from "./countries";
 import { useI18n } from "../i18n/i18n";
-
 
 export interface Party {
   name: string;
@@ -57,15 +56,15 @@ const TrashIcon = () => {
 
 const getPosition = (position: number, i: (id: string) => string) => {
   const ranges = [
-    { min: 100, max: Infinity, full: i('spectrum.farRight'), short: "RR" },
-    { min: 75, max: 99, full: i('spectrum.rightWing'), short: "Rr" },
-    { min: 50, max: 74, full: i('spectrum.centreRight'), short: "rr" },
-    { min: 25, max: 49, full: i('spectrum.leanRight'), short: "r" },
-    { min: -24, max: 24, full: i('spectrum.centre'), short: "C" },
-    { min: -49, max: -25, full: i('spectrum.leanLeft'), short: "l" },
-    { min: -74, max: -50, full: i('spectrum.centreLeft'), short: "ll" },
-    { min: -99, max: -75, full: i('spectrum.leftWing'), short: "Ll" },
-    { min: -Infinity, max: -100, full: i('spectrum.farLeft'), short: "LL" },
+    { min: 100, max: Infinity, full: i("spectrum.farRight"), short: "RR" },
+    { min: 75, max: 99, full: i("spectrum.rightWing"), short: "Rr" },
+    { min: 50, max: 74, full: i("spectrum.centreRight"), short: "rr" },
+    { min: 25, max: 49, full: i("spectrum.leanRight"), short: "r" },
+    { min: -24, max: 24, full: i("spectrum.centre"), short: "C" },
+    { min: -49, max: -25, full: i("spectrum.leanLeft"), short: "l" },
+    { min: -74, max: -50, full: i("spectrum.centreLeft"), short: "ll" },
+    { min: -99, max: -75, full: i("spectrum.leftWing"), short: "Ll" },
+    { min: -Infinity, max: -100, full: i("spectrum.farLeft"), short: "LL" },
   ];
 
   const match = ranges.find(
@@ -100,7 +99,7 @@ const PartyButton = ({
     : party.shortName;
 
   const shortDesc = `${partyName} (${party.seats})`;
-  const i = useI18n()
+  const i = useI18n();
   return (
     <div
       onClick={() => {
@@ -293,7 +292,7 @@ const PartyButton = ({
                   }
                 }}
               />
-              <span className="select-none">{i('spectrum.independent')}</span>
+              <span className="select-none">{i("spectrum.independent")}</span>
             </label>
           </div>
           <div className="w-full flex justify-evenly items-center gap-2">
@@ -373,17 +372,21 @@ const PartyButton = ({
 };
 
 const Seats = () => {
+    const [defaultCountryValue, setDefaultCountryValue] = useState<string | null>(
+      null
+  );
   const [parties, setParties] = useState<Party[]>(
-    countries.find((country) => country.name === "European Union")?.parties ||
+    
       []
   );
   const [selectedParties, setSelectedParties] = useState<Party[]>(
-    countries.find((country) => country.name === "European Union")?.parties ||
+    
       []
   );
   const [isEditMode, setIsEditMode] = useState(false);
   const [sortBy, setSortBy] = useState<"name" | "seats" | "position">("seats");
   const [allowTieBreaker, setAllowTieBreaker] = useState(false);
+
   const total = parties.reduce((acc, party) => acc + party.seats, 0);
   const selectedTotal = selectedParties.reduce(
     (acc, party) => acc + party.seats,
@@ -393,8 +396,28 @@ const Seats = () => {
   //   selectedParties.reduce((acc, party) => acc + party.position, 0) /
   //   selectedParties.length;
 
+  useEffect(() => {
+    const queryParams = new URLSearchParams(document.location.search);
+    const countryName = queryParams.get("country");
+    console.log("Country from URL:", countryName);
+    setDefaultCountryValue(countryName);
+    const country = countries.find((country) => country.name === countryName);
+    if (country) {
+      setParties(country.parties);
+      setSelectedParties(country.parties);
+      setDefaultCountryValue(country.name);
+    } else {
+      const country = countries.find((country) => country.name === "European Union");
+      if (country) {
+        setParties(country.parties);
+        setSelectedParties(country.parties);
+        setDefaultCountryValue(country.name);
+      }
+    }
+  }, []);
+
   const selectRef = useRef<HTMLSelectElement | null>(null);
-  const i = useI18n()
+  const i = useI18n();
   const majorityThreshold = (
     total % 2 === 0
       ? total / 2 + (allowTieBreaker ? 0 : 1)
@@ -440,29 +463,29 @@ const Seats = () => {
 
   const buttonConfigurations: ButtonConfig[] = [
     {
-      label: i('controls.selectAll'),
+      label: i("controls.selectAll"),
       onClick: () => setSelectedParties([...parties]),
     },
     {
-      label: i('controls.deselectAll'),
+      label: i("controls.deselectAll"),
       onClick: () => setSelectedParties([]),
     },
     {
-      label: i('controls.left'),
+      label: i("controls.left"),
       onClick: () => {
         const leftParties = parties.filter((party) => party.position < 0);
         setSelectedParties(leftParties);
       },
     },
     {
-      label: i('controls.right'),
+      label: i("controls.right"),
       onClick: () => {
         const rightParties = parties.filter((party) => party.position > 0);
         setSelectedParties(rightParties);
       },
     },
     {
-      label: i('controls.leftWithoutFarLeft'),
+      label: i("controls.leftWithoutFarLeft"),
       onClick: () => {
         const leftParties = parties.filter(
           (party) => party.position < 0 && party.position > -100
@@ -471,7 +494,7 @@ const Seats = () => {
       },
     },
     {
-      label: i('controls.rightWithoutFarRight'),
+      label: i("controls.rightWithoutFarRight"),
       onClick: () => {
         const rightParties = parties.filter(
           (party) => party.position > 0 && party.position < 100
@@ -480,21 +503,21 @@ const Seats = () => {
       },
     },
     {
-      label: i('controls.leftWing'),
+      label: i("controls.leftWing"),
       onClick: () => {
         const leftParties = parties.filter((party) => party.position <= -75);
         setSelectedParties(leftParties);
       },
     },
     {
-      label: i('controls.rightWing'),
+      label: i("controls.rightWing"),
       onClick: () => {
         const rightParties = parties.filter((party) => party.position >= 75);
         setSelectedParties(rightParties);
       },
     },
     {
-      label: i('controls.centre'),
+      label: i("controls.centre"),
       onClick: () => {
         const centerParties = parties.filter(
           (party) =>
@@ -506,7 +529,7 @@ const Seats = () => {
       },
     },
     {
-      label: i('controls.grandCentre'),
+      label: i("controls.grandCentre"),
       onClick: () => {
         const centerParties = parties.filter(
           (party) =>
@@ -516,7 +539,7 @@ const Seats = () => {
       },
     },
     {
-      label: i('controls.grandWithoutExtremes'),
+      label: i("controls.grandWithoutExtremes"),
       onClick: () => {
         const grandParties = parties.filter(
           (party) =>
@@ -530,13 +553,13 @@ const Seats = () => {
   ];
 
   const sortButtonConfigs = [
-    { label: i('body.name'), sortByKey: "name", title: "Sort by Name" },
+    { label: i("body.name"), sortByKey: "name", title: "Sort by Name" },
     {
-      label: i('body.position'),
+      label: i("body.position"),
       sortByKey: "position",
       title: "Sort by Political Position",
     },
-    { label: i('body.seats'), sortByKey: "seats", title: "Sort by Seats" },
+    { label: i("body.seats"), sortByKey: "seats", title: "Sort by Seats" },
   ] as {
     label: string;
     sortByKey: "name" | "position" | "seats";
@@ -547,7 +570,7 @@ const Seats = () => {
     <div>
       <select
         ref={selectRef}
-        defaultValue={"European Union"}
+        value={defaultCountryValue ?? "European Union"}
         title="Select Country"
         aria-label="Select Country"
         onChange={(e) => {
@@ -563,11 +586,12 @@ const Seats = () => {
             setParties(country.parties);
             setSelectedParties(country.parties);
           }
+          setDefaultCountryValue(e.target.value);
         }}
         id="countries-datalist"
         className="p-2 border-2 rounded-lg w-full border-gray-200 dark:border-gray-700 duration-300 transition-colors appearance-none bg-white dark:bg-gray-900"
       >
-        <option value="CustomValue">{i('header.custom')}</option>
+        <option value="CustomValue">{i("header.custom")}</option>
         <optgroup label="Sample">
           {countries
             .sort((a, b) => a.name.localeCompare(b.name))
@@ -586,7 +610,7 @@ const Seats = () => {
               ""
             ) : allowTieBreaker && majorityThreshold === selectedTotal ? (
               <span className="text-emerald-600 dark:text-emerald-400 line-clamp-1">
-                {i('body.tieBreakerEnabled')}
+                {i("body.tieBreakerEnabled")}
               </span>
             ) : (total % 2 === 0 ? total / 2 + 1 : Math.ceil(total / 2)) <=
               selectedTotal ? (
@@ -596,16 +620,18 @@ const Seats = () => {
                   majorityThreshold +
                   (allowTieBreaker ? 0 : 1) ===
                 1
-                  ? i('header.seat')
-                  : i('header.seats')}{" "}
-                {i('header.majority')}
+                  ? i("header.seat")
+                  : i("header.seats")}{" "}
+                {i("header.majority")}
               </span>
             ) : (
               <span className="text-rose-600 dark:text-rose-400">{`${
                 majorityThreshold - selectedTotal
               } ${
-                majorityThreshold - selectedTotal === 1 ? i('header.seat') : i('header.seats')
-              } ${i('header.left')}
+                majorityThreshold - selectedTotal === 1
+                  ? i("header.seat")
+                  : i("header.seats")
+              } ${i("header.left")}
                 `}</span>
             )}
           </p>
@@ -615,7 +641,7 @@ const Seats = () => {
               total % 2 === 0
                 ? total / 2 + (allowTieBreaker ? 0 : 1)
                 : Math.ceil(total / 2)
-            } ${i('header.seatsForMajority')}`}
+            } ${i("header.seatsForMajority")}`}
           >
             <CaretDownIcon />
             <p className="absolute left-5 rtl:right-5">
@@ -706,7 +732,9 @@ const Seats = () => {
                 )}
               </div>
             </span>
-            <span className="select-none text-wrap">{i('body.allowTieBreaker')}</span>
+            <span className="select-none text-wrap">
+              {i("body.allowTieBreaker")}
+            </span>
           </label>
         </div>
         <div className="flex sm:order-2 order-3 rounded-lg overflow-y-hidden overflow-x-auto whitespace-nowrap sm:w-auto w-full">
@@ -731,7 +759,7 @@ const Seats = () => {
             className="select-none cursor-default"
             onClick={() => setIsEditMode(false)}
           >
-            {i('body.view')}
+            {i("body.view")}
           </span>
           <div
             onClick={() => setIsEditMode(!isEditMode)}
@@ -749,7 +777,7 @@ const Seats = () => {
             className="select-none cursor-default"
             onClick={() => setIsEditMode(true)}
           >
-            {i('body.edit')}
+            {i("body.edit")}
           </span>
         </div>
       </div>
@@ -809,7 +837,9 @@ const Seats = () => {
           </li>
         )}
       </ul>
-      {parties.length <= 0 && <p className="text-center">{i('body.noParties')}</p>}
+      {parties.length <= 0 && (
+        <p className="text-center">{i("body.noParties")}</p>
+      )}
 
       <div className="flex gap-2 flex-wrap mt-4 bg-gray-200 dark:bg-gray-700 rounded-lg p-4 overflow-auto">
         {buttonConfigurations.map((buttonConfig, index) => (
@@ -838,7 +868,7 @@ const Seats = () => {
         }}
         className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200 dark:border-gray-700"
       >
-        {i('buttons.clear')}
+        {i("buttons.clear")}
       </button>
       <button
         onClick={() => {
@@ -858,7 +888,7 @@ const Seats = () => {
         aria-describedby="Export Parties"
         aria-disabled={false}
       >
-        {i('buttons.exportParties')}
+        {i("buttons.exportParties")}
       </button>
       <input
         type="file"
