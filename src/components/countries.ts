@@ -878,7 +878,7 @@ export const countries: { name: string; emoji?: string; parties: Party[] }[] = [
         shortName: "GDR",
         seats: 17,
         colour: "#E4002A",
-        position: -100,
+        position: -75,
         isIndependent: false,
       },
       {
