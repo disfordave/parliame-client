@@ -13,7 +13,7 @@ function App() {
   const i = useI18n();
 
   const [theme, setTheme] = useState<Theme>(
-    (localStorage.theme as Theme) || "auto"
+    (localStorage.theme as Theme) || "auto",
   );
 
   useEffect(() => {
@@ -26,7 +26,7 @@ function App() {
       // update DOM
       document.documentElement.classList.toggle(
         "dark",
-        effectiveTheme === "dark"
+        effectiveTheme === "dark",
       );
     };
 
@@ -49,15 +49,15 @@ function App() {
   }, [theme]);
 
   return (
-    <div className="bg-white dark:bg-gray-900 text-gray-950 dark:text-white min-h-screen transition-colors duration-300">
-      <div className="max-w-2xl mx-auto p-4 ">
-        <div className={"flex justify-between items-center  mb-4"}>
+    <div className="min-h-screen bg-white text-gray-950 transition-colors duration-300 dark:bg-gray-900 dark:text-white">
+      <div className="mx-auto max-w-2xl p-4">
+        <div className={"mb-4 flex items-center justify-between"}>
           <h1 className="text-2xl font-bold">{i("parliament")}</h1>
-          <div className="flex gap-2 ms-2">
+          <div className="ms-2 flex gap-2">
             <div>
               <button
                 onClick={() => dispatch(setLocale("en"))}
-                className={`px-2 py-1 border-2 border-e-0 rounded-lg rounded-e-none border-gray-200 dark:border-gray-700 appearance-none transition-colors duration-300 ${
+                className={`appearance-none rounded-lg rounded-e-none border-2 border-e-0 border-gray-200 px-2 py-1 transition-colors duration-300 dark:border-gray-700 ${
                   locale === "en"
                     ? "bg-gray-200 dark:bg-gray-700"
                     : "bg-white dark:bg-gray-900"
@@ -67,7 +67,7 @@ function App() {
               </button>
               <button
                 onClick={() => dispatch(setLocale("fr"))}
-                className={`px-2 py-1 border-2 border-x-0 rounded-x-none border-gray-200 dark:border-gray-700 appearance-none transition-colors duration-300 ${
+                className={`rounded-x-none appearance-none border-2 border-x-0 border-gray-200 px-2 py-1 transition-colors duration-300 dark:border-gray-700 ${
                   locale === "fr"
                     ? "bg-gray-200 dark:bg-gray-700"
                     : "bg-white dark:bg-gray-900"
@@ -77,7 +77,7 @@ function App() {
               </button>
               <button
                 onClick={() => dispatch(setLocale("de"))}
-                className={`px-2 py-1 border-2 border-x-0 rounded-x-none border-gray-200 dark:border-gray-700 appearance-none transition-colors duration-300 ${
+                className={`rounded-x-none appearance-none border-2 border-x-0 border-gray-200 px-2 py-1 transition-colors duration-300 dark:border-gray-700 ${
                   locale === "de"
                     ? "bg-gray-200 dark:bg-gray-700"
                     : "bg-white dark:bg-gray-900"
@@ -87,7 +87,7 @@ function App() {
               </button>
               <button
                 onClick={() => dispatch(setLocale("nl"))}
-                className={`px-2 py-1 border-2 border-s-0 rounded-lg rounded-s-none border-gray-200 dark:border-gray-700 appearance-none transition-colors duration-300 ${
+                className={`appearance-none rounded-lg rounded-s-none border-2 border-s-0 border-gray-200 px-2 py-1 transition-colors duration-300 dark:border-gray-700 ${
                   locale === "nl"
                     ? "bg-gray-200 dark:bg-gray-700"
                     : "bg-white dark:bg-gray-900"
@@ -115,13 +115,13 @@ function App() {
         </div>
         <footer
           className={
-            "py-8 flex justify-between items-center flex-wrap text-start gap-2"
+            "flex flex-wrap items-center justify-between gap-2 py-8 text-start"
           }
         >
           <p>
             &copy; {new Date().getFullYear()}{" "}
             <a
-              className={"hover:underline no-underline"}
+              className={"no-underline hover:underline"}
               href={"https://disfordave.com"}
               rel={"noreferrer noopener"}
               target={"_blank"}
@@ -130,7 +130,7 @@ function App() {
             </a>{" "}
           </p>
           <select
-            className="px-2 py-1 border-2 rounded-lg border-gray-200 dark:border-gray-700 appearance-none bg-white dark:bg-gray-900"
+            className="appearance-none rounded-lg border-2 border-gray-200 bg-white px-2 py-1 dark:border-gray-700 dark:bg-gray-900"
             value={theme}
             title={"Appearance"}
             onChange={(e) =>

@@ -70,12 +70,11 @@ const getPosition = (position: number, i: (id: string) => string) => {
   ];
 
   const match = ranges.find(
-    (range) => position >= range.min && position <= range.max
+    (range) => position >= range.min && position <= range.max,
   );
 
   return match || { full: "Centre", short: "C" };
 };
-
 
 const PartyButton = ({
   party,
@@ -115,7 +114,7 @@ const PartyButton = ({
       }}
       className={`${
         isEditMode ? "" : "cursor-pointer"
-      } shadow-md party-button overflow-hidden flex gap-2 items-center border-2 p-2 rounded-lg w-full transition-all duration-300 bg-white dark:bg-gray-900`}
+      } party-button flex w-full items-center gap-2 overflow-hidden rounded-lg border-2 bg-white p-2 shadow-md transition-all duration-300 dark:bg-gray-900`}
       style={{
         borderColor: selected ? colour : "var(--border-colour)", // dark mode #374151
         flexDirection: isEditMode ? "column" : "row",
@@ -124,14 +123,14 @@ const PartyButton = ({
         isEditMode
           ? ""
           : selected
-          ? `Deselect ${shortDesc}`
-          : `Select ${shortDesc}`
+            ? `Deselect ${shortDesc}`
+            : `Select ${shortDesc}`
       }
       // disabled={isEditMode}
     >
       <div
         className={`relative ${
-          isEditMode ? "w-full flex justify-center items-center" : ""
+          isEditMode ? "flex w-full items-center justify-center" : ""
         }`}
       >
         {isEditMode && (
@@ -140,24 +139,24 @@ const PartyButton = ({
             type="color"
             title="Party Colour"
             aria-label="Party Colour"
-            className="w-full cursor-pointer opacity-0 absolute"
+            className="absolute w-full cursor-pointer opacity-0"
             value={colour}
             onChange={(e) => {
               const newParty = { ...party, colour: e.target.value };
               setParties(parties.map((p) => (p === party ? newParty : p)));
               if (selected) {
                 setSelectedParties(
-                  selectedParties.map((p) => (p === party ? newParty : p))
+                  selectedParties.map((p) => (p === party ? newParty : p)),
                 );
               }
             }}
           />
         )}
         <div
-          className={` transition-all  ${
+          className={`transition-all ${
             isEditMode
               ? "h-6 w-full rounded-full border border-gray-200 dark:border-gray-700"
-              : "size-4 aspect-square rounded-full"
+              : "aspect-square size-4 rounded-full"
           }`}
           style={{ backgroundColor: colour }}
         ></div>
@@ -168,14 +167,14 @@ const PartyButton = ({
             name="partyName"
             type="text"
             placeholder="Party Name"
-            className="w-full outline-none border-b border-gray-200 dark:border-gray-700 bg-transparent"
+            className="w-full border-b border-gray-200 bg-transparent outline-none dark:border-gray-700"
             value={party.name}
             onChange={(e) => {
               const newParty = { ...party, name: e.target.value };
               setParties(parties.map((p) => (p === party ? newParty : p)));
               if (selected) {
                 setSelectedParties(
-                  selectedParties.map((p) => (p === party ? newParty : p))
+                  selectedParties.map((p) => (p === party ? newParty : p)),
                 );
               }
             }}
@@ -191,14 +190,14 @@ const PartyButton = ({
             name="partyShortName"
             type="text"
             placeholder="Party Short Name"
-            className="w-full outline-none border-b border-gray-200 dark:border-gray-700 bg-transparent"
+            className="w-full border-b border-gray-200 bg-transparent outline-none dark:border-gray-700"
             value={party.shortName}
             onChange={(e) => {
               const newParty = { ...party, shortName: e.target.value };
               setParties(parties.map((p) => (p === party ? newParty : p)));
               if (selected) {
                 setSelectedParties(
-                  selectedParties.map((p) => (p === party ? newParty : p))
+                  selectedParties.map((p) => (p === party ? newParty : p)),
                 );
               }
             }}
@@ -207,15 +206,14 @@ const PartyButton = ({
       )}
 
       <span
-        className={` font-semibold 
-            ${isEditMode ? "w-full" : "text-nowrap"}`}
+        className={`font-semibold ${isEditMode ? "w-full" : "text-nowrap"}`}
       >
         {isEditMode ? (
           <input
             name="seats"
             type="number"
             placeholder="Seats"
-            className="w-full outline-none border-b border-gray-200 dark:border-gray-700 bg-transparent"
+            className="w-full border-b border-gray-200 bg-transparent outline-none dark:border-gray-700"
             min={0}
             max={99999}
             value={party.seats.toFixed(0)}
@@ -224,7 +222,7 @@ const PartyButton = ({
               setParties(parties.map((p) => (p === party ? newParty : p)));
               if (selected) {
                 setSelectedParties(
-                  selectedParties.map((p) => (p === party ? newParty : p))
+                  selectedParties.map((p) => (p === party ? newParty : p)),
                 );
               }
 
@@ -233,7 +231,7 @@ const PartyButton = ({
                 setParties(parties.map((p) => (p === party ? newParty : p)));
                 if (selected) {
                   setSelectedParties(
-                    selectedParties.map((p) => (p === party ? newParty : p))
+                    selectedParties.map((p) => (p === party ? newParty : p)),
                   );
                 }
               }
@@ -245,8 +243,8 @@ const PartyButton = ({
       </span>
       {isEditMode ? (
         <>
-          <div className="flex  w-full">
-            <label className="flex flex-col gap-2 items-center w-full">
+          <div className="flex w-full">
+            <label className="flex w-full flex-col items-center gap-2">
               <input
                 name="position"
                 dir="ltr"
@@ -265,7 +263,7 @@ const PartyButton = ({
                   setParties(parties.map((p) => (p === party ? newParty : p)));
                   if (selected) {
                     setSelectedParties(
-                      selectedParties.map((p) => (p === party ? newParty : p))
+                      selectedParties.map((p) => (p === party ? newParty : p)),
                     );
                   }
                 }}
@@ -276,7 +274,7 @@ const PartyButton = ({
             </label>
           </div>
           <div>
-            <label className="flex gap-1 items-center">
+            <label className="flex items-center gap-1">
               <input
                 type="checkbox"
                 name="isIndependent"
@@ -290,7 +288,7 @@ const PartyButton = ({
                   setParties(parties.map((p) => (p === party ? newParty : p)));
                   if (selected) {
                     setSelectedParties(
-                      selectedParties.map((p) => (p === party ? newParty : p))
+                      selectedParties.map((p) => (p === party ? newParty : p)),
                     );
                   }
                 }}
@@ -298,18 +296,18 @@ const PartyButton = ({
               <span className="select-none">{i("spectrum.independent")}</span>
             </label>
           </div>
-          <div className="w-full flex justify-evenly items-center gap-2">
+          <div className="flex w-full items-center justify-evenly gap-2">
             <button
               onClick={() => {
                 if (selected) {
                   setSelectedParties(
-                    selectedParties.filter((p) => p !== party)
+                    selectedParties.filter((p) => p !== party),
                   );
                 } else {
                   setSelectedParties([...selectedParties, party]);
                 }
               }}
-              className={`hover:opacity-75 transition-opacity `}
+              className={`transition-opacity hover:opacity-75`}
               type="button"
               title={selected ? "Deselect party" : "Select party"}
               aria-label={selected ? "Deselect party" : "Select party"}
@@ -351,12 +349,12 @@ const PartyButton = ({
                 setParties(parties.filter((p) => p !== party));
                 if (selected) {
                   setSelectedParties(
-                    selectedParties.filter((p) => p !== party)
+                    selectedParties.filter((p) => p !== party),
                   );
                 }
               }}
               type="button"
-              className={`hover:opacity-75 transition-opacity `}
+              className={`transition-opacity hover:opacity-75`}
               title="Remove party"
               aria-label="Remove party"
             >
@@ -375,17 +373,11 @@ const PartyButton = ({
 };
 
 const Seats = () => {
-    const [defaultCountryValue, setDefaultCountryValue] = useState<string | null>(
-      null
+  const [defaultCountryValue, setDefaultCountryValue] = useState<string | null>(
+    null,
   );
-  const [parties, setParties] = useState<Party[]>(
-    
-      []
-  );
-  const [selectedParties, setSelectedParties] = useState<Party[]>(
-    
-      []
-  );
+  const [parties, setParties] = useState<Party[]>([]);
+  const [selectedParties, setSelectedParties] = useState<Party[]>([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const [sortBy, setSortBy] = useState<"name" | "seats" | "position">("seats");
   const [allowTieBreaker, setAllowTieBreaker] = useState(false);
@@ -393,12 +385,12 @@ const Seats = () => {
   const total = parties.reduce((acc, party) => acc + party.seats, 0);
   const selectedTotal = selectedParties.reduce(
     (acc, party) => acc + party.seats,
-    0
+    0,
   );
   // const totalPositions =
   //   selectedParties.reduce((acc, party) => acc + party.position, 0) /
   //   selectedParties.length;
-const langDispatch = useDispatch();
+  const langDispatch = useDispatch();
 
   useEffect(() => {
     const queryParams = new URLSearchParams(document.location.search);
@@ -412,7 +404,9 @@ const langDispatch = useDispatch();
       setSelectedParties(country.parties);
       setDefaultCountryValue(country.name);
     } else {
-      const country = countries.find((country) => country.name === "European Union");
+      const country = countries.find(
+        (country) => country.name === "European Union",
+      );
       if (country) {
         setParties(country.parties);
         setSelectedParties(country.parties);
@@ -497,7 +491,7 @@ const langDispatch = useDispatch();
       label: i("controls.leftWithoutFarLeft"),
       onClick: () => {
         const leftParties = parties.filter(
-          (party) => party.position < 0 && party.position > -100
+          (party) => party.position < 0 && party.position > -100,
         );
         setSelectedParties(leftParties);
       },
@@ -506,7 +500,7 @@ const langDispatch = useDispatch();
       label: i("controls.rightWithoutFarRight"),
       onClick: () => {
         const rightParties = parties.filter(
-          (party) => party.position > 0 && party.position < 100
+          (party) => party.position > 0 && party.position < 100,
         );
         setSelectedParties(rightParties);
       },
@@ -532,7 +526,7 @@ const langDispatch = useDispatch();
           (party) =>
             party.position <= 25 &&
             party.position >= -25 &&
-            !party.isIndependent
+            !party.isIndependent,
         );
         setSelectedParties(centerParties);
       },
@@ -542,7 +536,7 @@ const langDispatch = useDispatch();
       onClick: () => {
         const centerParties = parties.filter(
           (party) =>
-            party.position < 75 && party.position > -75 && !party.isIndependent
+            party.position < 75 && party.position > -75 && !party.isIndependent,
         );
         setSelectedParties(centerParties);
       },
@@ -554,7 +548,7 @@ const langDispatch = useDispatch();
           (party) =>
             party.position > -100 &&
             party.position < 100 &&
-            !party.isIndependent
+            !party.isIndependent,
         );
         setSelectedParties(grandParties);
       },
@@ -589,7 +583,7 @@ const langDispatch = useDispatch();
             return;
           }
           const country = countries.find(
-            (country) => country.name === e.target.value
+            (country) => country.name === e.target.value,
           );
           if (country) {
             setParties(country.parties);
@@ -598,7 +592,7 @@ const langDispatch = useDispatch();
           setDefaultCountryValue(e.target.value);
         }}
         id="countries-datalist"
-        className="p-2 border-2 rounded-lg w-full border-gray-200 dark:border-gray-700 duration-300 transition-colors appearance-none bg-white dark:bg-gray-900"
+        className="w-full appearance-none rounded-lg border-2 border-gray-200 bg-white p-2 transition-colors duration-300 dark:border-gray-700 dark:bg-gray-900"
       >
         <option value="CustomValue">{i("header.custom")}</option>
         <optgroup label="Sample">
@@ -612,18 +606,18 @@ const langDispatch = useDispatch();
         </optgroup>
       </select>
 
-      <div className=" sticky top-0 z-50 bg-white dark:bg-gray-900 duration-300 transition-colors pt-4 px-4 -mx-4  mb-4">
-        <div className="flex justify-between items-center">
-          <p className="flex-1 ">
+      <div className="sticky top-0 z-50 -mx-4 mb-4 bg-white px-4 pt-4 transition-colors duration-300 dark:bg-gray-900">
+        <div className="flex items-center justify-between">
+          <p className="flex-1">
             {selectedTotal === total || selectedTotal === 0 ? (
               ""
             ) : allowTieBreaker && majorityThreshold === selectedTotal ? (
-              <span className="text-emerald-600 dark:text-emerald-400 line-clamp-1">
+              <span className="line-clamp-1 text-emerald-600 dark:text-emerald-400">
                 {i("body.tieBreakerEnabled")}
               </span>
             ) : (total % 2 === 0 ? total / 2 + 1 : Math.ceil(total / 2)) <=
               selectedTotal ? (
-              <span className="text-violet-600 dark:text-violet-400 line-clamp-1">
+              <span className="line-clamp-1 text-violet-600 dark:text-violet-400">
                 {selectedTotal - majorityThreshold + (allowTieBreaker ? 0 : 1)}{" "}
                 {selectedTotal -
                   majorityThreshold +
@@ -645,7 +639,7 @@ const langDispatch = useDispatch();
             )}
           </p>
           <div
-            className="flex items-center justify-center relative"
+            className="relative flex items-center justify-center"
             title={`${
               total % 2 === 0
                 ? total / 2 + (allowTieBreaker ? 0 : 1)
@@ -659,14 +653,14 @@ const langDispatch = useDispatch();
                 : Math.ceil(total / 2)}{" "}
             </p>
           </div>
-          <div className="flex-1 flex justify-end text-end">
-            <p className="tabular-nums ">
+          <div className="flex flex-1 justify-end text-end">
+            <p className="tabular-nums">
               <span className="font-semibold">{selectedTotal}</span> / {total}
             </p>
           </div>
         </div>
         <div
-          className="relative flex rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-700 h-12 w-full transition-all"
+          className="relative flex h-12 w-full overflow-hidden rounded-lg bg-gray-200 transition-all dark:bg-gray-700"
           dir={sortBy === "position" ? "ltr" : ""}
         >
           {parties
@@ -688,24 +682,24 @@ const langDispatch = useDispatch();
                     ? `${(party.seats / total) * 100}%`
                     : "0%",
                 }}
-                className={`h-full transition-[width] duration-300 r-0 text-ellipsis overflow-hidden text-nowrap`}
+                className={`r-0 h-full overflow-hidden text-ellipsis text-nowrap transition-[width] duration-300`}
               ></div>
             ))}
-          <div className="absolute border-l-2 border-violet-500 border-dashed h-full bg-background-elevated left-[calc(50%-1px)] "></div>
+          <div className="bg-background-elevated absolute left-[calc(50%-1px)] h-full border-l-2 border-dashed border-violet-500"></div>
         </div>
-        <hr className="border-y border-gray-200 dark:border-gray-700 mt-4 -mx-4 sm:-mx-0 duration-300 transition-colors" />
+        <hr className="-mx-4 mt-4 border-y border-gray-200 transition-colors duration-300 sm:-mx-0 dark:border-gray-700" />
       </div>
 
-      <div className="flex flex-wrap justify-between items-center mb-4 gap-2">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
         <div className="flex-1 justify-start text-nowrap sm:w-auto">
-          <label className="flex gap-2 items-center ">
+          <label className="flex items-center gap-2">
             <span className="relative">
               <input
                 title="Allow Tie Breaker"
                 type="checkbox"
                 name="allowTieBreaker"
                 id="allowTieBreaker"
-                className="opacity-0 absolute w-full h-full"
+                className="absolute h-full w-full opacity-0"
                 checked={allowTieBreaker}
                 onChange={() => {
                   setAllowTieBreaker(!allowTieBreaker);
@@ -719,15 +713,15 @@ const langDispatch = useDispatch();
                   allowTieBreaker
                     ? "bg-violet-600 dark:bg-violet-400"
                     : "bg-gray-200 dark:bg-gray-700"
-                } rounded-full aspect-square size-6 flex justify-center items-center overflow-hidden transition-colors`}
+                } flex aspect-square size-6 items-center justify-center overflow-hidden rounded-full transition-colors`}
               >
                 {allowTieBreaker ? (
-                  <div className="w-full h-full text-white dark:text-gray-950 flex justify-center items-center">
+                  <div className="flex h-full w-full items-center justify-center text-white dark:text-gray-950">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 16 16"
                       fill="currentColor"
-                      className="size-4 "
+                      className="size-4"
                     >
                       <path
                         fillRule="evenodd"
@@ -737,7 +731,7 @@ const langDispatch = useDispatch();
                     </svg>
                   </div>
                 ) : (
-                  <div className="w-full h-full text-white bg-gray-200 dark:bg-gray-700 dark:text-gray-950 flex justify-center items-center"></div>
+                  <div className="flex h-full w-full items-center justify-center bg-gray-200 text-white dark:bg-gray-700 dark:text-gray-950"></div>
                 )}
               </div>
             </span>
@@ -746,44 +740,44 @@ const langDispatch = useDispatch();
             </span>
           </label>
         </div>
-        <div className="flex sm:order-2 order-3 rounded-lg overflow-y-hidden overflow-x-auto whitespace-nowrap sm:w-auto w-full">
+        <div className="order-3 flex w-full overflow-x-auto overflow-y-hidden whitespace-nowrap rounded-lg sm:order-2 sm:w-auto">
           {sortButtonConfigs.map((config, index) => (
             <button
               key={index}
               onClick={() => setSortBy(config.sortByKey)}
               className={`${
                 sortBy === config.sortByKey
-                  ? "bg-violet-600 dark:bg-violet-400 text-white dark:text-gray-950"
+                  ? "bg-violet-600 text-white dark:bg-violet-400 dark:text-gray-950"
                   : "bg-gray-200 dark:bg-gray-700"
-              } px-2 py-1 transition-colors flex-1`}
+              } flex-1 px-2 py-1 transition-colors`}
               title={config.title}
             >
               {config.label}
             </button>
           ))}
         </div>
-        <div className=" select-none flex sm:order-3 order-2 items-center gap-2 flex-1 justify-end">
+        <div className="order-2 flex flex-1 select-none items-center justify-end gap-2 sm:order-3">
           <span
             title={"Switch to View Mode"}
-            className="select-none cursor-default"
+            className="cursor-default select-none"
             onClick={() => setIsEditMode(false)}
           >
             {i("body.view")}
           </span>
           <div
             onClick={() => setIsEditMode(!isEditMode)}
-            className={` cursor-pointer rounded-full relative w-12 h-6 bg-gray-200 dark:bg-gray-700 flex `}
+            className={`relative flex h-6 w-12 cursor-pointer rounded-full bg-gray-200 dark:bg-gray-700`}
             title={isEditMode ? "Switch to View Mode" : "Switch to Edit Mode"}
           >
             <div
-              className={`h-full w-6 rounded-full bg-violet-600 dark:bg-violet-400 transition-all ${
+              className={`h-full w-6 rounded-full bg-violet-600 transition-all dark:bg-violet-400 ${
                 isEditMode ? "translate-x-full rtl:-translate-x-full" : ""
               }`}
             ></div>
           </div>
           <span
             title="Switch to Edit Mode"
-            className="select-none cursor-default"
+            className="cursor-default select-none"
             onClick={() => setIsEditMode(true)}
           >
             {i("body.edit")}
@@ -791,7 +785,7 @@ const langDispatch = useDispatch();
         </div>
       </div>
       <ul
-        className={`grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-4 transition-all`}
+        className={`grid grid-cols-1 gap-4 transition-all xs:grid-cols-2 sm:grid-cols-3 sm:gap-4`}
       >
         {parties
           .sort((a, b) => sort(a, b))
@@ -808,7 +802,7 @@ const langDispatch = useDispatch();
             </li>
           ))}
         {isEditMode && (
-          <li className="w-full h-full justify-center flex items-center">
+          <li className="flex h-full w-full items-center justify-center">
             <button
               onClick={() => {
                 setParties([
@@ -823,7 +817,7 @@ const langDispatch = useDispatch();
                   },
                 ]);
               }}
-              className="p-2 border-2 border-transparent rounded-full w-1/3  aspect-square m-4 bg-gray-200 dark:bg-gray-700 transition-colors hover:bg-gray-300 dark:hover:bg-gray-600"
+              className="m-4 aspect-square w-1/3 rounded-full border-2 border-transparent bg-gray-200 p-2 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
               type="button"
               title="Add Party"
               aria-label="Add Party"
@@ -834,7 +828,7 @@ const langDispatch = useDispatch();
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="size-2/3 stroke-2 dark:text-white text-gray-950 m-auto"
+                className="m-auto size-2/3 stroke-2 text-gray-950 dark:text-white"
               >
                 <path
                   strokeLinecap="round"
@@ -850,12 +844,12 @@ const langDispatch = useDispatch();
         <p className="text-center">{i("body.noParties")}</p>
       )}
 
-      <div className="flex gap-2 flex-wrap mt-4 bg-gray-200 dark:bg-gray-700 rounded-lg p-4 overflow-auto">
+      <div className="mt-4 flex flex-wrap gap-2 overflow-auto rounded-lg bg-gray-200 p-4 dark:bg-gray-700">
         {buttonConfigurations.map((buttonConfig, index) => (
           <button
             key={index}
             onClick={buttonConfig.onClick}
-            className="px-3 py-1 border-2 border-transparent hover:border-violet-600 dark:hover:border-violet-400 transition-colors rounded-full bg-white dark:bg-gray-900 text-nowrap"
+            className="text-nowrap rounded-full border-2 border-transparent bg-white px-3 py-1 transition-colors hover:border-violet-600 dark:bg-gray-900 dark:hover:border-violet-400"
             type="button"
             title={buttonConfig.label}
             aria-label={buttonConfig.label}
@@ -876,7 +870,7 @@ const langDispatch = useDispatch();
           }
           setDefaultCountryValue("CustomValue");
         }}
-        className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200 dark:border-gray-700"
+        className="mt-4 w-full rounded-lg border-2 border-gray-200 p-2 dark:border-gray-700"
       >
         {i("buttons.clear")}
       </button>
@@ -891,7 +885,7 @@ const langDispatch = useDispatch();
           a.click();
           URL.revokeObjectURL(url);
         }}
-        className="p-2 border-2 rounded-lg w-full mt-4 border-gray-200 dark:border-gray-700"
+        className="mt-4 w-full rounded-lg border-2 border-gray-200 p-2 dark:border-gray-700"
         type="button"
         title="Export Parties"
         aria-label="Export Parties"
@@ -929,7 +923,7 @@ const langDispatch = useDispatch();
                     typeof item.colour === "string" &&
                     typeof item.position === "number" &&
                     (typeof item.isIndependent === "boolean" ||
-                      item.isIndependent === undefined)
+                      item.isIndependent === undefined),
                 )
               ) {
                 setParties(parsedData as Party[]);
@@ -941,13 +935,13 @@ const langDispatch = useDispatch();
               } else {
                 console.error("Uploaded JSON file has an incorrect format");
                 alert(
-                  "The uploaded file has an incorrect format. Please upload a valid JSON file."
+                  "The uploaded file has an incorrect format. Please upload a valid JSON file.",
                 );
               }
             } catch (error) {
               console.error("Error parsing JSON file:", error);
               alert(
-                "Failed to parse the JSON file. Please ensure it's in the correct format."
+                "Failed to parse the JSON file. Please ensure it's in the correct format.",
               );
             }
           };

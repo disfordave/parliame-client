@@ -1,21 +1,22 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 export const i18nSlice = createSlice({
-  name: 'i18n',
+  name: "i18n",
   initialState: {
-    value: localStorage.getItem('locale') || 'en'
+    value: localStorage.getItem("locale") || "en",
   },
   reducers: {
     setLocale: (state, action) => {
-      state.value = action.payload
-      localStorage.setItem('locale', action.payload)
-    }
-  }
-})
+      state.value = action.payload;
+      localStorage.setItem("locale", action.payload);
+    },
+  },
+});
 
 // Action creators are generated for each case reducer function
-export const { setLocale } = i18nSlice.actions
+export const { setLocale } = i18nSlice.actions;
 
-export const selectLocale = (state: { i18n: { value: string } }) => state.i18n.value
+export const selectLocale = (state: { i18n: { value: string } }) =>
+  state.i18n.value;
 
-export default i18nSlice.reducer
+export default i18nSlice.reducer;

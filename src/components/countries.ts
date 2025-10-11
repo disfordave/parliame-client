@@ -951,7 +951,7 @@ export const countries: { name: string; emoji?: string; parties: Party[] }[] = [
         position: 25,
         isIndependent: false,
       },
-            {
+      {
         name: "Reiwa Shinsengumi",
         shortName: "Reiwa",
         seats: 9,
@@ -975,7 +975,7 @@ export const countries: { name: string; emoji?: string; parties: Party[] }[] = [
         position: 0,
         isIndependent: false,
       },
-            {
+      {
         name: "Sanseito",
         shortName: "Sanseito",
         seats: 3,
