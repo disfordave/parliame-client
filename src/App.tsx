@@ -52,7 +52,10 @@ function App() {
     <div className="min-h-screen bg-white text-gray-950 transition-colors duration-300 dark:bg-gray-900 dark:text-white">
       <div className="mx-auto max-w-2xl p-4">
         <div className={"mb-4 flex items-center justify-between"}>
+<div className={"flex items-center gap-2"}>
+            <img src={"/favicon.svg"} alt={"Parliament"} className={"size-8"} />
           <h1 className="text-2xl font-bold">{i("parliament")}</h1>
+</div>
           <div className="ms-2 flex gap-2">
             <div>
               <button
