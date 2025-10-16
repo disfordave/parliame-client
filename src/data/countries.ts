@@ -1,4 +1,4 @@
-import { Party } from "./Seats";
+import { Party } from "@/types";
 
 export const countries: { name: string; emoji?: string; parties: Party[] }[] = [
   {
