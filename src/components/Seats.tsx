@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 
-import { useI18n } from "../i18n/i18n";
+// import { useI18n } from "../i18n/i18n";
 import { useDispatch } from "react-redux";
 import { setLocale } from "../i18n/i18nSlice";
 
@@ -14,6 +14,7 @@ import {
   useIsEditMode,
   useParties,
   useSortBy,
+  useI18n,
 } from "@/lib/zustandStore";
 import { PartyButton } from "@/components/PartyButton";
 import { sort } from "@/utils/sort";
@@ -69,7 +70,9 @@ const Seats = () => {
   }, []);
 
   const selectRef = useRef<HTMLSelectElement | null>(null);
-  const i = useI18n();
+
+
+  const { i } = useI18n();
   const majorityThreshold = (
     total % 2 === 0
       ? total / 2 + (allowTieBreaker ? 0 : 1)

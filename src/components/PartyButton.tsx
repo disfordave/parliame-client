@@ -2,11 +2,11 @@ import {
   useSelectedParties,
   useIsEditMode,
   useParties,
+  useI18n,
 } from "@/lib/zustandStore";
 
 import { Party } from "@/types";
 import { TrashIcon } from "@/components/icons/Icons";
-import { useI18n } from "@/i18n/i18n";
 import { getPosition } from "@/utils/getPosition";
 
 export const PartyButton = ({ party }: { party: Party }) => {
@@ -24,7 +24,7 @@ export const PartyButton = ({ party }: { party: Party }) => {
     : party.shortName;
 
   const shortDesc = `${partyName} (${party.seats})`;
-  const i = useI18n();
+  const { i } = useI18n();
   return (
     <div
       onClick={() => {

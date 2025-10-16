@@ -1,3 +1,4 @@
+import { translate } from "@/i18n/i18n";
 import { BearState, DefaultCountryValueState, PartiesState, IsEditModeState, SortByState, AllowTieBreakerState, SelectedPartiesState } from "@/types";
 import { create } from "zustand";
 
@@ -41,4 +42,19 @@ const useAllowTieBreaker = create<AllowTieBreakerState>((set) => ({
   setAllowTieBreaker: (by) => set(() => ({ allowTieBreaker: by }))
 }))
 
-export { useBear, useDefaultCountryValue, useParties, useSelectedParties, useIsEditMode, useSortBy, useAllowTieBreaker };
+interface I18nState {
+  locale: string;
+  i: (key: string) => string;
+  setLocale: (by: string) => void;
+}
+
+const useI18n = create<I18nState>((set, get) => ({
+  locale: "en",
+  i: (key: string) => {
+    const currentLocale = get().locale;
+    return translate({ locale: currentLocale, id: key });
+  },
+  setLocale: (by: string) => set(() => ({ locale: by })),
+}));
+
+export { useBear, useDefaultCountryValue, useParties, useSelectedParties, useIsEditMode, useSortBy, useAllowTieBreaker, useI18n };

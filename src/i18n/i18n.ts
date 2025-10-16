@@ -21,7 +21,7 @@ function locate(obj: any, path: string) {
   return obj;
 }
 
-function translate({ locale, id }: { locale: string; id: string }) {
+export function translate({ locale, id }: { locale: string; id: string }) {
   if (
     locale !== "en" &&
     locale !== "fr" &&

@@ -1,5 +1,4 @@
-import { useI18n } from "@/i18n/i18n";
-import { useParties, useSelectedParties } from "@/lib/zustandStore";
+import { useParties, useSelectedParties, useI18n } from "@/lib/zustandStore";
 
 interface ButtonConfig {
   label: string;
@@ -10,7 +9,7 @@ interface ButtonConfig {
 export default function CoalitionBySpectrumButtons() {
       const { parties } = useParties();
   const { setSelectedParties } = useSelectedParties();
-  const i = useI18n();
+  const { i } = useI18n();
       const buttonConfigurations: ButtonConfig[] = [
         {
           label: i("controls.selectAll"),

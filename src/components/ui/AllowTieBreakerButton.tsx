@@ -1,9 +1,8 @@
-import { useI18n } from "@/i18n/i18n";
-import { useAllowTieBreaker } from "@/lib/zustandStore";
+import { useAllowTieBreaker, useI18n } from "@/lib/zustandStore";
 
 export default function AllowTieBreakerButton() {
   const { allowTieBreaker, setAllowTieBreaker } = useAllowTieBreaker();
-  const i = useI18n();
+  const { i } = useI18n();
 
   return (
     <>

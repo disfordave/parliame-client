@@ -1,9 +1,8 @@
-import { useI18n } from "@/i18n/i18n";
-import { useSortBy } from "@/lib/zustandStore";
+import { useSortBy, useI18n } from "@/lib/zustandStore";
 
 export default function SortButton() {
   const { sortBy, setSortBy } = useSortBy();
-  const i = useI18n();
+  const { i } = useI18n();
   const sortButtonConfigs = [
     { label: i("body.name"), sortByKey: "name", title: "Sort by Name" },
     {

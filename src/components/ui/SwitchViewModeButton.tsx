@@ -1,9 +1,8 @@
-import { useI18n } from "@/i18n/i18n";
-import { useIsEditMode } from "@/lib/zustandStore";
+import { useIsEditMode, useI18n } from "@/lib/zustandStore";
 
 export default function SwitchViewModeButton() {
   const { isEditMode, setIsEditMode } = useIsEditMode();
-  const i = useI18n();
+  const { i } = useI18n();
   return (
     <>
       <div className="order-2 flex flex-1 select-none items-center justify-end gap-2 sm:order-3">
