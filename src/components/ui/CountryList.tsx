@@ -4,13 +4,21 @@ import {
   useSelectedCountry,
 } from "@/lib/zustandStore";
 import { countries } from "@/data/countries";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function CountryList() {
   const { selectedCountry, setSelectedCountry } = useSelectedCountry();
   const { setParties } = useParties();
   const { setSelectedParties } = useSelectedParties();
   const [openCountryList, setOpenCountryList] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (openCountryList && dropdownRef.current) {
+      dropdownRef.current.focus();
+    }
+  }, [openCountryList]);
+
   return (
     <>
       <button
@@ -33,7 +41,16 @@ export default function CountryList() {
       <div className="relative">
         {openCountryList && (
           <>
-            <div className="absolute top-0 z-[100] max-h-[50vh] w-full overflow-auto rounded-lg border-2 border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+            <div
+              className="absolute top-0 z-[100] max-h-[50vh] w-full overflow-auto rounded-lg border-2 border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+              ref={dropdownRef}
+              tabIndex={0}
+              onBlur={(e) => {
+                if (!e.currentTarget.contains(e.relatedTarget)) {
+                  setOpenCountryList(false);
+                }
+              }}
+            >
               <ul>
                 <li>
                   <button
