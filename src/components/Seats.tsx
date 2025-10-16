@@ -7,9 +7,19 @@ import { setLocale } from "../i18n/i18nSlice";
 import { Party } from "@/types";
 import { CaretDownIcon } from "@/components/icons/Icons";
 import { countries } from "@/data/countries";
-import { useAllowTieBreaker, useDefaultCountryValue, useSelectedParties, useIsEditMode, useParties, useSortBy } from "@/lib/zustandStore";
+import {
+  useAllowTieBreaker,
+  useDefaultCountryValue,
+  useSelectedParties,
+  useIsEditMode,
+  useParties,
+  useSortBy,
+} from "@/lib/zustandStore";
 import { PartyButton } from "@/components/PartyButton";
 import { sort } from "@/utils/sort";
+import AllowTieBreakerButton from "./ui/AllowTieBreakerButton";
+import SwitchViewModeButton from "./ui/SwitchViewModeButton";
+import SortButton from "./ui/SortButton";
 
 interface ButtonConfig {
   label: string;
@@ -19,10 +29,11 @@ interface ButtonConfig {
 const Seats = () => {
   const { parties, setParties } = useParties();
   const { selectedParties, setSelectedParties } = useSelectedParties();
-  const { isEditMode, setIsEditMode } = useIsEditMode();
-  const { sortBy, setSortBy } = useSortBy();
-  const { allowTieBreaker, setAllowTieBreaker } = useAllowTieBreaker();
-  const { defaultCountryValue, setDefaultCountryValue } = useDefaultCountryValue();
+  const { isEditMode } = useIsEditMode();
+  const { sortBy } = useSortBy();
+  const { allowTieBreaker } = useAllowTieBreaker();
+  const { defaultCountryValue, setDefaultCountryValue } =
+    useDefaultCountryValue();
 
   const total = parties.reduce((acc, party) => acc + party.seats, 0);
 
@@ -67,8 +78,6 @@ const Seats = () => {
       ? total / 2 + (allowTieBreaker ? 0 : 1)
       : Math.ceil(total / 2)
   ) as number;
-
- 
 
   const buttonConfigurations: ButtonConfig[] = [
     {
@@ -160,20 +169,6 @@ const Seats = () => {
       },
     },
   ];
-
-  const sortButtonConfigs = [
-    { label: i("body.name"), sortByKey: "name", title: "Sort by Name" },
-    {
-      label: i("body.position"),
-      sortByKey: "position",
-      title: "Sort by Political Position",
-    },
-    { label: i("body.seats"), sortByKey: "seats", title: "Sort by Seats" },
-  ] as {
-    label: string;
-    sortByKey: "name" | "position" | "seats";
-    title: string;
-  }[];
 
   return (
     <div>
@@ -297,98 +292,9 @@ const Seats = () => {
       </div>
 
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-        <div className="flex-1 justify-start text-nowrap sm:w-auto">
-          <label className="flex items-center gap-2">
-            <span className="relative">
-              <input
-                title="Allow Tie Breaker"
-                type="checkbox"
-                name="allowTieBreaker"
-                id="allowTieBreaker"
-                className="absolute h-full w-full opacity-0"
-                checked={allowTieBreaker}
-                onChange={() => {
-                  setAllowTieBreaker(!allowTieBreaker);
-                }}
-              />
-              <div
-                role="checkbox"
-                aria-label={"Allow Tie Breaker"}
-                aria-checked={allowTieBreaker}
-                className={`${
-                  allowTieBreaker
-                    ? "bg-violet-600 dark:bg-violet-400"
-                    : "bg-gray-200 dark:bg-gray-700"
-                } flex aspect-square size-6 items-center justify-center overflow-hidden rounded-full transition-colors`}
-              >
-                {allowTieBreaker ? (
-                  <div className="flex h-full w-full items-center justify-center text-white dark:text-gray-950">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 16 16"
-                      fill="currentColor"
-                      className="size-4"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center bg-gray-200 text-white dark:bg-gray-700 dark:text-gray-950"></div>
-                )}
-              </div>
-            </span>
-            <span className="select-none text-wrap">
-              {i("body.allowTieBreaker")}
-            </span>
-          </label>
-        </div>
-        <div className="order-3 flex w-full overflow-x-auto overflow-y-hidden whitespace-nowrap rounded-lg sm:order-2 sm:w-auto">
-          {sortButtonConfigs.map((config, index) => (
-            <button
-              key={index}
-              onClick={() => setSortBy(config.sortByKey)}
-              className={`${
-                sortBy === config.sortByKey
-                  ? "bg-violet-600 text-white dark:bg-violet-400 dark:text-gray-950"
-                  : "bg-gray-200 dark:bg-gray-700"
-              } flex-1 px-2 py-1 transition-colors`}
-              title={config.title}
-            >
-              {config.label}
-            </button>
-          ))}
-        </div>
-        <div className="order-2 flex flex-1 select-none items-center justify-end gap-2 sm:order-3">
-          <span
-            title={"Switch to View Mode"}
-            className="cursor-default select-none"
-            onClick={() => setIsEditMode(false)}
-          >
-            {i("body.view")}
-          </span>
-          <div
-            onClick={() => setIsEditMode(!isEditMode)}
-            className={`relative flex h-6 w-12 cursor-pointer rounded-full bg-gray-200 dark:bg-gray-700`}
-            title={isEditMode ? "Switch to View Mode" : "Switch to Edit Mode"}
-          >
-            <div
-              className={`h-full w-6 rounded-full bg-violet-600 transition-all dark:bg-violet-400 ${
-                isEditMode ? "translate-x-full rtl:-translate-x-full" : ""
-              }`}
-            ></div>
-          </div>
-          <span
-            title="Switch to Edit Mode"
-            className="cursor-default select-none"
-            onClick={() => setIsEditMode(true)}
-          >
-            {i("body.edit")}
-          </span>
-        </div>
+        <AllowTieBreakerButton />
+        <SortButton />
+        <SwitchViewModeButton />
       </div>
       <ul
         className={`grid grid-cols-1 gap-4 transition-all xs:grid-cols-2 sm:grid-cols-3 sm:gap-4`}
@@ -397,9 +303,7 @@ const Seats = () => {
           .sort((a, b) => sort(a, b, isEditMode, sortBy))
           .map((party, index) => (
             <li key={index}>
-              <PartyButton
-                party={party}
-              />
+              <PartyButton party={party} />
             </li>
           ))}
         {isEditMode && (
