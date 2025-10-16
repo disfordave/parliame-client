@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { countries } from "./countries";
+import { countries } from "../data/countries";
 import { useI18n } from "../i18n/i18n";
 import { useDispatch } from "react-redux";
 import { setLocale } from "../i18n/i18nSlice";
