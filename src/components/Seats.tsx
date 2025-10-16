@@ -16,7 +16,7 @@ import SortButton from "./ui/SortButton";
 import CoalitionBySpectrumButtons from "./ui/CoalitionBySpectrumButtons";
 import AddNewPartyButton from "./ui/AddNewPartyButton";
 import SeatsGraph from "./ui/SeatsGraph";
-import CountryList from "./ui/CountryList";
+import CountryList from "./ui/CountryListDropdown";
 import JsonShareButton from "./ui/JsonShareButton";
 
 const Seats = () => {

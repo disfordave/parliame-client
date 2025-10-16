@@ -20,9 +20,18 @@ export default function CountryList() {
   }, [openCountryList]);
 
   return (
-    <>
+    <div
+      tabIndex={0}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget)) {
+          setOpenCountryList(false);
+        }
+      }}
+    >
       <button
-        onClick={() => setOpenCountryList(!openCountryList)}
+        onClick={() => {
+          setOpenCountryList(!openCountryList);
+        }}
         className="w-full rounded-lg border-2 border-gray-200 bg-white p-2 dark:border-gray-700 dark:bg-gray-900"
       >
         <div className="flex gap-1">
@@ -44,12 +53,6 @@ export default function CountryList() {
             <div
               className="absolute top-0 z-[100] max-h-[50vh] w-full overflow-auto rounded-lg border-2 border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
               ref={dropdownRef}
-              tabIndex={0}
-              onBlur={(e) => {
-                if (!e.currentTarget.contains(e.relatedTarget)) {
-                  setOpenCountryList(false);
-                }
-              }}
             >
               <ul>
                 <li>
@@ -110,6 +113,6 @@ export default function CountryList() {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 }
