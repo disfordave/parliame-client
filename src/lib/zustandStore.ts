@@ -1,4 +1,4 @@
-import { BearState, DefaultCountryValueState, PartiesState, IsEditModeState, SortByState, AllowTieBreakerState } from "@/types";
+import { BearState, DefaultCountryValueState, PartiesState, IsEditModeState, SortByState, AllowTieBreakerState, SelectedPartiesState } from "@/types";
 import { create } from "zustand";
 
 const useBear = create<BearState>((set) => ({
@@ -9,13 +9,20 @@ const useBear = create<BearState>((set) => ({
 
 const useDefaultCountryValue = create<DefaultCountryValueState>((set) => ({
   defaultCountryValue: null,
-  setValue: (by) => set(() => ({ defaultCountryValue: by }))
+  setDefaultCountryValue: (by) => set(() => ({ defaultCountryValue: by }))
 }))
 
 const useParties = create<PartiesState>((set) => (
   {
     parties: [],
     setParties: (by) => set(() => ({parties: by}))
+  }
+))
+
+const useSelectedParties = create<SelectedPartiesState>((set) => (
+  {
+    selectedParties: [],
+    setSelectedParties: (by) => set(() => ({selectedParties: by}))
   }
 ))
 
@@ -34,4 +41,4 @@ const useAllowTieBreaker = create<AllowTieBreakerState>((set) => ({
   setAllowTieBreaker: (by) => set(() => ({ allowTieBreaker: by }))
 }))
 
-export { useBear, useDefaultCountryValue, useParties, useIsEditMode, useSortBy, useAllowTieBreaker };
+export { useBear, useDefaultCountryValue, useParties, useSelectedParties, useIsEditMode, useSortBy, useAllowTieBreaker };

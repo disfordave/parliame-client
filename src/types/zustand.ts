@@ -7,12 +7,17 @@ interface BearState {
 
 interface DefaultCountryValueState {
   defaultCountryValue: string | null;
-  setValue: (by: string) => void;
+  setDefaultCountryValue: (by: string) => void;
 }
 
 interface PartiesState {
   parties: Party[],
   setParties: (by: Party[]) => void;
+}
+
+interface SelectedPartiesState {
+  selectedParties: Party[],
+  setSelectedParties: (by: Party[]) => void;
 }
 
 interface IsEditModeState {
@@ -30,4 +35,4 @@ interface AllowTieBreakerState {
   setAllowTieBreaker: (by: boolean) => void;
 }
 
-export type { BearState, DefaultCountryValueState, PartiesState, IsEditModeState, SortByState, AllowTieBreakerState };
+export type { BearState, DefaultCountryValueState, PartiesState, SelectedPartiesState, IsEditModeState, SortByState, AllowTieBreakerState };
