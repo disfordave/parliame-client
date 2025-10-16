@@ -2,11 +2,12 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import Seats from "@/components/Seats";
 import { useI18n } from "@/lib/zustandStore";
+import LocaleSettingButton from "./components/ui/LocaleSettingButton";
 
 type Theme = "light" | "dark" | "auto";
 
 function App() {
-  const { locale, i, setLocale } = useI18n();
+  const { i } = useI18n();
   const [theme, setTheme] = useState<Theme>(
     (localStorage.theme as Theme) || "auto",
   );
@@ -46,54 +47,15 @@ function App() {
   return (
     <div className="min-h-screen bg-white text-gray-950 transition-colors duration-300 dark:bg-gray-900 dark:text-white">
       <div className="mx-auto max-w-2xl p-4">
-        <div className={"mb-4 flex items-center justify-between"}>
+        <div
+          className={"mb-4 flex flex-wrap items-center justify-between gap-2"}
+        >
           <div className={"flex items-center gap-1"}>
             <img src={"/favicon.svg"} alt={"Parliament"} className={"size-8"} />
             <h1 className="text-2xl font-bold">{i("parliament")}</h1>
           </div>
           <div className="ms-2 flex gap-2">
-            <div>
-              <button
-                onClick={() => setLocale("en")}
-                className={`appearance-none rounded-lg rounded-e-none border-2 border-e-0 border-gray-200 px-2 py-1 transition-colors duration-300 dark:border-gray-700 ${
-                  locale === "en"
-                    ? "bg-gray-200 dark:bg-gray-700"
-                    : "bg-white dark:bg-gray-900"
-                }`}
-              >
-                EN
-              </button>
-              <button
-                onClick={() => setLocale("fr")}
-                className={`rounded-x-none appearance-none border-2 border-x-0 border-gray-200 px-2 py-1 transition-colors duration-300 dark:border-gray-700 ${
-                  locale === "fr"
-                    ? "bg-gray-200 dark:bg-gray-700"
-                    : "bg-white dark:bg-gray-900"
-                }`}
-              >
-                FR
-              </button>
-              <button
-                onClick={() => setLocale("de")}
-                className={`rounded-x-none appearance-none border-2 border-x-0 border-gray-200 px-2 py-1 transition-colors duration-300 dark:border-gray-700 ${
-                  locale === "de"
-                    ? "bg-gray-200 dark:bg-gray-700"
-                    : "bg-white dark:bg-gray-900"
-                }`}
-              >
-                DE
-              </button>
-              <button
-                onClick={() => setLocale("nl")}
-                className={`appearance-none rounded-lg rounded-s-none border-2 border-s-0 border-gray-200 px-2 py-1 transition-colors duration-300 dark:border-gray-700 ${
-                  locale === "nl"
-                    ? "bg-gray-200 dark:bg-gray-700"
-                    : "bg-white dark:bg-gray-900"
-                }`}
-              >
-                NL
-              </button>
-            </div>
+            <LocaleSettingButton />
           </div>
         </div>
         <Seats />
