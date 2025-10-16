@@ -3,15 +3,7 @@ import { countries } from "../data/countries";
 import { useI18n } from "../i18n/i18n";
 import { useDispatch } from "react-redux";
 import { setLocale } from "../i18n/i18nSlice";
-
-export interface Party {
-  name: string;
-  shortName: string;
-  seats: number;
-  colour: string;
-  position: number;
-  isIndependent?: boolean;
-}
+import { Party } from "@/types";
 
 interface ButtonConfig {
   label: string;

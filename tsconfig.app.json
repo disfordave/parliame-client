@@ -19,7 +19,12 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    "baseUrl": ".", // Required for `paths` to work
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": ["src"]
 }
