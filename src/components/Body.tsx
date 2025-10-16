@@ -61,29 +61,26 @@ const Seats = () => {
         <SortButton />
         <SwitchViewModeButton />
       </div>
-      {parties.length > 0 ? (
-        <>
-          <ul
-            className={`grid grid-cols-1 gap-4 transition-all xs:grid-cols-2 sm:grid-cols-3 sm:gap-4`}
-          >
-            {parties
-              .sort((a, b) => sort(a, b, isEditMode, sortBy))
-              .map((party, index) => (
-                <li key={index}>
-                  <PartyButton party={party} />
-                </li>
-              ))}
-            {isEditMode && (
-              <li className="flex h-full w-full items-center justify-center">
-                <AddNewPartyButton />
+      <>
+        <ul
+          className={`grid grid-cols-1 gap-4 transition-all xs:grid-cols-2 sm:grid-cols-3 sm:gap-4`}
+        >
+          {parties
+            .sort((a, b) => sort(a, b, isEditMode, sortBy))
+            .map((party, index) => (
+              <li key={index}>
+                <PartyButton party={party} />
               </li>
-            )}
-          </ul>
-        </>
-      ) : (
-        <>
-          <p className="text-center">{i("body.noParties")}</p>
-        </>
+            ))}
+          {isEditMode && (
+            <li className="flex h-full w-full items-center justify-center">
+              <AddNewPartyButton />
+            </li>
+          )}
+        </ul>
+      </>
+      {parties.length <= 0 && !isEditMode && (
+        <p className="text-center">{i("body.noParties")}</p>
       )}
       <CoalitionBySpectrumButtons />
       <button
