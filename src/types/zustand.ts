@@ -11,12 +11,12 @@ interface DefaultCountryValueState {
 }
 
 interface PartiesState {
-  parties: Party[],
+  parties: Party[];
   setParties: (by: Party[]) => void;
 }
 
 interface SelectedPartiesState {
-  selectedParties: Party[],
+  selectedParties: Party[];
   setSelectedParties: (by: Party[]) => void;
 }
 
@@ -35,4 +35,12 @@ interface AllowTieBreakerState {
   setAllowTieBreaker: (by: boolean) => void;
 }
 
-export type { BearState, DefaultCountryValueState, PartiesState, SelectedPartiesState, IsEditModeState, SortByState, AllowTieBreakerState };
+export type {
+  BearState,
+  DefaultCountryValueState,
+  PartiesState,
+  SelectedPartiesState,
+  IsEditModeState,
+  SortByState,
+  AllowTieBreakerState,
+};

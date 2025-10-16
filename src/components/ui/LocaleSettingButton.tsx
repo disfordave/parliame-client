@@ -6,7 +6,7 @@ export default function LocaleSettingButton() {
   const locales = ["en", "fr", "de", "nl"];
   return (
     <>
-      <div className="border-2 border-gray-200 dark:border-gray-700 rounded-lg flex overflow-hidden">
+      <div className="flex overflow-hidden rounded-lg border-2 border-gray-200 dark:border-gray-700">
         {locales.map((loc) => (
           <button
             key={loc}

@@ -19,7 +19,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
-        "baseUrl": ".", // Required for `paths` to work
+    "baseUrl": ".", // Required for `paths` to work
     "paths": {
       "@/*": ["src/*"]
     }

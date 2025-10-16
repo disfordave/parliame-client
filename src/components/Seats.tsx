@@ -65,8 +65,6 @@ const Seats = () => {
 
   const selectRef = useRef<HTMLSelectElement | null>(null);
 
-
-
   const majorityThreshold = (
     total % 2 === 0
       ? total / 2 + (allowTieBreaker ? 0 : 1)
