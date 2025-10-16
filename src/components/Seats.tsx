@@ -1,9 +1,5 @@
 import { useRef, useEffect } from "react";
 
-// import { useI18n } from "../i18n/i18n";
-import { useDispatch } from "react-redux";
-import { setLocale } from "../i18n/i18nSlice";
-
 import { Party } from "@/types";
 import { CaretDownIcon } from "@/components/icons/Icons";
 import { countries } from "@/data/countries";
@@ -32,15 +28,13 @@ const Seats = () => {
   const { allowTieBreaker } = useAllowTieBreaker();
   const { defaultCountryValue, setDefaultCountryValue } =
     useDefaultCountryValue();
-
+  const { i, setLocale } = useI18n();
   const total = parties.reduce((acc, party) => acc + party.seats, 0);
 
   const selectedTotal = selectedParties.reduce(
     (acc, party) => acc + party.seats,
     0,
   );
-
-  const langDispatch = useDispatch();
 
   useEffect(() => {
     const queryParams = new URLSearchParams(document.location.search);
@@ -65,14 +59,14 @@ const Seats = () => {
     }
 
     if (lang && ["en", "fr", "de", "nl"].includes(lang)) {
-      langDispatch(setLocale(lang));
+      setLocale(lang);
     }
   }, []);
 
   const selectRef = useRef<HTMLSelectElement | null>(null);
 
 
-  const { i } = useI18n();
+
   const majorityThreshold = (
     total % 2 === 0
       ? total / 2 + (allowTieBreaker ? 0 : 1)

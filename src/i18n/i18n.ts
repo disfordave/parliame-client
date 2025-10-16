@@ -1,9 +1,7 @@
-import { useSelector } from "react-redux";
 import en from "./en.json" with { type: "json" };
 import fr from "./fr.json" with { type: "json" };
 import de from "./de.json" with { type: "json" };
 import nl from "./nl.json" with { type: "json" };
-import { selectLocale } from "./i18nSlice";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function locate(obj: any, path: string) {
@@ -38,8 +36,3 @@ export function translate({ locale, id }: { locale: string; id: string }) {
     );
   }
 }
-
-export const useI18n = () => {
-  const locale = useSelector(selectLocale);
-  return (id: string) => translate({ locale, id });
-};
