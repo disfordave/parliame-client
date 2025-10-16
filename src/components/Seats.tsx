@@ -9,6 +9,7 @@ import { CaretDownIcon } from "@/components/icons/Icons";
 import { countries } from "@/data/countries";
 import { useAllowTieBreaker, useDefaultCountryValue, useSelectedParties, useIsEditMode, useParties, useSortBy } from "@/lib/zustandStore";
 import { PartyButton } from "@/components/PartyButton";
+import { sort } from "@/utils/sort";
 
 interface ButtonConfig {
   label: string;
@@ -24,14 +25,12 @@ const Seats = () => {
   const { defaultCountryValue, setDefaultCountryValue } = useDefaultCountryValue();
 
   const total = parties.reduce((acc, party) => acc + party.seats, 0);
-  
+
   const selectedTotal = selectedParties.reduce(
     (acc, party) => acc + party.seats,
     0,
   );
-  // const totalPositions =
-  //   selectedParties.reduce((acc, party) => acc + party.position, 0) /
-  //   selectedParties.length;
+
   const langDispatch = useDispatch();
 
   useEffect(() => {
@@ -69,42 +68,7 @@ const Seats = () => {
       : Math.ceil(total / 2)
   ) as number;
 
-  const sort = (a: Party, b: Party) => {
-    if (isEditMode) return 0; // Stop sorting if edit mode is on
-    if (sortBy === "name") {
-      const aIsIndependent = a.isIndependent === true;
-      const bIsIndependent = b.isIndependent === true;
-
-      // If both are independent, maintain original order
-      if (aIsIndependent && bIsIndependent) return 0;
-
-      // If only a is independent, push it to the end
-      if (aIsIndependent) return 1;
-
-      // If only b is independent, push it to the end
-      if (bIsIndependent) return -1;
-
-      return a.shortName.localeCompare(b.shortName);
-    }
-    if (sortBy === "seats") {
-      const aIsIndependent = a.isIndependent === true;
-      const bIsIndependent = b.isIndependent === true;
-
-      // If both are independent, maintain original order
-      if (aIsIndependent && bIsIndependent) return 0;
-
-      // If only a is independent, push it to the end
-      if (aIsIndependent) return 1;
-
-      // If only b is independent, push it to the end
-      if (bIsIndependent) return -1;
-
-      // If neither is independent, sort by seats in descending order
-      return b.seats - a.seats;
-    }
-    if (sortBy === "position") return a.position - b.position;
-    return 0;
-  };
+ 
 
   const buttonConfigurations: ButtonConfig[] = [
     {
@@ -306,7 +270,7 @@ const Seats = () => {
           dir={sortBy === "position" ? "ltr" : ""}
         >
           {parties
-            .sort((a, b) => sort(a, b))
+            .sort((a, b) => sort(a, b, isEditMode, sortBy))
             .map((party, index) => (
               <div
                 key={index}
@@ -430,7 +394,7 @@ const Seats = () => {
         className={`grid grid-cols-1 gap-4 transition-all xs:grid-cols-2 sm:grid-cols-3 sm:gap-4`}
       >
         {parties
-          .sort((a, b) => sort(a, b))
+          .sort((a, b) => sort(a, b, isEditMode, sortBy))
           .map((party, index) => (
             <li key={index}>
               <PartyButton
