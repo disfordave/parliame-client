@@ -80,9 +80,9 @@ export default function CountryListDropdown() {
                 transition={{
                   duration: 0.3,
                 }}
-                initial={{ opacity: 0, translateY: -2 }}
+                initial={{ opacity: 0, translateY: -8 }}
                 animate={{ opacity: 1, translateY: 0 }}
-                exit={{ opacity: 0, translateY: -2 }}
+                exit={{ opacity: 0, translateY: -8 }}
                 className="absolute top-0 z-[100] max-h-[50vh] w-full overflow-auto rounded-lg border-2 border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-900"
                 ref={dropdownRef}
               >
