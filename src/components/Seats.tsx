@@ -1,10 +1,8 @@
 import { useRef, useEffect } from "react";
 
 import { Party } from "@/types";
-import { CaretDownIcon } from "@/components/icons/Icons";
 import { countries } from "@/data/countries";
 import {
-  useAllowTieBreaker,
   useDefaultCountryValue,
   useSelectedParties,
   useIsEditMode,
@@ -19,22 +17,16 @@ import SwitchViewModeButton from "./ui/SwitchViewModeButton";
 import SortButton from "./ui/SortButton";
 import CoalitionBySpectrumButtons from "./ui/CoalitionBySpectrumButtons";
 import AddNewPartyButton from "./ui/AddNewPartyButton";
+import SeatsGraph from "./ui/SeatsGraph";
 
 const Seats = () => {
   const { parties, setParties } = useParties();
-  const { selectedParties, setSelectedParties } = useSelectedParties();
+  const { setSelectedParties } = useSelectedParties();
   const { isEditMode } = useIsEditMode();
   const { sortBy } = useSortBy();
-  const { allowTieBreaker } = useAllowTieBreaker();
   const { defaultCountryValue, setDefaultCountryValue } =
     useDefaultCountryValue();
   const { i, setLocale } = useI18n();
-  const total = parties.reduce((acc, party) => acc + party.seats, 0);
-
-  const selectedTotal = selectedParties.reduce(
-    (acc, party) => acc + party.seats,
-    0,
-  );
 
   useEffect(() => {
     const queryParams = new URLSearchParams(document.location.search);
@@ -64,12 +56,6 @@ const Seats = () => {
   }, []);
 
   const selectRef = useRef<HTMLSelectElement | null>(null);
-
-  const majorityThreshold = (
-    total % 2 === 0
-      ? total / 2 + (allowTieBreaker ? 0 : 1)
-      : Math.ceil(total / 2)
-  ) as number;
 
   return (
     <div>
@@ -107,91 +93,7 @@ const Seats = () => {
             ))}
         </optgroup>
       </select>
-
-      <div className="sticky top-0 z-50 -mx-4 mb-4 bg-white px-4 pt-4 transition-colors duration-300 dark:bg-gray-900">
-        <div className="flex items-center justify-between">
-          <p className="flex-1">
-            {selectedTotal === total || selectedTotal === 0 ? (
-              ""
-            ) : allowTieBreaker && majorityThreshold === selectedTotal ? (
-              <span className="line-clamp-1 text-emerald-600 dark:text-emerald-400">
-                {i("body.tieBreakerEnabled")}
-              </span>
-            ) : (total % 2 === 0 ? total / 2 + 1 : Math.ceil(total / 2)) <=
-              selectedTotal ? (
-              <span className="line-clamp-1 text-violet-600 dark:text-violet-400">
-                {selectedTotal - majorityThreshold + (allowTieBreaker ? 0 : 1)}{" "}
-                {selectedTotal -
-                  majorityThreshold +
-                  (allowTieBreaker ? 0 : 1) ===
-                1
-                  ? i("header.seat")
-                  : i("header.seats")}{" "}
-                {i("header.majority")}
-              </span>
-            ) : (
-              <span className="text-rose-600 dark:text-rose-400">{`${
-                majorityThreshold - selectedTotal
-              } ${
-                majorityThreshold - selectedTotal === 1
-                  ? i("header.seat")
-                  : i("header.seats")
-              } ${i("header.left")}
-                `}</span>
-            )}
-          </p>
-          <div
-            className="relative flex items-center justify-center"
-            title={`${
-              total % 2 === 0
-                ? total / 2 + (allowTieBreaker ? 0 : 1)
-                : Math.ceil(total / 2)
-            } ${i("header.seatsForMajority")}`}
-          >
-            <CaretDownIcon />
-            <p className="absolute left-5 rtl:right-5">
-              {total % 2 === 0
-                ? total / 2 + (allowTieBreaker ? 0 : 1)
-                : Math.ceil(total / 2)}{" "}
-            </p>
-          </div>
-          <div className="flex flex-1 justify-end text-end">
-            <p className="tabular-nums">
-              <span className="font-semibold">{selectedTotal}</span> / {total}
-            </p>
-          </div>
-        </div>
-        <div
-          className="relative flex h-12 w-full overflow-hidden rounded-lg bg-gray-200 transition-all dark:bg-gray-700"
-          dir={sortBy === "position" ? "ltr" : ""}
-        >
-          {parties
-            .sort((a, b) => sort(a, b, isEditMode, sortBy))
-            .map((party, index) => (
-              <div
-                key={index}
-                title={`${
-                  party.isIndependent
-                    ? party.shortName.length > 0
-                      ? party.shortName + " (I)"
-                      : "Independent"
-                    : party.shortName
-                } (${party.seats})`}
-                style={{
-                  backgroundColor: party.colour,
-                  minWidth: "0%",
-                  width: selectedParties.includes(party)
-                    ? `${(party.seats / total) * 100}%`
-                    : "0%",
-                }}
-                className={`r-0 h-full overflow-hidden text-ellipsis text-nowrap transition-[width] duration-300`}
-              ></div>
-            ))}
-          <div className="bg-background-elevated absolute left-[calc(50%-1px)] h-full border-l-2 border-dashed border-violet-500"></div>
-        </div>
-        <hr className="-mx-4 mt-4 border-y border-gray-200 transition-colors duration-300 sm:-mx-0 dark:border-gray-700" />
-      </div>
-
+      <SeatsGraph />
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
         <AllowTieBreakerButton />
         <SortButton />
