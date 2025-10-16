@@ -1,17 +1,12 @@
 import "./App.css";
-import Seats from "./components/Seats";
 import { useEffect, useState } from "react";
-import { useI18n } from "./i18n/i18n";
-import { useDispatch, useSelector } from "react-redux";
-import { selectLocale, setLocale } from "./i18n/i18nSlice";
+import Seats from "@/components/Seats";
+import { useI18n } from "@/lib/zustandStore";
 
 type Theme = "light" | "dark" | "auto";
 
 function App() {
-  const locale = useSelector(selectLocale);
-  const dispatch = useDispatch();
-  const i = useI18n();
-
+  const { locale, i, setLocale } = useI18n();
   const [theme, setTheme] = useState<Theme>(
     (localStorage.theme as Theme) || "auto",
   );
@@ -59,7 +54,7 @@ function App() {
           <div className="ms-2 flex gap-2">
             <div>
               <button
-                onClick={() => dispatch(setLocale("en"))}
+                onClick={() => setLocale("en")}
                 className={`appearance-none rounded-lg rounded-e-none border-2 border-e-0 border-gray-200 px-2 py-1 transition-colors duration-300 dark:border-gray-700 ${
                   locale === "en"
                     ? "bg-gray-200 dark:bg-gray-700"
@@ -69,7 +64,7 @@ function App() {
                 EN
               </button>
               <button
-                onClick={() => dispatch(setLocale("fr"))}
+                onClick={() => setLocale("fr")}
                 className={`rounded-x-none appearance-none border-2 border-x-0 border-gray-200 px-2 py-1 transition-colors duration-300 dark:border-gray-700 ${
                   locale === "fr"
                     ? "bg-gray-200 dark:bg-gray-700"
@@ -79,7 +74,7 @@ function App() {
                 FR
               </button>
               <button
-                onClick={() => dispatch(setLocale("de"))}
+                onClick={() => setLocale("de")}
                 className={`rounded-x-none appearance-none border-2 border-x-0 border-gray-200 px-2 py-1 transition-colors duration-300 dark:border-gray-700 ${
                   locale === "de"
                     ? "bg-gray-200 dark:bg-gray-700"
@@ -89,7 +84,7 @@ function App() {
                 DE
               </button>
               <button
-                onClick={() => dispatch(setLocale("nl"))}
+                onClick={() => setLocale("nl")}
                 className={`appearance-none rounded-lg rounded-s-none border-2 border-s-0 border-gray-200 px-2 py-1 transition-colors duration-300 dark:border-gray-700 ${
                   locale === "nl"
                     ? "bg-gray-200 dark:bg-gray-700"

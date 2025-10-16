@@ -49,12 +49,15 @@ interface I18nState {
 }
 
 const useI18n = create<I18nState>((set, get) => ({
-  locale: "en",
+  locale: localStorage.getItem("locale") || "en",
   i: (key: string) => {
     const currentLocale = get().locale;
     return translate({ locale: currentLocale, id: key });
   },
-  setLocale: (by: string) => set(() => ({ locale: by })),
+  setLocale: (by: string) => {
+    localStorage.setItem("locale", by);
+    set(() => ({ locale: by }));
+  },
 }));
 
 export { useBear, useDefaultCountryValue, useParties, useSelectedParties, useIsEditMode, useSortBy, useAllowTieBreaker, useI18n };
