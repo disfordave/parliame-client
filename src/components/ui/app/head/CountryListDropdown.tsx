@@ -5,8 +5,9 @@ import {
 } from "@/lib/zustandStore";
 import { countries } from "@/data/countries";
 import { useEffect, useRef, useState } from "react";
+import { ChevronDownIcon } from "@/components/icons/Icons";
 
-export default function CountryList() {
+export default function CountryListDropdown() {
   const { selectedCountry, setSelectedCountry } = useSelectedCountry();
   const { setParties } = useParties();
   const { setSelectedParties } = useSelectedParties();
@@ -34,17 +35,20 @@ export default function CountryList() {
         }}
         className="w-full rounded-lg border-2 border-gray-200 bg-white p-2 dark:border-gray-700 dark:bg-gray-900"
       >
-        <div className="flex gap-1">
+        <div className="flex gap-1 justify-between items-center">
           {selectedCountry ? (
-            <>
+            <div className="flex gap-1">
               <span>{selectedCountry.name}</span>
               <span>{selectedCountry.emoji}</span>
-            </>
+            </div>
           ) : (
             <>
               <span>Custom</span>
             </>
           )}
+          <ChevronDownIcon className={
+            `transition-transform duration-300 ${openCountryList ? "rotate-180" : ""}`
+          } />
         </div>
       </button>
       <div className="relative">

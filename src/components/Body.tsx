@@ -16,7 +16,7 @@ import SortButton from "./ui/app/filters/SortButton";
 import CoalitionBySpectrumButtons from "./ui/app/filters/CoalitionBySpectrumButtons";
 import AddNewPartyButton from "./ui/app/parties/AddNewPartyButton";
 import SeatsGraph from "./ui/app/head/SeatsGraph";
-import CountryList from "./ui/app/head/CountryListDropdown";
+import CountryListDropdown from "./ui/app/head/CountryListDropdown";
 import JsonShareButton from "./ui/app/JsonShareButton";
 
 const Seats = () => {
@@ -54,7 +54,7 @@ const Seats = () => {
 
   return (
     <div>
-      <CountryList />
+      <CountryListDropdown />
       <SeatsGraph />
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
         <AllowTieBreakerButton />
