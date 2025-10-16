@@ -20,11 +20,8 @@ import { sort } from "@/utils/sort";
 import AllowTieBreakerButton from "./ui/AllowTieBreakerButton";
 import SwitchViewModeButton from "./ui/SwitchViewModeButton";
 import SortButton from "./ui/SortButton";
-
-interface ButtonConfig {
-  label: string;
-  onClick: () => void;
-}
+import CoalitionBySpectrumButtons from "./ui/CoalitionBySpectrumButtons";
+import AddNewPartyButton from "./ui/AddNewPartyButton";
 
 const Seats = () => {
   const { parties, setParties } = useParties();
@@ -78,97 +75,6 @@ const Seats = () => {
       ? total / 2 + (allowTieBreaker ? 0 : 1)
       : Math.ceil(total / 2)
   ) as number;
-
-  const buttonConfigurations: ButtonConfig[] = [
-    {
-      label: i("controls.selectAll"),
-      onClick: () => setSelectedParties([...parties]),
-    },
-    {
-      label: i("controls.deselectAll"),
-      onClick: () => setSelectedParties([]),
-    },
-    {
-      label: i("controls.left"),
-      onClick: () => {
-        const leftParties = parties.filter((party) => party.position < 0);
-        setSelectedParties(leftParties);
-      },
-    },
-    {
-      label: i("controls.right"),
-      onClick: () => {
-        const rightParties = parties.filter((party) => party.position > 0);
-        setSelectedParties(rightParties);
-      },
-    },
-    {
-      label: i("controls.leftWithoutFarLeft"),
-      onClick: () => {
-        const leftParties = parties.filter(
-          (party) => party.position < 0 && party.position > -100,
-        );
-        setSelectedParties(leftParties);
-      },
-    },
-    {
-      label: i("controls.rightWithoutFarRight"),
-      onClick: () => {
-        const rightParties = parties.filter(
-          (party) => party.position > 0 && party.position < 100,
-        );
-        setSelectedParties(rightParties);
-      },
-    },
-    {
-      label: i("controls.leftWing"),
-      onClick: () => {
-        const leftParties = parties.filter((party) => party.position <= -75);
-        setSelectedParties(leftParties);
-      },
-    },
-    {
-      label: i("controls.rightWing"),
-      onClick: () => {
-        const rightParties = parties.filter((party) => party.position >= 75);
-        setSelectedParties(rightParties);
-      },
-    },
-    {
-      label: i("controls.centre"),
-      onClick: () => {
-        const centerParties = parties.filter(
-          (party) =>
-            party.position <= 25 &&
-            party.position >= -25 &&
-            !party.isIndependent,
-        );
-        setSelectedParties(centerParties);
-      },
-    },
-    {
-      label: i("controls.grandCentre"),
-      onClick: () => {
-        const centerParties = parties.filter(
-          (party) =>
-            party.position < 75 && party.position > -75 && !party.isIndependent,
-        );
-        setSelectedParties(centerParties);
-      },
-    },
-    {
-      label: i("controls.grandWithoutExtremes"),
-      onClick: () => {
-        const grandParties = parties.filter(
-          (party) =>
-            party.position > -100 &&
-            party.position < 100 &&
-            !party.isIndependent,
-        );
-        setSelectedParties(grandParties);
-      },
-    },
-  ];
 
   return (
     <div>
@@ -308,64 +214,14 @@ const Seats = () => {
           ))}
         {isEditMode && (
           <li className="flex h-full w-full items-center justify-center">
-            <button
-              onClick={() => {
-                setParties([
-                  ...parties,
-                  {
-                    name: "",
-                    shortName: "",
-                    seats: 0,
-                    colour: "#6B7280",
-                    position: 0,
-                    isIndependent: false,
-                  },
-                ]);
-              }}
-              className="m-4 aspect-square w-1/3 rounded-full border-2 border-transparent bg-gray-200 p-2 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
-              type="button"
-              title="Add Party"
-              aria-label="Add Party"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="m-auto size-2/3 stroke-2 text-gray-950 dark:text-white"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 4.5v15m7.5-7.5h-15"
-                />
-              </svg>
-            </button>
+            <AddNewPartyButton />
           </li>
         )}
       </ul>
       {parties.length <= 0 && (
         <p className="text-center">{i("body.noParties")}</p>
       )}
-
-      <div className="mt-4 flex flex-wrap gap-2 overflow-auto rounded-lg bg-gray-200 p-4 dark:bg-gray-700">
-        {buttonConfigurations.map((buttonConfig, index) => (
-          <button
-            key={index}
-            onClick={buttonConfig.onClick}
-            className="text-nowrap rounded-full border-2 border-transparent bg-white px-3 py-1 transition-colors hover:border-violet-600 dark:bg-gray-900 dark:hover:border-violet-400"
-            type="button"
-            title={buttonConfig.label}
-            aria-label={buttonConfig.label}
-            aria-describedby={buttonConfig.label}
-            aria-disabled={false}
-          >
-            {buttonConfig.label}
-          </button>
-        ))}
-      </div>
-
+      <CoalitionBySpectrumButtons />
       <button
         onClick={() => {
           setParties([]);
