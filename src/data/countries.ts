@@ -1,6 +1,6 @@
-import { Party } from "@/types";
+import { Country } from "@/types";
 
-export const countries: { name: string; emoji?: string; parties: Party[] }[] = [
+export const countries: Country[] = [
   {
     name: "European Union",
     emoji: "🇪🇺",

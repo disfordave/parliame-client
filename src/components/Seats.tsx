@@ -1,9 +1,8 @@
-import { useRef, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-import { Party } from "@/types";
+import { Country, Party } from "@/types";
 import { countries } from "@/data/countries";
 import {
-  useDefaultCountryValue,
   useSelectedParties,
   useIsEditMode,
   useParties,
@@ -24,29 +23,34 @@ const Seats = () => {
   const { setSelectedParties } = useSelectedParties();
   const { isEditMode } = useIsEditMode();
   const { sortBy } = useSortBy();
-  const { defaultCountryValue, setDefaultCountryValue } =
-    useDefaultCountryValue();
   const { i, setLocale } = useI18n();
+
+  const [selectedCountry, setSelectedCountry] = useState<Country | null>(
+    countries.find((c) => c.name === "European Union") ?? null,
+  );
+  const [openCountryList, setOpenCountryList] = useState<boolean>(false);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(document.location.search);
     const countryName = queryParams.get("country");
     const lang = queryParams.get("lang");
     console.log("Country from URL:", countryName);
-    setDefaultCountryValue(countryName ?? "European Union");
+    // setDefaultCountryValue(countryName ?? "European Union");
     const country = countries.find((country) => country.name === countryName);
     if (country) {
+      setSelectedCountry(country);
       setParties(country.parties);
       setSelectedParties(country.parties);
-      setDefaultCountryValue(country.name);
+      // setDefaultCountryValue(country.name);
     } else {
       const country = countries.find(
         (country) => country.name === "European Union",
       );
       if (country) {
+        setSelectedCountry(country);
         setParties(country.parties);
         setSelectedParties(country.parties);
-        setDefaultCountryValue(country.name);
+        // setDefaultCountryValue(country.name);
       }
     }
 
@@ -55,78 +59,123 @@ const Seats = () => {
     }
   }, []);
 
-  const selectRef = useRef<HTMLSelectElement | null>(null);
-
   return (
     <div>
-      <select
-        ref={selectRef}
-        value={defaultCountryValue ?? "European Union"}
-        title="Select Country"
-        aria-label="Select Country"
-        onChange={(e) => {
-          if (e.target.value === "CustomValue") {
-            setParties([]);
-            setSelectedParties([]);
-            return;
-          }
-          const country = countries.find(
-            (country) => country.name === e.target.value,
-          );
-          if (country) {
-            setParties(country.parties);
-            setSelectedParties(country.parties);
-          }
-          setDefaultCountryValue(e.target.value);
-        }}
-        id="countries-datalist"
-        className="w-full appearance-none rounded-lg border-2 border-gray-200 bg-white p-2 transition-colors duration-300 dark:border-gray-700 dark:bg-gray-900"
+      <button
+        onClick={() => setOpenCountryList(!openCountryList)}
+        className="w-full rounded-lg border-2 border-gray-200 bg-white p-2 dark:border-gray-700 dark:bg-gray-900"
       >
-        <option value="CustomValue">{i("header.custom")}</option>
-        <optgroup label="Sample">
-          {countries
-            .sort((a, b) => a.name.localeCompare(b.name))
-            .map((country) => (
-              <option key={country.name} value={country.name}>
-                {`${country.name}${country.emoji ? " " + country.emoji : ""}`}
-              </option>
-            ))}
-        </optgroup>
-      </select>
+        <div className="flex gap-1">
+          {selectedCountry ? (
+            <>
+              <span>{selectedCountry.name}</span>
+              <span>{selectedCountry.emoji}</span>
+            </>
+          ) : (
+            <>
+              <span>Custom</span>
+            </>
+          )}
+        </div>
+      </button>
+      <div className="relative">
+        {openCountryList && (
+          <>
+            <div className="absolute top-0 z-[100] max-h-[50vh] w-full overflow-auto rounded-lg border-2 border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+              <ul>
+                <li>
+                  <button
+                    onClick={() => {
+                      setSelectedCountry(null);
+                      setParties([]);
+                      setSelectedParties([]);
+                      return;
+                    }}
+                    className={`w-full p-2 transition-colors duration-300 ${
+                      !selectedCountry
+                        ? "bg-gray-200 dark:bg-gray-700"
+                        : "bg-white dark:bg-gray-900"
+                    }`}
+                  >
+                    <div className="flex gap-1">
+                      <span>Custom</span>
+                    </div>
+                  </button>
+                </li>
+                {countries
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map((country) => (
+                    <li key={country.name} value={country.name}>
+                      <button
+                        onClick={() => {
+                          setSelectedCountry(country);
+                          const findCountry = countries.find(
+                            (c) => c.name === country.name,
+                          );
+                          if (findCountry) {
+                            setParties(findCountry.parties);
+                            setSelectedParties(findCountry.parties);
+                          } else {
+                            setSelectedCountry(null);
+                            setParties([]);
+                            setSelectedParties([]);
+                            return;
+                          }
+                        }}
+                        className={`w-full p-2 transition-colors duration-300 ${
+                          selectedCountry === country
+                            ? "bg-gray-200 dark:bg-gray-700"
+                            : "bg-white dark:bg-gray-900"
+                        }`}
+                      >
+                        <div className="flex gap-1">
+                          <span>{country.name}</span>
+                          <span>{country.emoji}</span>
+                        </div>
+                      </button>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          </>
+        )}
+      </div>
       <SeatsGraph />
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
         <AllowTieBreakerButton />
         <SortButton />
         <SwitchViewModeButton />
       </div>
-      <ul
-        className={`grid grid-cols-1 gap-4 transition-all xs:grid-cols-2 sm:grid-cols-3 sm:gap-4`}
-      >
-        {parties
-          .sort((a, b) => sort(a, b, isEditMode, sortBy))
-          .map((party, index) => (
-            <li key={index}>
-              <PartyButton party={party} />
-            </li>
-          ))}
-        {isEditMode && (
-          <li className="flex h-full w-full items-center justify-center">
-            <AddNewPartyButton />
-          </li>
-        )}
-      </ul>
-      {parties.length <= 0 && (
-        <p className="text-center">{i("body.noParties")}</p>
+      {parties.length > 0 ? (
+        <>
+          <ul
+            className={`grid grid-cols-1 gap-4 transition-all xs:grid-cols-2 sm:grid-cols-3 sm:gap-4`}
+          >
+            {parties
+              .sort((a, b) => sort(a, b, isEditMode, sortBy))
+              .map((party, index) => (
+                <li key={index}>
+                  <PartyButton party={party} />
+                </li>
+              ))}
+            {isEditMode && (
+              <li className="flex h-full w-full items-center justify-center">
+                <AddNewPartyButton />
+              </li>
+            )}
+          </ul>
+        </>
+      ) : (
+        <>
+          <p className="text-center">{i("body.noParties")}</p>
+        </>
       )}
       <CoalitionBySpectrumButtons />
       <button
         onClick={() => {
           setParties([]);
           setSelectedParties([]);
-          if (selectRef.current) {
-            selectRef.current.value = "CustomValue";
-          }
-          setDefaultCountryValue("CustomValue");
+          setSelectedCountry(null);
         }}
         className="mt-4 w-full rounded-lg border-2 border-gray-200 p-2 dark:border-gray-700"
       >
@@ -186,10 +235,7 @@ const Seats = () => {
               ) {
                 setParties(parsedData as Party[]);
                 setSelectedParties(parsedData as Party[]);
-                setDefaultCountryValue("CustomValue");
-                if (selectRef.current) {
-                  selectRef.current.value = "CustomValue";
-                }
+                setSelectedCountry(null);
               } else {
                 console.error("Uploaded JSON file has an incorrect format");
                 alert(
