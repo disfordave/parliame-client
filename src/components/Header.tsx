@@ -1,5 +1,5 @@
 import { useI18n } from "@/lib/zustandStore";
-import LocaleSettingButton from "./ui/LocaleSettingButton";
+import LocaleSettingButton from "./ui/settings/LocaleSettingButton";
 
 export default function Header() {
   const { i } = useI18n();

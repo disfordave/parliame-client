@@ -8,16 +8,16 @@ import {
   useI18n,
   useSelectedCountry,
 } from "@/lib/zustandStore";
-import { PartyButton } from "@/components/PartyButton";
+import { PartyButton } from "@/components/ui/app/parties/PartyButton";
 import { sort } from "@/utils/sort";
-import AllowTieBreakerButton from "./ui/AllowTieBreakerButton";
-import SwitchViewModeButton from "./ui/SwitchViewModeButton";
-import SortButton from "./ui/SortButton";
-import CoalitionBySpectrumButtons from "./ui/CoalitionBySpectrumButtons";
-import AddNewPartyButton from "./ui/AddNewPartyButton";
-import SeatsGraph from "./ui/SeatsGraph";
-import CountryList from "./ui/CountryListDropdown";
-import JsonShareButton from "./ui/JsonShareButton";
+import AllowTieBreakerButton from "./ui/app/filters/AllowTieBreakerButton";
+import SwitchViewModeButton from "./ui/app/filters/SwitchViewModeButton";
+import SortButton from "./ui/app/filters/SortButton";
+import CoalitionBySpectrumButtons from "./ui/app/filters/CoalitionBySpectrumButtons";
+import AddNewPartyButton from "./ui/app/parties/AddNewPartyButton";
+import SeatsGraph from "./ui/app/head/SeatsGraph";
+import CountryList from "./ui/app/head/CountryListDropdown";
+import JsonShareButton from "./ui/app/JsonShareButton";
 
 const Seats = () => {
   const { parties, setParties } = useParties();

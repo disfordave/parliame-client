@@ -1,5 +1,5 @@
 import { useI18n } from "@/lib/zustandStore";
-import ThemeButton from "@/components/ui/ThemeButton";
+import ThemeButton from "@/components/ui/settings/ThemeButton";
 
 export default function Footer() {
   const { i } = useI18n();
