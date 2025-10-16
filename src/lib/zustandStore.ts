@@ -1,3 +1,4 @@
+import { countries } from "@/data/countries";
 import { translate } from "@/i18n/i18n";
 import {
   BearState,
@@ -7,6 +8,8 @@ import {
   SortByState,
   AllowTieBreakerState,
   SelectedPartiesState,
+  SelectedCountryState,
+  I18nState,
 } from "@/types";
 import { create } from "zustand";
 
@@ -46,21 +49,22 @@ const useAllowTieBreaker = create<AllowTieBreakerState>((set) => ({
   setAllowTieBreaker: (by) => set(() => ({ allowTieBreaker: by })),
 }));
 
-interface I18nState {
-  locale: string;
-  i: (key: string) => string;
-  setLocale: (by: string) => void;
-}
-
 const useI18n = create<I18nState>((set, get) => ({
   locale: localStorage.getItem("locale") || "en",
-  i: (key: string) => {
+  i: (key) => {
     const currentLocale = get().locale;
     return translate({ locale: currentLocale, id: key });
   },
-  setLocale: (by: string) => {
+  setLocale: (by) => {
     localStorage.setItem("locale", by);
     set(() => ({ locale: by }));
+  },
+}));
+
+const useSelectedCountry = create<SelectedCountryState>((set) => ({
+  selectedCountry: countries.find((c) => c.name === "European Union") ?? null,
+  setSelectedCountry: (by) => {
+    set(() => ({ selectedCountry: by }));
   },
 }));
 
@@ -73,4 +77,5 @@ export {
   useSortBy,
   useAllowTieBreaker,
   useI18n,
+  useSelectedCountry,
 };

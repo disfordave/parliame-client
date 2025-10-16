@@ -1,4 +1,4 @@
-import { Party } from "@/types";
+import { Country, Party } from "@/types";
 
 interface BearState {
   bears: number;
@@ -35,6 +35,17 @@ interface AllowTieBreakerState {
   setAllowTieBreaker: (by: boolean) => void;
 }
 
+interface I18nState {
+  locale: string;
+  i: (key: string) => string;
+  setLocale: (by: string) => void;
+}
+
+interface SelectedCountryState {
+  selectedCountry: Country | null;
+  setSelectedCountry: (by: Country | null) => void;
+}
+
 export type {
   BearState,
   DefaultCountryValueState,
@@ -43,4 +54,6 @@ export type {
   IsEditModeState,
   SortByState,
   AllowTieBreakerState,
+  I18nState,
+  SelectedCountryState
 };
