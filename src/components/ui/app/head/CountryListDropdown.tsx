@@ -83,7 +83,7 @@ export default function CountryListDropdown() {
             </div>
           ) : (
             <>
-              <span>Custom</span>
+              <span>{i("header.custom")}</span>
             </>
           )}
           <ChevronDownIcon
