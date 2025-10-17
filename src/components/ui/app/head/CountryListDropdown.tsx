@@ -2,6 +2,7 @@ import {
   useSelectedParties,
   useParties,
   useSelectedCountry,
+  useI18n,
 } from "@/lib/zustandStore";
 import { countries } from "@/data/countries";
 import { useEffect, useRef, useState } from "react";
@@ -13,6 +14,7 @@ export default function CountryListDropdown() {
   const { selectedCountry, setSelectedCountry } = useSelectedCountry();
   const { setParties } = useParties();
   const { setSelectedParties } = useSelectedParties();
+  const { i } = useI18n();
   const [openCountryList, setOpenCountryList] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
@@ -106,7 +108,7 @@ export default function CountryListDropdown() {
               >
                 <ul>
                   <li>
-                    <span className="px-2 py-1 text-sm opacity-75">Custom</span>
+                    <span className="px-2 py-1 text-sm opacity-75">{i("header.custom")}</span>
                     <ul>
                       <li>
                         <button
@@ -125,7 +127,7 @@ export default function CountryListDropdown() {
                           }`}
                         >
                           <div className="flex gap-1">
-                            <span>Custom</span>
+                            <span>{i("header.custom")}</span>
                           </div>
                         </button>
                       </li>
@@ -133,7 +135,7 @@ export default function CountryListDropdown() {
                   </li>
                   <li>
                     <span className="px-2 py-1 text-sm opacity-75">
-                      Sample Countries
+                      {i("header.sampleCountries")}
                     </span>
                     <ul>
                       {countries

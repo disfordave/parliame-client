@@ -7,6 +7,7 @@
   },
   "header": {
     "custom": "Aangepast",
+    "sampleCountries": "Voorbeeldlanden",
     "majorityWithCount": "Meerderheid met {count} zetels",
     "seatsForMajority": "{count} zetels voor de meerderheid",
     "seat": "Zetel",
