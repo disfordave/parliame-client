@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { countries } from "@/data/countries";
+import { sort } from "@/utils/sort";
 import {
   useSelectedParties,
   useIsEditMode,
@@ -8,16 +9,17 @@ import {
   useI18n,
   useSelectedCountry,
 } from "@/lib/zustandStore";
-import { PartyButton } from "@/components/ui/app/parties/PartyButton";
-import { sort } from "@/utils/sort";
-import AllowTieBreakerButton from "./ui/app/filters/AllowTieBreakerButton";
-import SwitchViewModeButton from "./ui/app/filters/SwitchViewModeButton";
-import SortButton from "./ui/app/filters/SortButton";
-import CoalitionBySpectrumButtons from "./ui/app/filters/CoalitionBySpectrumButtons";
-import AddNewPartyButton from "./ui/app/parties/AddNewPartyButton";
-import SeatsGraph from "./ui/app/head/SeatsGraph";
-import CountryListDropdown from "./ui/app/head/CountryListDropdown";
-import JsonShareButton from "./ui/app/JsonShareButton";
+import {
+  PartyButton,
+  AllowTieBreakerButton,
+  SwitchViewModeButton,
+  SortButton,
+  CoalitionBySpectrumButtons,
+  AddNewPartyButton,
+  SeatsGraph,
+  CountryListDropdown,
+  JsonShareButton,
+} from "@/components/ui/app";
 
 const Seats = () => {
   const { parties, setParties } = useParties();

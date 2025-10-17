@@ -9,7 +9,7 @@ import { Party } from "@/types";
 import { TrashIcon } from "@/components/icons/Icons";
 import { getPosition } from "@/utils/getPosition";
 
-export const PartyButton = ({ party }: { party: Party }) => {
+export default function PartyButton({ party }: { party: Party }) {
   const { isEditMode } = useIsEditMode();
   const { parties, setParties } = useParties();
   const { selectedParties, setSelectedParties } = useSelectedParties();

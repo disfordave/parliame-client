@@ -49,7 +49,7 @@ export default function CountryListDropdown() {
         onClick={() => {
           setOpenCountryList(!openCountryList);
         }}
-        className={`w-full rounded-lg border-2 border-gray-200 p-2 transition-colors duration-300 dark:border-gray-700 ${
+        className={`w-full rounded-lg border-2 border-gray-200 p-2 pe-1 transition-colors duration-300 dark:border-gray-700 ${
           openCountryList
             ? "bg-gray-200 dark:bg-gray-700"
             : "bg-white dark:bg-gray-900"
