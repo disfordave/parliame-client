@@ -88,50 +88,63 @@ export default function CountryListDropdown() {
               >
                 <ul>
                   <li>
-                    <button
-                      onClick={() => {
-                        setSelectedCountry(null);
-                        setParties([]);
-                        setSelectedParties([]);
-                        setOpenCountryList(false);
-                        return;
-                      }}
-                      className={`w-full p-2 transition-colors duration-300 ${
-                        !selectedCountry
-                          ? "bg-gray-200 dark:bg-gray-700"
-                          : "bg-white hover:bg-gray-100 dark:bg-gray-900 hover:dark:bg-gray-800"
-                      }`}
-                    >
-                      <div className="flex gap-1">
-                        <span>Custom</span>
-                      </div>
-                    </button>
-                  </li>
-                  {countries
-                    .sort((a, b) => a.name.localeCompare(b.name))
-                    .map((country) => (
-                      <li
-                        key={country.name}
-                        value={country.name}
-                        id={country.name}
-                      >
+                    <span className="px-2 py-1 text-sm opacity-75">Custom</span>
+                    <ul>
+                      <li>
                         <button
                           onClick={() => {
-                            select(country);
+                            if (selectedCountry) {
+                              setSelectedCountry(null);
+                              setParties([]);
+                              setSelectedParties([]);
+                            }
+                            setOpenCountryList(false);
                           }}
                           className={`w-full p-2 transition-colors duration-300 ${
-                            selectedCountry === country
+                            !selectedCountry
                               ? "bg-gray-200 dark:bg-gray-700"
                               : "bg-white hover:bg-gray-100 dark:bg-gray-900 hover:dark:bg-gray-800"
                           }`}
                         >
                           <div className="flex gap-1">
-                            <span>{country.name}</span>
-                            <span>{country.emoji}</span>
+                            <span>Custom</span>
                           </div>
                         </button>
                       </li>
-                    ))}
+                    </ul>
+                  </li>
+                  <li>
+                    <span className="px-2 py-1 text-sm opacity-75">
+                      Sample Countries
+                    </span>
+                    <ul>
+                      {countries
+                        .sort((a, b) => a.name.localeCompare(b.name))
+                        .map((country) => (
+                          <li
+                            key={country.name}
+                            value={country.name}
+                            id={country.name}
+                          >
+                            <button
+                              onClick={() => {
+                                select(country);
+                              }}
+                              className={`w-full p-2 transition-colors duration-300 ${
+                                selectedCountry === country
+                                  ? "bg-gray-200 dark:bg-gray-700"
+                                  : "bg-white hover:bg-gray-100 dark:bg-gray-900 hover:dark:bg-gray-800"
+                              }`}
+                            >
+                              <div className="flex gap-1">
+                                <span>{country.name}</span>
+                                <span>{country.emoji}</span>
+                              </div>
+                            </button>
+                          </li>
+                        ))}
+                    </ul>
+                  </li>
                 </ul>
               </motion.div>
             </>
