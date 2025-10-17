@@ -55,5 +55,5 @@ export type {
   SortByState,
   AllowTieBreakerState,
   I18nState,
-  SelectedCountryState
+  SelectedCountryState,
 };

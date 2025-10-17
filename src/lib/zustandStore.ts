@@ -1,5 +1,5 @@
 import { countries } from "@/data/countries";
-import { translate } from "@/i18n/i18n";
+import { defaultLocale, translate } from "@/i18n/i18n";
 import {
   BearState,
   DefaultCountryValueState,
@@ -50,7 +50,7 @@ const useAllowTieBreaker = create<AllowTieBreakerState>((set) => ({
 }));
 
 const useI18n = create<I18nState>((set, get) => ({
-  locale: localStorage.getItem("locale") || "en",
+  locale: localStorage.getItem("locale") || defaultLocale,
   i: (key) => {
     const currentLocale = get().locale;
     return translate({ locale: currentLocale, id: key });
