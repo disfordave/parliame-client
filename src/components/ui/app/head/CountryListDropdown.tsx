@@ -16,6 +16,8 @@ export default function CountryListDropdown() {
   const [openCountryList, setOpenCountryList] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
+  const itemRefs = useRef<Record<string, HTMLLIElement | null>>({});
+
   useEffect(() => {
     if (openCountryList && dropdownRef.current) {
       dropdownRef.current.focus();
@@ -35,6 +37,20 @@ export default function CountryListDropdown() {
     }
     setOpenCountryList(false);
   }
+
+  // Scroll to selected item when dropdown opens
+  useEffect(() => {
+    if (
+      openCountryList &&
+      selectedCountry &&
+      itemRefs.current[selectedCountry.name]
+    ) {
+      itemRefs.current[selectedCountry.name]?.scrollIntoView({
+        block: "nearest", // or "center"
+        behavior: "smooth",
+      });
+    }
+  }, [openCountryList, selectedCountry]);
 
   return (
     <div
@@ -125,6 +141,9 @@ export default function CountryListDropdown() {
                             key={country.name}
                             value={country.name}
                             id={country.name}
+                            ref={(el) => {
+                              if (el) itemRefs.current[country.name] = el;
+                            }}
                           >
                             <button
                               onClick={() => {
