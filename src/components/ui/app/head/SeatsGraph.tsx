@@ -38,7 +38,7 @@ export default function SeatsGraph() {
               ""
             ) : allowTieBreaker && majorityThreshold === selectedTotal ? (
               <span className="line-clamp-1 text-emerald-600 dark:text-emerald-400">
-                {i("body.tieBreakerEnabled")}
+                {i("header.tieBreakingMajority")}
               </span>
             ) : (total % 2 === 0 ? total / 2 + 1 : Math.ceil(total / 2)) <=
               selectedTotal ? (
