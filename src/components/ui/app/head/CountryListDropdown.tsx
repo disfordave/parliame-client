@@ -38,17 +38,19 @@ export default function CountryListDropdown() {
     setOpenCountryList(false);
   }
 
-  // Scroll to selected item when dropdown opens
   useEffect(() => {
     if (
       openCountryList &&
       selectedCountry &&
       itemRefs.current[selectedCountry.name]
     ) {
-      itemRefs.current[selectedCountry.name]?.scrollIntoView({
-        block: "nearest", // or "center"
-        behavior: "smooth",
-      });
+      const itemRef = itemRefs.current[selectedCountry.name];
+      if (itemRef) {
+        itemRef.scrollIntoView({
+          block: "nearest",
+          behavior: "smooth",
+        });
+      }
     }
   }, [openCountryList, selectedCountry]);
 
