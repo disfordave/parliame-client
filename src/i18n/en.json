@@ -7,6 +7,7 @@
   },
   "seats": "Seats",
   "header": {
+    "countries": "Countries",
     "custom": "Custom",
     "sampleCountries": "Sample countries",
     "seatsForMajority": "seats for majority",

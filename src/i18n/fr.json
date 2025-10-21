@@ -7,6 +7,7 @@
   },
   "seats": "Sièges",
   "header": {
+    "countries": "Pays",
     "custom": "Personnalisé",
     "sampleCountries": "Pays exemples",
     "seatsForMajority": "sièges pour la majorité",

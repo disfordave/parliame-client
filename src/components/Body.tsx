@@ -20,10 +20,11 @@ import {
   CountryListDropdown,
   JsonShareButton,
 } from "@/components/ui/app";
+import { ResponsivePie } from "@nivo/pie";
 
 const Seats = () => {
   const { parties, setParties } = useParties();
-  const { setSelectedParties } = useSelectedParties();
+  const { selectedParties, setSelectedParties } = useSelectedParties();
   const { isEditMode } = useIsEditMode();
   const { sortBy } = useSortBy();
   const { i, setLocale } = useI18n();
@@ -56,8 +57,51 @@ const Seats = () => {
 
   return (
     <div>
-      <CountryListDropdown />
-      <SeatsGraph />
+      <div className="block lg:hidden mt-4">
+        <CountryListDropdown />
+      </div>
+      <div className="w-full h-48 xs:h-48 sx:h-64 md:h-80 lg:h-96 -mb-4">
+        <ResponsivePie /* or Pie for fixed dimensions */
+          data={[
+            ...selectedParties.sort((a, b) => b.seats - a.seats).map((party) => ({
+              id: party.name,
+              label: party.name,
+              value: party.seats,
+              color: party.colour,
+            })),
+            {
+              id: "empty",
+              label: "empty",
+              value:
+                parties.reduce((acc, party) => acc + party.seats, 0) -
+                selectedParties.reduce((acc, party) => acc + party.seats, 0),
+              color: "#f0f0f0",
+            },
+          ]}
+          startAngle={-90}
+          endAngle={90}
+          margin={{ top: 16, right: 16, bottom: 16, left: 16 }}
+          sortByValue={false} 
+          innerRadius={0.4}
+          colors={{ datum: "data.color" }}
+          activeOuterRadiusOffset={8}
+          enableArcLinkLabels={false}
+          arcLinkLabelsSkipAngle={10}
+          arcLinkLabelsTextColor="#333333"
+          arcLinkLabelsThickness={2}
+          arcLinkLabelsColor={{ from: "color" }}
+          enableArcLabels={false}
+          arcLabelsSkipAngle={10}
+          arcLabelsTextColor={{ from: "color", modifiers: [["darker", 2]] }}
+          isInteractive={false}
+          transitionMode="innerRadius"
+          motionConfig="default"
+        />
+        
+      </div>
+      <div className="w-[calc(100%-2rem)] sx:w-3/4 mx-auto sticky top-0 pt-4 pb-2 z-10">
+        <SeatsGraph />
+      </div>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
         <AllowTieBreakerButton />
         <SortButton />

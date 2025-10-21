@@ -6,6 +6,7 @@
     "auto": "Automatisch"
   },
   "header": {
+    "countries": "Landen",
     "custom": "Aangepast",
     "sampleCountries": "Voorbeeldlanden",
     "majorityWithCount": "Meerderheid met {count} zetels",
