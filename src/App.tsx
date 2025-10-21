@@ -27,7 +27,7 @@ function App() {
           </div>
           <div className="hidden pt-4 lg:block">
             <div className="sticky top-4 h-[80vh] w-full overflow-auto rounded-lg border-2 border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-900">
-              <h2 className="px-2 py-1 text-xl font-semibold">
+              <h2 className="p-2 text-xl font-semibold">
                 {i("header.countries")}
               </h2>
               <ul>
@@ -96,7 +96,7 @@ function App() {
                                 : "bg-white hover:bg-gray-100 dark:bg-gray-900 hover:dark:bg-gray-800"
                             }`}
                           >
-                            <div className="flex gap-1">
+                            <div className="flex gap-1 line-clamp-1">
                               <span>{country.name}</span>
                               <span>{country.emoji}</span>
                             </div>
