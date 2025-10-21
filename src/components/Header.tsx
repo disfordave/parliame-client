@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <>
       <header
-        className={"mb-4 flex flex-wrap items-center justify-between gap-2"}
+        className={" flex flex-wrap items-center justify-between gap-2"}
       >
         <div className={"flex items-center gap-1"}>
           <img src={"/favicon.svg"} alt={"Parliament"} className={"size-8"} />

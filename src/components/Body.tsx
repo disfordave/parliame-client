@@ -57,10 +57,10 @@ const Seats = () => {
 
   return (
     <div>
-      <div className="block lg:hidden">
+      <div className="block lg:hidden mt-4">
         <CountryListDropdown />
       </div>
-      <div className="w-full h-64 lg:h-96">
+      <div className="w-full h-48 xs:h-48 sx:h-64 md:h-80 lg:h-96 -mb-4">
         <ResponsivePie /* or Pie for fixed dimensions */
           data={[
             ...selectedParties.sort((a, b) => b.seats - a.seats).map((party) => ({
@@ -97,8 +97,11 @@ const Seats = () => {
           transitionMode="innerRadius"
           motionConfig="default"
         />
+        
       </div>
-      <SeatsGraph />
+      <div className="w-[calc(100%-2rem)] sx:w-3/4 mx-auto sticky top-0 pt-4 pb-2 z-10">
+        <SeatsGraph />
+      </div>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
         <AllowTieBreakerButton />
         <SortButton />
