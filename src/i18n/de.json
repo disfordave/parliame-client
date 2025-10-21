@@ -6,6 +6,7 @@
     "auto": "Automatisch"
   },
   "header": {
+    "countries": "Länder",
     "custom": "Benutzerdefiniert",
     "sampleCountries": "Beispielländer",
     "majorityWithCount": "Mehrheit mit {count} Sitzen",
