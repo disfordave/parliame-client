@@ -1,5 +1,6 @@
 export { default as CountryListDropdown } from "./head/CountryListDropdown";
 export { default as SeatsGraph } from "./head/SeatsGraph";
+export { default as PieChart } from "./head/PieChart";
 
 export { default as AllowTieBreakerButton } from "./filters/AllowTieBreakerButton";
 export { default as SortButton } from "./filters/SortButton";
