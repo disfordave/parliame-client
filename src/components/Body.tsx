@@ -120,7 +120,7 @@ const Seats = () => {
       <div className="sticky top-0 z-10 mx-auto w-[calc(100%-2rem)] pb-2 pt-4 sx:w-3/4">
         <SeatsGraph />
       </div>
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
         <AllowTieBreakerButton />
         <SortButton />
         <SwitchViewModeButton />
