@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { countries } from "@/data/countries";
 import { sort } from "@/utils/sort";
 import {
@@ -55,6 +55,23 @@ const Seats = () => {
     }
   }, []);
 
+  const [isDarkMode, setIsDarkMode] = useState(
+    document.documentElement.classList.contains('dark')
+  );
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDarkMode(document.documentElement.classList.contains('dark'));
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div>
       <div className="mt-4 block lg:hidden">
@@ -64,7 +81,7 @@ const Seats = () => {
         <ResponsivePie
           data={[
             ...selectedParties
-              .sort((a, b) => b.seats - a.seats)
+              .sort((a, b) => sort(a, b, isEditMode, sortBy))
               .map((party) => ({
                 id: party.name.length < 1 ? party.shortName : party.name,
                 label: party.name.length < 1 ? party.shortName : party.name,
@@ -77,7 +94,7 @@ const Seats = () => {
               value:
                 parties.reduce((acc, party) => acc + party.seats, 0) -
                 selectedParties.reduce((acc, party) => acc + party.seats, 0),
-              color: "#f0f0f0",
+              color: isDarkMode ? "#374151" : "#e5e7eb"
             },
           ]}
           startAngle={-90}
