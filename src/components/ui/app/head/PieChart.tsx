@@ -60,7 +60,7 @@ export default function PieChart({
         endAngle={90}
         margin={{ top: 16, right: 16, bottom: 16, left: 16 }}
         sortByValue={false}
-        innerRadius={0.4}
+        innerRadius={0.35}
         colors={{ datum: "data.color" }}
         activeOuterRadiusOffset={8}
         enableArcLinkLabels={false}
