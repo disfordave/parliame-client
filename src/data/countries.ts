@@ -792,7 +792,7 @@ export const countries: Country[] = [
         shortName: "NZ First",
         seats: 8,
         colour: "#000000",
-        position: 8,
+        position: 100,
         isIndependent: false,
       },
     ],
