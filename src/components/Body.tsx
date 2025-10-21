@@ -61,7 +61,7 @@ const Seats = () => {
       <div className="mt-4 block lg:hidden">
         <CountryListDropdown />
       </div>
-      <div className="-mb-4 md:-mb-8 w-full h-full aspect-video">
+      <div className="-mb-4 aspect-video h-full w-full md:-mb-8">
         <PieChart
           parties={parties}
           selectedParties={selectedParties}

@@ -293,4 +293,4 @@ export default function PartyButton({ party }: { party: Party }) {
       )}
     </div>
   );
-};
+}

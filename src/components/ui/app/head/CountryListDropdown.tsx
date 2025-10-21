@@ -108,7 +108,9 @@ export default function CountryListDropdown() {
               >
                 <ul>
                   <li>
-                    <span className="px-2 py-1 text-sm opacity-75">{i("header.custom")}</span>
+                    <span className="px-2 py-1 text-sm opacity-75">
+                      {i("header.custom")}
+                    </span>
                     <ul>
                       <li>
                         <button
