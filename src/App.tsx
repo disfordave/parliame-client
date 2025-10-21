@@ -21,11 +21,11 @@ function App() {
     <div className="min-h-screen bg-white text-gray-950 transition-colors duration-300 dark:bg-gray-900 dark:text-white">
       <div className="mx-auto max-w-6xl p-4">
         <Header />
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
-          <div className="lg:col-span-3">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[14.5fr_5.5fr]">
+          <div className="">
             <Body />
           </div>
-          <div className="hidden pt-4 lg:col-span-1 lg:block">
+          <div className="hidden pt-4 lg:block">
             <div className="sticky top-4 h-[80vh] w-full overflow-auto rounded-lg border-2 border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-900">
               <h2 className="px-2 py-1 text-xl font-semibold">
                 {i("header.countries")}

@@ -57,18 +57,20 @@ const Seats = () => {
 
   return (
     <div>
-      <div className="block lg:hidden mt-4">
+      <div className="mt-4 block lg:hidden">
         <CountryListDropdown />
       </div>
-      <div className="w-full h-48 xs:h-48 sx:h-64 md:h-80 lg:h-96 -mb-4">
+      <div className="-mb-4 h-48 w-full xs:h-48 sx:h-64 md:h-80 lg:h-96">
         <ResponsivePie
           data={[
-            ...selectedParties.sort((a, b) => b.seats - a.seats).map((party) => ({
-              id: party.name.length < 1 ? party.shortName : party.name,
-              label: party.name.length < 1 ? party.shortName : party.name,
-              value: party.seats,
-              color: party.colour,
-            })),
+            ...selectedParties
+              .sort((a, b) => b.seats - a.seats)
+              .map((party) => ({
+                id: party.name.length < 1 ? party.shortName : party.name,
+                label: party.name.length < 1 ? party.shortName : party.name,
+                value: party.seats,
+                color: party.colour,
+              })),
             {
               id: "empty",
               label: "empty",
@@ -81,7 +83,7 @@ const Seats = () => {
           startAngle={-90}
           endAngle={90}
           margin={{ top: 16, right: 16, bottom: 16, left: 16 }}
-          sortByValue={false} 
+          sortByValue={false}
           innerRadius={0.4}
           colors={{ datum: "data.color" }}
           activeOuterRadiusOffset={8}
@@ -97,9 +99,8 @@ const Seats = () => {
           transitionMode="innerRadius"
           motionConfig="default"
         />
-        
       </div>
-      <div className="w-[calc(100%-2rem)] sx:w-3/4 mx-auto sticky top-0 pt-4 pb-2 z-10">
+      <div className="sticky top-0 z-10 mx-auto w-[calc(100%-2rem)] pb-2 pt-4 sx:w-3/4">
         <SeatsGraph />
       </div>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">

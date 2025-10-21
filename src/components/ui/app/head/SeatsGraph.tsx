@@ -31,7 +31,7 @@ export default function SeatsGraph() {
 
   return (
     <>
-      <div className="sticky top-0 z-50 -mx-4 mb-4 border border-gray-200 dark:border-gray-700 bg-white/50 p-2 transition-colors duration-300 dark:bg-gray-900/50 backdrop-blur-sm rounded-lg">
+      <div className="sticky top-0 z-50 -mx-4 mb-4 rounded-lg border border-gray-200 bg-white/50 p-2 backdrop-blur-sm transition-colors duration-300 dark:border-gray-700 dark:bg-gray-900/50">
         <div className="flex items-center justify-between">
           <p className="flex-1">
             {selectedTotal === total || selectedTotal === 0 ? (
@@ -112,7 +112,6 @@ export default function SeatsGraph() {
             ))}
           <div className="bg-background-elevated absolute left-[calc(50%-1px)] h-full border-l-2 border-dashed border-violet-500"></div>
         </div>
-       
       </div>
     </>
   );
