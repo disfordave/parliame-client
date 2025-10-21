@@ -61,11 +61,11 @@ const Seats = () => {
         <CountryListDropdown />
       </div>
       <div className="w-full h-48 xs:h-48 sx:h-64 md:h-80 lg:h-96 -mb-4">
-        <ResponsivePie /* or Pie for fixed dimensions */
+        <ResponsivePie
           data={[
             ...selectedParties.sort((a, b) => b.seats - a.seats).map((party) => ({
-              id: party.name,
-              label: party.name,
+              id: party.name.length < 1 ? party.shortName : party.name,
+              label: party.name.length < 1 ? party.shortName : party.name,
               value: party.seats,
               color: party.colour,
             })),
