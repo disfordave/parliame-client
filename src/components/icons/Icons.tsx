@@ -1,3 +1,5 @@
+// From heroicons, under the MIT license.
+
 export const CaretDownIcon = ({ className = "" }) => {
   return (
     <>
