@@ -114,7 +114,7 @@ export const countries: Country[] = [
       {
         name: "Partij voor de Vrijheid",
         shortName: "PVV",
-        seats: 37,
+        seats: 26,
         colour: "#012758",
         position: 100,
         isIndependent: false,
@@ -122,7 +122,7 @@ export const countries: Country[] = [
       {
         name: "Volkspartij voor Vrijheid en Democratie",
         shortName: "VVD",
-        seats: 24,
+        seats: 22,
         colour: "#0A2CCA",
         position: 50,
         isIndependent: false,
@@ -130,23 +130,15 @@ export const countries: Country[] = [
       {
         name: "GroenLinks/Partij van de Arbeid",
         shortName: "GL/PvdA",
-        seats: 25,
+        seats: 20,
         colour: "#DC1F26",
         position: -50,
         isIndependent: false,
       }, // Centre-left
       {
-        name: "Nieuw Sociaal Contract",
-        shortName: "NSC",
-        seats: 20,
-        colour: "#F0C400",
-        position: 25,
-        isIndependent: false,
-      }, // Lean right
-      {
         name: "Democraten 66",
         shortName: "D66",
-        seats: 9,
+        seats: 26,
         colour: "#00AE41",
         position: -25,
         isIndependent: false,
@@ -154,7 +146,7 @@ export const countries: Country[] = [
       {
         name: "Christen-Democratisch Appèl",
         shortName: "CDA",
-        seats: 5,
+        seats: 18,
         colour: "#2CC84D",
         position: 25,
         isIndependent: false,
@@ -162,7 +154,7 @@ export const countries: Country[] = [
       {
         name: "BoerBurgerBeweging",
         shortName: "BBB",
-        seats: 7,
+        seats: 4,
         colour: "#94C11F",
         position: 50,
         isIndependent: false,
@@ -170,7 +162,7 @@ export const countries: Country[] = [
       {
         name: "Volt",
         shortName: "Volt",
-        seats: 2,
+        seats: 1,
         colour: "#582c83",
         position: -25,
         isIndependent: false,
@@ -202,7 +194,7 @@ export const countries: Country[] = [
       {
         name: "Forum voor Democratie",
         shortName: "FvD",
-        seats: 3,
+        seats: 7,
         colour: "#841818",
         position: 100,
         isIndependent: false,
@@ -210,7 +202,7 @@ export const countries: Country[] = [
       {
         name: "Socialistische Partij",
         shortName: "SP",
-        seats: 5,
+        seats: 3,
         colour: "#F60000",
         position: -75,
         isIndependent: false,
@@ -226,11 +218,19 @@ export const countries: Country[] = [
       {
         name: "JA21",
         shortName: "JA21",
-        seats: 1,
+        seats: 9,
         colour: "#242B57",
         position: 75,
         isIndependent: false,
-      }, // Centre-right
+      }, 
+      {
+        name: "50PLUS",
+        shortName: "50PLUS",
+        seats: 2,
+        colour: "#92107D",
+        position: 0,
+        isIndependent: false,
+      }, 
     ],
   },
   {

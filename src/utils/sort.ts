@@ -55,6 +55,11 @@ export const sort = (
     // If only b is independent, push it to the end
     if (bIsIndependent) return -1;
 
+    if (a.seats === b.seats) {
+      // If seats are equal, sort by name
+      return a.shortName.localeCompare(b.shortName);
+    }
+
     // If neither is independent, sort by seats in descending order
     return b.seats - a.seats;
   }
