@@ -20,7 +20,7 @@
 
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
-import { countries } from "@/data/countries";
+// import { countries } from "@/data/countries";
 import { sort } from "@/utils/sort";
 import {
   useSelectedParties,
@@ -54,23 +54,23 @@ const Seats = () => {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(document.location.search);
-    const countryName = queryParams.get("country");
+    // const countryName = queryParams.get("country");
     const lang = queryParams.get("lang");
-    const country = countries.find((country) => country.name === countryName);
-    if (country) {
-      setSelectedCountry(country);
-      setParties(country.parties);
-      setSelectedParties(country.parties);
-    } else {
-      const country = countries.find(
-        (country) => country.name === "European Union",
-      );
-      if (country) {
-        setSelectedCountry(country);
-        setParties(country.parties);
-        setSelectedParties(country.parties);
-      }
-    }
+    // const country = countries.find((country) => country.name === countryName);
+    // if (country) {
+    //   setSelectedCountry(country);
+    //   setParties(country.parties);
+    //   setSelectedParties(country.parties);
+    // } else {
+    //   const country = countries.find(
+    //     (country) => country.name === "European Union",
+    //   );
+    //   if (country) {
+    //     setSelectedCountry(country);
+    //     setParties(country.parties);
+    //     setSelectedParties(country.parties);
+    //   }
+    // }
 
     if (lang && ["en", "fr", "de", "nl"].includes(lang)) {
       setLocale(lang);

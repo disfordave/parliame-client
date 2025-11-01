@@ -1,5 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { useEffect, useState } from "react";
 import Footer from "./components/Footer";
@@ -8,7 +8,7 @@ import { useParties, useSelectedParties } from "./lib/zustandStore";
 
 export default function Data() {
   const { parties, setParties } = useParties();
-  const { selectedParties, setSelectedParties } = useSelectedParties();
+  const { setSelectedParties } = useSelectedParties();
 
   const [countriesState, setCountriesState] = useState(null);
   const [selectedCountryState, setSelectedCountryState] = useState(null);
@@ -58,8 +58,16 @@ export default function Data() {
           "http://localhost:3000/api/polls/" + (selectedPoll as any).id,
         );
         const json = await data.json();
-        setParties(json.results);
-        setSelectedParties(json.results);
+        const partyData = json.results.map((item: any) => ({
+            name: item.party.name,
+            shortName: item.party.shortName,
+            seats: item.seats,
+            colour: item.party.colour,
+            position: item.party.position,
+            isIndependent: false,
+          }));
+        setParties(partyData);
+        setSelectedParties(partyData);
         console.log("Parties set:", json.results);
       }
     };
@@ -98,7 +106,7 @@ export default function Data() {
                             selectedCountryState === country
                               ? "bg-red-500 text-white"
                               : "bg-gray-200 p-4 dark:bg-gray-700"
-                          } rounded-full px-2 py-1 text-nowrap`}
+                          } text-nowrap rounded-full px-2 py-1`}
                         >
                           {country.name} {country.emoji}
                         </button>
@@ -115,7 +123,7 @@ export default function Data() {
                       <li key={item.id}>
                         <button
                           onClick={() => setSelectedChamber(item)}
-                          className={`${selectedChamber === item ? "bg-blue-500 text-white" : "bg-gray-200 p-4 dark:bg-gray-700"} rounded-full px-2 py-1 text-nowrap`}
+                          className={`${selectedChamber === item ? "bg-blue-500 text-white" : "bg-gray-200 p-4 dark:bg-gray-700"} text-nowrap rounded-full px-2 py-1`}
                         >
                           {item.name}
                         </button>
@@ -134,7 +142,7 @@ export default function Data() {
                       <li key={poll.id}>
                         <button
                           onClick={() => setSelectedPoll(poll)}
-                          className={`${selectedPoll === poll ? "bg-green-500 text-white" : "bg-gray-200 p-4 dark:bg-gray-700"} rounded-full px-2 py-1 text-nowrap`}
+                          className={`${selectedPoll === poll ? "bg-green-500 text-white" : "bg-gray-200 p-4 dark:bg-gray-700"} text-nowrap rounded-full px-2 py-1`}
                         >
                           {poll.name} -{" "}
                           {new Date(poll.date).toLocaleDateString()}
@@ -147,18 +155,22 @@ export default function Data() {
                 )}
               </div>
               {parties && parties.length > 0 && (
-                <div className="rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900 ">
+                <div className="rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900">
                   <h2 className="mb-2 text-xl font-bold">Parties</h2>
                   <ul>
-                    {parties.map((p, index) => (
-                      <li key={p.partyId} className="mb-1 flex items-center">
-                        <span
-                          className="mr-2 inline-block h-4 w-4 rounded-full"
-                          style={{ backgroundColor: p.party.colour }}
-                        ></span>
-                        {p.party.name} - Seats: {p.seats}
-                      </li>
-                    ))}
+                    {parties.map((p, index) => {
+                      return (
+                        <li key={index} className="mb-1 flex items-center">
+                          <span
+                            className="mr-2 inline-block h-4 w-4 rounded-full"
+                            style={{
+                              backgroundColor: p.colour || "#999999",
+                            }}
+                          ></span>
+                          {p.name} - Seats: {p.seats}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               )}
