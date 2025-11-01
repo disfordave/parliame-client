@@ -18,27 +18,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { useI18n } from "@/lib/zustandStore";
 import { LocaleSettingButton, ThemeButton } from "@/components/ui/settings/";
 
 export default function Footer() {
-  const { i } = useI18n();
   return (
     <>
-      <div className={"mt-4 italic opacity-75"}>
-        <p>
-          {i("footer.feelFree")}{" "}
-          <a
-            className={"underline hover:no-underline"}
-            href={"https://disfordave.com/projects/parliament/#comments"}
-            rel={"noreferrer noopener"}
-            target={"_blank"}
-          >
-            {i("footer.myWebsite")}
-          </a>{" "}
-          {i("footer.ifYouHave")}
-        </p>
-      </div>
       <footer
         className={
           "flex flex-wrap items-center justify-between gap-2 py-8 text-start"

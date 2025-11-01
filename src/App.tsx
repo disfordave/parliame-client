@@ -23,12 +23,9 @@ import Body from "@/components/Body";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import LandscapeCountryListBanner from "./components/ui/app/head/LandscapeCountryListBanner";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-const queryClient = new QueryClient();
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
       <div className="min-h-screen bg-white text-gray-950 transition-colors duration-300 dark:bg-gray-900 dark:text-white">
         <div className="mx-auto max-w-6xl p-4">
           <Header />
@@ -43,7 +40,6 @@ function App() {
           <Footer />
         </div>
       </div>
-    </QueryClientProvider>
   );
 }
 

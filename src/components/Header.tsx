@@ -20,13 +20,15 @@
 
 import { useI18n } from "@/lib/zustandStore";
 import { Logo } from "./icons/Logo";
+import { Link } from "react-router";
 
 export default function Header() {
   const { i } = useI18n();
   return (
     <>
       <header className={"flex flex-wrap items-center justify-between gap-4"}>
-        <div className={"flex items-center gap-2"}>
+        <div >
+          <Link to="/" className={"flex items-center gap-2"}>
           <Logo className="size-12 flex-shrink-0" />
           <div className="flex flex-col justify-start">
             <h1 className="text-2xl font-bold uppercase">Parliame</h1>
@@ -34,7 +36,16 @@ export default function Header() {
               {i("subtitle")}
             </p>
           </div>
+          </Link>
         </div>
+        <nav className="flex gap-2">
+          <Link to="/" className="text-blue-600 hover:underline">
+            Home
+          </Link>
+          <Link to="/data" className="text-blue-600 hover:underline">
+            Data
+          </Link>
+        </nav>
       </header>
     </>
   );
