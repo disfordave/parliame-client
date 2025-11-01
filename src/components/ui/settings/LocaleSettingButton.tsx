@@ -53,7 +53,7 @@ export default function LocaleSettingButton() {
       >
         <span className="text-start">{locale.toUpperCase()}</span>
         <ChevronDownIcon
-          className={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+          className={`transition-transform duration-300 ${isOpen ? "" : "rotate-180"}`}
         />
       </button>
       <AnimatePresence>
@@ -64,11 +64,11 @@ export default function LocaleSettingButton() {
               transition={{
                 duration: 0.3,
               }}
-              initial={{ opacity: 0, translateY: -2 }}
+              initial={{ opacity: 0, translateY: 2 }}
               animate={{ opacity: 1, translateY: 0 }}
-              exit={{ opacity: 0, translateY: -2 }}
+              exit={{ opacity: 0, translateY: 2 }}
               ref={dropdownRef}
-              className="absolute z-[100] flex w-full flex-col overflow-hidden rounded-lg border-2 border-gray-200 shadow-md dark:border-gray-700"
+              className="absolute z-[100] flex w-full flex-col overflow-hidden rounded-lg border-2 border-gray-200 shadow-md dark:border-gray-700 bottom-10"
             >
               {Object.keys(locales).map((loc) => (
                 <button

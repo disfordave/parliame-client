@@ -1,5 +1,6 @@
 {
   "parliament": "Parlement",
+  "subtitle": "Een hulpmiddel voor de verdeling van parlementaire zetels",
   "appearance": {
     "light": "Licht",
     "dark": "Donker",

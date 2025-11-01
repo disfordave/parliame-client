@@ -19,7 +19,7 @@
 */
 
 import { useI18n } from "@/lib/zustandStore";
-import { ThemeButton } from "@/components/ui/settings/";
+import { LocaleSettingButton, ThemeButton } from "@/components/ui/settings/";
 
 export default function Footer() {
   const { i } = useI18n();
@@ -55,7 +55,12 @@ export default function Footer() {
             @disfordave
           </a>{" "}
         </p>
-        <ThemeButton />
+        <div className="flex gap-2 justify-start items-center flex-wrap">
+          <ThemeButton />
+        <div className="flex gap-2">
+          <LocaleSettingButton />
+        </div>
+        </div>
       </footer>
     </>
   );

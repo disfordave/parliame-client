@@ -1,5 +1,6 @@
 {
   "parliament": "Parlament",
+  "subtitle": "Ein Werkzeug zur Verteilung von Parlamentssitzen",
   "appearance": {
     "light": "Hell",
     "dark": "Dunkel",

@@ -1,5 +1,6 @@
 {
   "parliament": "Parlement",
+  "subtitle": "Un outil de distribution des sièges parlementaires",
   "appearance": {
     "light": "Clair",
     "dark": "Sombre",
