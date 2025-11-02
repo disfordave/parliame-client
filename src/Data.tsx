@@ -209,7 +209,14 @@ export default function Data() {
                           body: JSON.stringify(newCountry),
                         },
                       );
+
+                      if (!addCountry.ok) {
+                        alert(`Error adding country: ${addCountry.statusText}`);
+                        return;
+                      }
                       const addedCountry = await addCountry.json();
+
+                      if (!addedCountry) return;
                       //@ts-expect-error ts-ignore
                       setCountriesState([
                         ...(countriesState as any[]),
@@ -309,6 +316,11 @@ export default function Data() {
                               body: JSON.stringify(newParty),
                             },
                           );
+
+                          if (!addParty.ok) {
+                            alert(`Error adding party: ${addParty.statusText}`);
+                            return;
+                          }
                           const addedParty = await addParty.json();
                           setSelectedCountryPartyData([
                             ...(selectedCountryPartyData as any[]),
@@ -408,6 +420,10 @@ export default function Data() {
                           body: JSON.stringify(newCountry),
                         },
                       );
+                      if (!addChamber.ok) {
+                        alert(`Error adding chamber: ${addChamber.statusText}`);
+                        return;
+                      }
                       const addedChamber = await addChamber.json();
                       //@ts-expect-error ts-ignore
                       setChambers([...(chambers as any[]), addedChamber]);
@@ -490,6 +506,10 @@ export default function Data() {
                           body: JSON.stringify(newPoll),
                         },
                       );
+                      if (!addPoll.ok) {
+                        alert(`Error adding poll: ${addPoll.statusText}`);
+                        return;
+                      }
                       const addedPoll = await addPoll.json();
                       //@ts-expect-error ts-ignore
                       setPolls([...(polls as any[]), addedPoll]);
