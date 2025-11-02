@@ -86,7 +86,7 @@ export default function Data() {
         <div className="mt-4 grid flex-1 grid-cols-1 gap-4 lg:grid-cols-[14.5fr_5.5fr]">
           <div className="">
             <div className="mb-4 block lg:hidden">
-              <div className="rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900">
+              <div className="rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900 overflow-auto">
                 <h2 className="mb-2 text-xl font-bold">User Information</h2>
                 <p>
                   Select a country, chamber, and election/poll to view party
@@ -96,7 +96,7 @@ export default function Data() {
             </div>
             <div>
               {countriesState && (countriesState as any[]).length > 0 && (
-                <div className="mb-4 rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900">
+                <div className="mb-4 rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900 overflow-auto">
                   <h2 className="mb-2 text-xl font-bold">
                     Countries & Regions
                   </h2>
@@ -120,7 +120,7 @@ export default function Data() {
                   </ul>
                 </div>
               )}
-              <div className="mb-4 rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900">
+              <div className="mb-4 rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900 overflow-auto">
                 <h2 className="mb-2 text-xl font-bold">Chambers</h2>
                 {chambers && (chambers as any[]).length > 0 ? (
                   <ul className="flex flex-wrap items-start gap-2">
@@ -139,7 +139,7 @@ export default function Data() {
                   <p className="px-2 py-1">No chambers available</p>
                 )}
               </div>
-              <div className="mb-4 rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900">
+              <div className="mb-4 rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900 overflow-auto">
                 <h2 className="mb-2 text-xl font-bold">Election & Polls</h2>
                 {polls && (polls as any[]).length > 0 ? (
                   <ul className="flex flex-wrap items-start gap-2">
@@ -160,14 +160,14 @@ export default function Data() {
                 )}
               </div>
               {parties && parties.length > 0 && (
-                <div className="rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900">
+                <div className="rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900 overflow-auto">
                   <h2 className="mb-2 text-xl font-bold">Parties</h2>
                   <ul>
                     {parties.map((p, index) => {
                       return (
                         <li key={index} className="mb-1 flex items-center">
                           <span
-                            className="mr-2 inline-block h-4 w-4 rounded-full"
+                            className="mr-2 inline-block h-4 w-4 rounded-full flex-shrink-0"
                             style={{
                               backgroundColor: p.colour || "#999999",
                             }}
@@ -182,7 +182,7 @@ export default function Data() {
             </div>
           </div>
           <div className="hidden lg:block">
-            <div className="sticky top-4 h-[80vh] w-full overflow-auto rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900">
+            <div className="sticky top-4 h-[80vh] w-full overflow-auto rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900 ">
               <div className="">
                 <h2 className="mb-2 text-xl font-bold">User Information</h2>
                 <p>
