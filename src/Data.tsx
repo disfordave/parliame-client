@@ -6,9 +6,37 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import { useParties, useSelectedParties } from "./lib/zustandStore";
 
+export const API_BASE = "http://localhost:3000";
+
+export interface User {
+  githubId: string;
+  username: string;
+  displayName: string;
+  avatarUrl: string;
+}
+
+export async function getUser() {
+  const res = await fetch(`${API_BASE}/auth/user`, { credentials: "include" });
+  return res.ok ? res.json() : null;
+}
+
+const handleLogout = async () => {
+    await fetch(`${API_BASE}/auth/logout`, {
+      method: "GET",
+      credentials: "include", // include cookies
+    });
+    window.location.href = "/data"; // or use navigate("/")
+  };
+
 export default function Data() {
   const { parties, setParties } = useParties();
   const { setSelectedParties } = useSelectedParties();
+
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    getUser().then(setUser);
+  }, []);
 
   const [countriesState, setCountriesState] = useState(null);
   const [selectedCountryState, setSelectedCountryState] = useState(null);
@@ -16,13 +44,11 @@ export default function Data() {
   const [selectedChamber, setSelectedChamber] = useState(null);
   const [polls, setPolls] = useState(null);
   const [selectedPoll, setSelectedPoll] = useState(null);
-  const [selectedCountryPartyData, setSelectedCountryPartyData] = useState<
-    any[]
-  >([]);
+  const [selectedCountryPartyData, setSelectedCountryPartyData] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchCountries = async () => {
-      const data = await fetch("http://localhost:3000/api/countries");
+      const data = await fetch("http://localhost:3000/countries");
       const json = await data.json();
       setCountriesState(json);
     };
@@ -33,7 +59,7 @@ export default function Data() {
     const fetchCountryPartyData = async () => {
       if (selectedCountryState) {
         const data = await fetch(
-          "http://localhost:3000/api/parties?country=" +
+          "http://localhost:3000/parties?country=" +
             (selectedCountryState as any).code,
         );
         const json = await data.json();
@@ -46,7 +72,7 @@ export default function Data() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetch(
-        "http://localhost:3000/api/chambers?country=" +
+        "http://localhost:3000/chambers?country=" +
           (selectedCountryState as any).code,
       );
       const json = await data.json();
@@ -60,7 +86,7 @@ export default function Data() {
   useEffect(() => {
     const fetchPolls = async () => {
       const data = await fetch(
-        "http://localhost:3000/api/polls?type=election&chamber=" +
+        "http://localhost:3000/polls?type=election&chamber=" +
           (selectedChamber as any).id +
           "&electionOnly=true",
       );
@@ -76,7 +102,7 @@ export default function Data() {
     const fetchPartyData = async () => {
       if (selectedPoll) {
         const data = await fetch(
-          "http://localhost:3000/api/polls/" + (selectedPoll as any).id,
+          "http://localhost:3000/polls/" + (selectedPoll as any).id,
         );
         const json = await data.json();
         const partyData = json.results.map((item: any) => ({
@@ -105,10 +131,18 @@ export default function Data() {
             <div className="mb-4 block lg:hidden">
               <div className="overflow-auto rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900">
                 <h2 className="mb-2 text-xl font-bold">User Information</h2>
-                <p>
-                  Select a country, chamber, and election/poll to view party
-                  data.
-                </p>
+                <div style={{ textAlign: "center", marginTop: "50px" }}>
+                  {!user ? (
+                    <a href={`${API_BASE}/auth/github`}>
+                      <button>Login with GitHub</button>
+                    </a>
+                  ) : (
+                    <div>
+                      <h2>Welcome, {user.username}</h2>
+                       <button onClick={handleLogout}>Logout</button>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
             <div>
@@ -152,6 +186,7 @@ export default function Data() {
                       const addCountry = await fetch(
                         "http://localhost:3000/api/countries",
                         {
+                          credentials: "include",
                           method: "POST",
                           headers: {
                             "Content-Type": "application/json",
@@ -253,6 +288,7 @@ export default function Data() {
                           const addParty = await fetch(
                             "http://localhost:3000/api/parties",
                             {
+                              credentials: "include",
                               method: "POST",
                               headers: {
                                 "Content-Type": "application/json",
@@ -457,10 +493,18 @@ export default function Data() {
             <div className="sticky top-4 h-[80vh] w-full overflow-auto rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900">
               <div className="">
                 <h2 className="mb-2 text-xl font-bold">User Information</h2>
-                <p>
-                  Select a country, chamber, and election/poll to view party
-                  data.
-                </p>
+                <div style={{ textAlign: "center", marginTop: "50px" }}>
+                  {!user ? (
+                    <a href={`${API_BASE}/auth/github`}>
+                      <button>Login with GitHub</button>
+                    </a>
+                  ) : (
+                    <div>
+                      <h2>Welcome, {user.username}</h2>
+                       <button onClick={handleLogout}>Logout</button>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
