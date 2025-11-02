@@ -16,6 +16,9 @@ export default function Data() {
   const [selectedChamber, setSelectedChamber] = useState(null);
   const [polls, setPolls] = useState(null);
   const [selectedPoll, setSelectedPoll] = useState(null);
+  const [selectedCountryPartyData, setSelectedCountryPartyData] = useState<
+    any[]
+  >([]);
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -25,6 +28,20 @@ export default function Data() {
     };
     fetchCountries();
   }, []);
+
+  useEffect(() => {
+    const fetchCountryPartyData = async () => {
+      if (selectedCountryState) {
+        const data = await fetch(
+          "http://localhost:3000/api/parties?country=" +
+            (selectedCountryState as any).code,
+        );
+        const json = await data.json();
+        setSelectedCountryPartyData(json as any[]);
+      }
+    };
+    fetchCountryPartyData();
+  }, [selectedCountryState]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -178,6 +195,129 @@ export default function Data() {
                       Add Country
                     </button>
                   </form>
+                  <ul className="flex flex-wrap items-center gap-2">
+                    {selectedCountryPartyData &&
+                      (selectedCountryPartyData as any[]).map(
+                        (p: any, index: number) => (
+                          <li
+                            key={index}
+                            className="flex items-center gap-1 text-nowrap rounded-full bg-gray-200 px-2 py-1 dark:bg-gray-700"
+                          >
+                            <span
+                              className="size-3 flex-shrink-0 rounded-full"
+                              style={{
+                                backgroundColor: p.colour || "#999999",
+                              }}
+                            ></span>
+                            {p.shortName}
+                          </li>
+                        ),
+                      )}
+                  </ul>
+                  {selectedCountryState && (
+                    <>
+                      <h3>
+                        Add Party for {(selectedCountryState as any).name}
+                      </h3>
+                      <form
+                        onSubmit={async (e) => {
+                          e.preventDefault();
+                          const form = e.target as HTMLFormElement;
+                          const formData = new FormData(form);
+                          const id = formData.get("id") as string;
+                          const name = formData.get("name") as string;
+                          const shortName = formData.get("shortName") as string;
+                          const colour = formData.get("colour") as string;
+                          const position = formData.get("position") as string;
+                          // const isIndependent = formData.get(
+                          //   "isIndependent",
+                          // ) === "on";
+                          const country = selectedCountryState
+                            ? (selectedCountryState as any).code
+                            : "";
+
+                          if (colour && !colour.startsWith("#")) {
+                            alert(
+                              "Colour must be a valid hex code starting with #",
+                            );
+                            return;
+                          }
+                          const newParty = {
+                            id,
+                            name,
+                            shortName,
+                            colour,
+                            position,
+                            country,
+                          };
+                          const addParty = await fetch(
+                            "http://localhost:3000/api/parties",
+                            {
+                              method: "POST",
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify(newParty),
+                            },
+                          );
+                          const addedParty = await addParty.json();
+                          setSelectedCountryPartyData([
+                            ...(selectedCountryPartyData as any[]),
+                            addedParty,
+                          ]);
+
+                          form.reset();
+                        }}
+                      >
+                        <input
+                          type="text"
+                          name="id"
+                          placeholder="Party ID"
+                          className="mr-2 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
+                          required
+                        />
+                        <input
+                          type="text"
+                          name="name"
+                          placeholder="Party name"
+                          className="mr-2 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
+                          required
+                        />
+                        <input
+                          type="text"
+                          name="shortName"
+                          placeholder="Short Name"
+                          className="mr-2 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
+                        />
+                        <input
+                          type="text"
+                          name="colour"
+                          placeholder="Colour (hex code)"
+                          className="mr-2 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
+                        />
+                        <input
+                          type="text"
+                          name="position"
+                          placeholder="Position (e.g., left, center, right)"
+                          className="mr-2 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
+                        />
+                        <label className="mr-2">
+                          <input
+                            type="checkbox"
+                            name="isIndependent"
+                            className="mr-1"
+                          />
+                          Independent
+                        </label>
+                        <button
+                          type="submit"
+                          className="rounded bg-blue-500 px-2 py-1 text-white"
+                        >
+                          Add Party
+                        </button>
+                      </form>
+                    </>
+                  )}
                 </div>
               )}
               <div className="mb-4 overflow-auto rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900">
@@ -198,78 +338,78 @@ export default function Data() {
                 ) : (
                   <p className="px-2 py-1">No chambers available</p>
                 )}
-                {
-                  selectedCountryState && (
-                    <form
-                  onSubmit={async (e) => {
-                    e.preventDefault();
-                    const form = e.target as HTMLFormElement;
-                    const formData = new FormData(form);
-                    const id = formData.get("id") as string;
-                    const name = formData.get("name") as string;
-                    const country = selectedCountryState ? (selectedCountryState as any).code : "";
-                    const shortName = formData.get("shortName") as string;
-                    const totalSeats = formData.get("totalSeats") as string;
-                    const newCountry = {
-                      id,
-                      name,
-                      country,
-                      shortName,
-                      totalSeats: parseInt(totalSeats, 10),
-                    };
-                    const addChamber = await fetch(
-                      "http://localhost:3000/api/chambers",
-                      {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
+                {selectedCountryState && (
+                  <form
+                    onSubmit={async (e) => {
+                      e.preventDefault();
+                      const form = e.target as HTMLFormElement;
+                      const formData = new FormData(form);
+                      const id = formData.get("id") as string;
+                      const name = formData.get("name") as string;
+                      const country = selectedCountryState
+                        ? (selectedCountryState as any).code
+                        : "";
+                      const shortName = formData.get("shortName") as string;
+                      const totalSeats = formData.get("totalSeats") as string;
+                      const newCountry = {
+                        id,
+                        name,
+                        country,
+                        shortName,
+                        totalSeats: parseInt(totalSeats, 10),
+                      };
+                      const addChamber = await fetch(
+                        "http://localhost:3000/api/chambers",
+                        {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify(newCountry),
                         },
-                        body: JSON.stringify(newCountry),
-                      },
-                    );
-                    const addedChamber = await addChamber.json();
-                    //@ts-expect-error ts-ignore
-                    setChambers([...(chambers as any[]), addedChamber]);
-                    
-                    form.reset();
-                  }}
-                >
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Chamber name"
-                    className="mr-2 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
-                    required
-                  />
-                  <input
-                    type="text"
-                    name="id"
-                    placeholder="Chamber ID"
-                    className="mr-2 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
-                    required
-                  />
-                  <input
-                    type="text"
-                    name="shortName"
-                    placeholder="Short Name"
-                    className="mr-2 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
-                  />
-                  <input
-                    type="number"
-                    name="totalSeats"
-                    placeholder="Total Seats"
-                    className="mr-2 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
-                    required
-                  />
-                  <button
-                    type="submit"
-                    className="rounded bg-blue-500 px-2 py-1 text-white"
+                      );
+                      const addedChamber = await addChamber.json();
+                      //@ts-expect-error ts-ignore
+                      setChambers([...(chambers as any[]), addedChamber]);
+
+                      form.reset();
+                    }}
                   >
-                    Add Chamber
-                  </button>
-                </form>
-                  )
-                }
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Chamber name"
+                      className="mr-2 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
+                      required
+                    />
+                    <input
+                      type="text"
+                      name="id"
+                      placeholder="Chamber ID"
+                      className="mr-2 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
+                      required
+                    />
+                    <input
+                      type="text"
+                      name="shortName"
+                      placeholder="Short Name"
+                      className="mr-2 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
+                    />
+                    <input
+                      type="number"
+                      name="totalSeats"
+                      placeholder="Total Seats"
+                      className="mr-2 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
+                      required
+                    />
+                    <button
+                      type="submit"
+                      className="rounded bg-blue-500 px-2 py-1 text-white"
+                    >
+                      Add Chamber
+                    </button>
+                  </form>
+                )}
               </div>
               <div className="mb-4 overflow-auto rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900">
                 <h2 className="mb-2 text-xl font-bold">Election & Polls</h2>
