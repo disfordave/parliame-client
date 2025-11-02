@@ -29,26 +29,30 @@ export default function Data() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetch(
-        "http://localhost:3000/api/chambers/" +
+        "http://localhost:3000/api/chambers?country=" +
           (selectedCountryState as any).code,
       );
       const json = await data.json();
       setChambers(json);
     };
-    fetchData();
+    if (selectedCountryState) {
+      fetchData();
+    }
   }, [selectedCountryState, countriesState]);
 
   useEffect(() => {
     const fetchPolls = async () => {
       const data = await fetch(
-        "http://localhost:3000/api/polls/filter?chamber=" +
+        "http://localhost:3000/api/polls?type=election&chamber=" +
           (selectedChamber as any).id +
           "&electionOnly=true",
       );
       const json = await data.json();
       setPolls(json);
     };
-    fetchPolls();
+    if (selectedChamber) {
+      fetchPolls();
+    }
   }, [countriesState, selectedCountryState, chambers, selectedChamber]);
 
   useEffect(() => {
@@ -59,19 +63,20 @@ export default function Data() {
         );
         const json = await data.json();
         const partyData = json.results.map((item: any) => ({
-            name: item.party.name,
-            shortName: item.party.shortName,
-            seats: item.seats,
-            colour: item.party.colour,
-            position: item.party.position,
-            isIndependent: false,
-          }));
+          name: item.party.name,
+          shortName: item.party.shortName,
+          seats: item.seats,
+          colour: item.party.colour,
+          position: item.party.position,
+          isIndependent: false,
+        }));
         setParties(partyData);
         setSelectedParties(partyData);
-        console.log("Parties set:", json.results);
       }
     };
-    fetchPartyData();
+    if (selectedPoll) {
+      fetchPartyData();
+    }
   }, [selectedPoll]);
 
   return (

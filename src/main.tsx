@@ -34,7 +34,7 @@ const router = createBrowserRouter([
   {
     path: "/data",
     element: <Data />,
-  }
+  },
 ]);
 
 createRoot(document.getElementById("root")!).render(

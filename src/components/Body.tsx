@@ -99,9 +99,13 @@ const Seats = () => {
         <SwitchViewModeButton />
       </div>
       <>
-      {
-        isEditMode && <p className="opacity-75 max-w-xl text-center mx-auto my-4">This edit mode only affects your current local view. To share your changes, sign in and edit the data in the <Link to="/data">Data</Link> page.</p>
-      }
+        {isEditMode && (
+          <p className="mx-auto my-4 max-w-xl text-center opacity-75">
+            This edit mode only affects your current local view. To share your
+            changes, sign in and edit the data in the{" "}
+            <Link to="/data">Data</Link> page.
+          </p>
+        )}
         <ul
           className={`grid grid-cols-1 gap-4 transition-all xs:grid-cols-2 sm:grid-cols-3 sm:gap-4 md:grid-cols-4`}
         >
@@ -114,10 +118,9 @@ const Seats = () => {
             ))}
           {isEditMode && (
             <>
-            
-            <li className="flex h-full w-full items-center justify-center">
-              <AddNewPartyButton />
-            </li>
+              <li className="flex h-full w-full items-center justify-center">
+                <AddNewPartyButton />
+              </li>
             </>
           )}
         </ul>
