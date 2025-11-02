@@ -25,6 +25,7 @@ import App from "./App.tsx";
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import Data from "./Data.tsx";
+import About from "./About.tsx";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: "/data",
     element: <Data />,
+  },
+  {
+    path: "/about",
+    element: <About />,
   },
 ]);
 

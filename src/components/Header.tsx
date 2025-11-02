@@ -26,7 +26,7 @@ export default function Header() {
   const { i } = useI18n();
   return (
     <>
-      <header className={"flex flex-wrap items-center justify-between gap-4"}>
+      <header className={"flex flex-wrap items-center justify-between gap-2"}>
         <div>
           <Link to="/" className={"flex items-center gap-2"}>
             <Logo className="size-12 flex-shrink-0" />
@@ -38,12 +38,17 @@ export default function Header() {
             </div>
           </Link>
         </div>
-        <nav className="flex gap-2">
-          <Link to="/" className="text-blue-600 hover:underline">
+        <nav className="flex flex-wrap items-center justify-center gap-2 text-lg font-semibold">
+          <Link to="/" className="mx-2 hover:underline">
             Home
           </Link>
-          <Link to="/data" className="text-blue-600 hover:underline">
+          <div className="h-4 w-1 border-x-2 border-gray-300 dark:border-gray-600"></div>
+          <Link to="/data" className="mx-2 hover:underline">
             Data
+          </Link>
+          <div className="h-4 w-1 border-x-2 border-gray-300 dark:border-gray-600"></div>
+          <Link to="/about" className="mx-2 hover:underline">
+            About
           </Link>
         </nav>
       </header>

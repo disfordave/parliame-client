@@ -199,7 +199,7 @@ export default function Data() {
                         emoji,
                       };
                       const addCountry = await fetch(
-                        "http://localhost:3000/api/countries",
+                        "http://localhost:3000/countries",
                         {
                           credentials: "include",
                           method: "POST",
@@ -274,7 +274,6 @@ export default function Data() {
                           e.preventDefault();
                           const form = e.target as HTMLFormElement;
                           const formData = new FormData(form);
-                          const id = formData.get("id") as string;
                           const name = formData.get("name") as string;
                           const shortName = formData.get("shortName") as string;
                           const colour = formData.get("colour") as string;
@@ -293,7 +292,6 @@ export default function Data() {
                             return;
                           }
                           const newParty = {
-                            id,
                             name,
                             shortName,
                             colour,
@@ -301,7 +299,7 @@ export default function Data() {
                             country,
                           };
                           const addParty = await fetch(
-                            "http://localhost:3000/api/parties",
+                            "http://localhost:3000/parties",
                             {
                               credentials: "include",
                               method: "POST",
@@ -320,13 +318,6 @@ export default function Data() {
                           form.reset();
                         }}
                       >
-                        <input
-                          type="text"
-                          name="id"
-                          placeholder="Party ID"
-                          className="mr-2 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
-                          required
-                        />
                         <input
                           type="text"
                           name="name"
@@ -395,7 +386,6 @@ export default function Data() {
                       e.preventDefault();
                       const form = e.target as HTMLFormElement;
                       const formData = new FormData(form);
-                      const id = formData.get("id") as string;
                       const name = formData.get("name") as string;
                       const country = selectedCountryState
                         ? (selectedCountryState as any).code
@@ -403,14 +393,13 @@ export default function Data() {
                       const shortName = formData.get("shortName") as string;
                       const totalSeats = formData.get("totalSeats") as string;
                       const newCountry = {
-                        id,
                         name,
                         country,
                         shortName,
                         totalSeats: parseInt(totalSeats, 10),
                       };
                       const addChamber = await fetch(
-                        "http://localhost:3000/api/chambers",
+                        "http://localhost:3000/chambers",
                         {
                           method: "POST",
                           headers: {
@@ -430,13 +419,6 @@ export default function Data() {
                       type="text"
                       name="name"
                       placeholder="Chamber name"
-                      className="mr-2 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
-                      required
-                    />
-                    <input
-                      type="text"
-                      name="id"
-                      placeholder="Chamber ID"
                       className="mr-2 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
                       required
                     />
@@ -487,11 +469,9 @@ export default function Data() {
                       e.preventDefault();
                       const form = e.target as HTMLFormElement;
                       const formData = new FormData(form);
-                      const id = formData.get("id") as string;
                       const name = formData.get("name") as string;
                       const date = formData.get("date") as string;
                       const newPoll = {
-                        id,
                         name,
                         date,
                         country: (selectedCountryState as any).code,
@@ -517,13 +497,6 @@ export default function Data() {
                       form.reset();
                     }}
                   >
-                    <input
-                      type="text"
-                      name="id"
-                      placeholder="Poll ID"
-                      className="mr-2 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
-                      required
-                    />
                     <input
                       type="text"
                       name="name"
