@@ -21,12 +21,12 @@ export async function getUser() {
 }
 
 const handleLogout = async () => {
-    await fetch(`${API_BASE}/auth/logout`, {
-      method: "GET",
-      credentials: "include", // include cookies
-    });
-    window.location.href = "/data"; // or use navigate("/")
-  };
+  await fetch(`${API_BASE}/auth/logout`, {
+    method: "GET",
+    credentials: "include", // include cookies
+  });
+  window.location.href = "/data"; // or use navigate("/")
+};
 
 export default function Data() {
   const { parties, setParties } = useParties();
@@ -44,7 +44,15 @@ export default function Data() {
   const [selectedChamber, setSelectedChamber] = useState(null);
   const [polls, setPolls] = useState(null);
   const [selectedPoll, setSelectedPoll] = useState(null);
-  const [selectedCountryPartyData, setSelectedCountryPartyData] = useState<any[]>([]);
+  const [selectedCountryPartyData, setSelectedCountryPartyData] = useState<
+    any[]
+  >([]);
+  const [newPollDataResult, setNewPollDataResult] = useState<
+    {
+      partyId: string;
+      seats: number;
+    }[]
+  >([]);
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -138,8 +146,15 @@ export default function Data() {
                     </a>
                   ) : (
                     <div>
+                      {user.avatarUrl && (
+                        <img
+                          src={user.avatarUrl}
+                          alt="User Avatar"
+                          className="mx-auto mb-4 h-16 w-16 rounded-full"
+                        />
+                      )}
                       <h2>Welcome, {user.username}</h2>
-                       <button onClick={handleLogout}>Logout</button>
+                      <button onClick={handleLogout}>Logout</button>
                     </div>
                   )}
                 </div>
@@ -244,7 +259,7 @@ export default function Data() {
                                 backgroundColor: p.colour || "#999999",
                               }}
                             ></span>
-                            {p.shortName}
+                            {p.shortName} ({p.id})
                           </li>
                         ),
                       )}
@@ -466,6 +481,117 @@ export default function Data() {
                 ) : (
                   <p className="px-2 py-1">No polls available</p>
                 )}
+                {user && selectedChamber && (
+                  <form
+                    onSubmit={async (e) => {
+                      e.preventDefault();
+                      const form = e.target as HTMLFormElement;
+                      const formData = new FormData(form);
+                      const id = formData.get("id") as string;
+                      const name = formData.get("name") as string;
+                      const date = formData.get("date") as string;
+                      const newPoll = {
+                        id,
+                        name,
+                        date,
+                        country: (selectedCountryState as any).code,
+                        chamber: (selectedChamber as any).id,
+                        type: "election",
+                        results: newPollDataResult,
+                      };
+                      const addPoll = await fetch(
+                        "http://localhost:3000/polls",
+                        {
+                          credentials: "include",
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify(newPoll),
+                        },
+                      );
+                      const addedPoll = await addPoll.json();
+                      //@ts-expect-error ts-ignore
+                      setPolls([...(polls as any[]), addedPoll]);
+
+                      form.reset();
+                    }}
+                  >
+                    <input
+                      type="text"
+                      name="id"
+                      placeholder="Poll ID"
+                      className="mr-2 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
+                      required
+                    />
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Poll name"
+                      className="mr-2 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
+                      required
+                    />
+                    <input
+                      type="text"
+                      name="date"
+                      placeholder="Poll date"
+                      className="mr-2 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
+                      required
+                    />
+                    <div>
+                      {selectedCountryPartyData &&
+                      selectedCountryPartyData.length > 0 ? (
+                        selectedCountryPartyData.map((party: any) => (
+                          <div key={party.id} className="mb-2">
+                            <label className="mr-2">
+                              {party.name} Seats:
+                              <input
+                                type="number"
+                                min="0"
+                                className="ml-2 w-20 rounded border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800"
+                                onChange={(e) => {
+                                  const seats = parseInt(e.target.value, 10);
+                                  setNewPollDataResult((prev) => {
+                                    const existingIndex = prev.findIndex(
+                                      (item) => item.partyId === party.id,
+                                    );
+                                    if (isNaN(seats) || seats < 0) {
+                                      // Remove entry if seats is invalid
+                                      if (existingIndex !== -1) {
+                                        const updated = [...prev];
+                                        updated.splice(existingIndex, 1);
+                                        return updated;
+                                      }
+                                      return prev;
+                                    }
+                                    if (existingIndex !== -1) {
+                                      const updated = [...prev];
+                                      updated[existingIndex].seats = seats;
+                                      return updated;
+                                    } else {
+                                      return [
+                                        ...prev,
+                                        { partyId: party.id, seats },
+                                      ];
+                                    }
+                                  });
+                                }}
+                              />
+                            </label>
+                          </div>
+                        ))
+                      ) : (
+                        <p>No parties available for this country.</p>
+                      )}
+                    </div>
+                    <button
+                      type="submit"
+                      className="rounded bg-blue-500 px-2 py-1 text-white"
+                    >
+                      Add Poll
+                    </button>
+                  </form>
+                )}
               </div>
               {parties && parties.length > 0 && (
                 <div className="overflow-auto rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900">
@@ -500,8 +626,15 @@ export default function Data() {
                     </a>
                   ) : (
                     <div>
+                      {user.avatarUrl && (
+                        <img
+                          src={user.avatarUrl}
+                          alt="User Avatar"
+                          className="mx-auto mb-4 h-16 w-16 rounded-full"
+                        />
+                      )}
                       <h2>Welcome, {user.username}</h2>
-                       <button onClick={handleLogout}>Logout</button>
+                      <button onClick={handleLogout}>Logout</button>
                     </div>
                   )}
                 </div>
