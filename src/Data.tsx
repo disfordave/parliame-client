@@ -55,7 +55,7 @@ export default function Data() {
 
   useEffect(() => {
     const fetchCountries = async () => {
-      const data = await fetch("http://localhost:3000/countries");
+      const data = await fetch(API_BASE + "/countries");
       const json = await data.json();
       setCountriesState(json);
     };
@@ -66,8 +66,7 @@ export default function Data() {
     const fetchCountryPartyData = async () => {
       if (selectedCountryState) {
         const data = await fetch(
-          "http://localhost:3000/parties?country=" +
-            (selectedCountryState as any).code,
+          API_BASE + "/parties?country=" + (selectedCountryState as any).code,
         );
         const json = await data.json();
         setSelectedCountryPartyData(json as any[]);
@@ -79,8 +78,7 @@ export default function Data() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetch(
-        "http://localhost:3000/chambers?country=" +
-          (selectedCountryState as any).code,
+        API_BASE + "/chambers?country=" + (selectedCountryState as any).code,
       );
       const json = await data.json();
       setChambers(json);
@@ -93,7 +91,8 @@ export default function Data() {
   useEffect(() => {
     const fetchPolls = async () => {
       const data = await fetch(
-        "http://localhost:3000/polls?type=election&chamber=" +
+        API_BASE +
+          "/polls?type=election&chamber=" +
           (selectedChamber as any).id +
           "&electionOnly=true",
       );
@@ -109,7 +108,7 @@ export default function Data() {
     const fetchPartyData = async () => {
       if (selectedPoll) {
         const data = await fetch(
-          "http://localhost:3000/polls/" + (selectedPoll as any).id,
+          API_BASE + "/polls/" + (selectedPoll as any).id,
         );
         const json = await data.json();
         const partyData = json.results.map((item: any) => ({
@@ -194,7 +193,7 @@ export default function Data() {
                             emoji,
                           };
                           const addCountry = await fetch(
-                            "http://localhost:3000/countries",
+                            API_BASE + "/countries",
                             {
                               credentials: "include",
                               method: "POST",
@@ -301,17 +300,14 @@ export default function Data() {
                             position,
                             country,
                           };
-                          const addParty = await fetch(
-                            "http://localhost:3000/parties",
-                            {
-                              credentials: "include",
-                              method: "POST",
-                              headers: {
-                                "Content-Type": "application/json",
-                              },
-                              body: JSON.stringify(newParty),
+                          const addParty = await fetch(API_BASE + "/parties", {
+                            credentials: "include",
+                            method: "POST",
+                            headers: {
+                              "Content-Type": "application/json",
                             },
-                          );
+                            body: JSON.stringify(newParty),
+                          });
 
                           if (!addParty.ok) {
                             alert(`Error adding party: ${addParty.statusText}`);
@@ -426,16 +422,13 @@ export default function Data() {
                         shortName,
                         totalSeats: parseInt(totalSeats, 10),
                       };
-                      const addChamber = await fetch(
-                        "http://localhost:3000/chambers",
-                        {
-                          method: "POST",
-                          headers: {
-                            "Content-Type": "application/json",
-                          },
-                          body: JSON.stringify(newCountry),
+                      const addChamber = await fetch(API_BASE + "/chambers", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
                         },
-                      );
+                        body: JSON.stringify(newCountry),
+                      });
                       if (!addChamber.ok) {
                         alert(`Error adding chamber: ${addChamber.statusText}`);
                         return;
@@ -519,17 +512,14 @@ export default function Data() {
                         type: "election",
                         results: newPollDataResult,
                       };
-                      const addPoll = await fetch(
-                        "http://localhost:3000/polls",
-                        {
-                          credentials: "include",
-                          method: "POST",
-                          headers: {
-                            "Content-Type": "application/json",
-                          },
-                          body: JSON.stringify(newPoll),
+                      const addPoll = await fetch(API_BASE + "/polls", {
+                        credentials: "include",
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
                         },
-                      );
+                        body: JSON.stringify(newPoll),
+                      });
                       if (!addPoll.ok) {
                         alert(`Error adding poll: ${addPoll.statusText}`);
                         return;
