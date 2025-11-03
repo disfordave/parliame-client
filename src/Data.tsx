@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useParties, useSelectedParties } from "./lib/zustandStore";
 import { Link } from "react-router";
 
-export const API_BASE = "http://localhost:3000";
+export const API_BASE = "https://api.parliame.com";
 
 export interface User {
   githubId: string;
