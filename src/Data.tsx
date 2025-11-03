@@ -172,81 +172,74 @@ export default function Data() {
           <div>
             <div className="mb-4 overflow-auto rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900">
               <h2 className="mb-1 text-xl font-bold">Countries & Regions</h2>
+              {user && (
+                <>
+                  <h3 className="my-1 text-lg font-medium">Add new country</h3>
+                  <form
+                    onSubmit={async (e) => {
+                      e.preventDefault();
+                      const form = e.target as HTMLFormElement;
+                      const formData = new FormData(form);
+                      const name = formData.get("name") as string;
+                      const code = formData.get("code") as string;
+                      const emoji = formData.get("emoji") as string;
+                      const newCountry = {
+                        name,
+                        code,
+                        emoji,
+                      };
+                      const addCountry = await fetch(API_BASE + "/countries", {
+                        credentials: "include",
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(newCountry),
+                      });
+
+                      if (!addCountry.ok) {
+                        alert(`Error adding country: ${addCountry.statusText}`);
+                        return;
+                      }
+                      const addedCountry = await addCountry.json();
+
+                      if (!addedCountry) return;
+                      //@ts-expect-error ts-ignore
+                      setCountriesState([
+                        ...(countriesState as unknown as any[]),
+                        addedCountry,
+                      ]);
+                      form.reset();
+                    }}
+                  >
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Country name"
+                      className={inputClassNames}
+                      required
+                    />
+                    <input
+                      type="text"
+                      name="code"
+                      placeholder="Country code"
+                      className={inputClassNames}
+                      required
+                    />
+                    <input
+                      type="text"
+                      name="emoji"
+                      placeholder="Emoji"
+                      className={inputClassNames}
+                    />
+                    <button type="submit" className={buttonClassNames}>
+                      Add Country
+                    </button>
+                  </form>
+                </>
+              )}
               {countriesState && (countriesState as any[]).length > 0 && (
                 <>
-                  {user && (
-                    <>
-                      <h3 className="my-1 text-lg font-medium">
-                        Add new country
-                      </h3>
-                      <form
-                        onSubmit={async (e) => {
-                          e.preventDefault();
-                          const form = e.target as HTMLFormElement;
-                          const formData = new FormData(form);
-                          const name = formData.get("name") as string;
-                          const code = formData.get("code") as string;
-                          const emoji = formData.get("emoji") as string;
-                          const newCountry = {
-                            name,
-                            code,
-                            emoji,
-                          };
-                          const addCountry = await fetch(
-                            API_BASE + "/countries",
-                            {
-                              credentials: "include",
-                              method: "POST",
-                              headers: {
-                                "Content-Type": "application/json",
-                              },
-                              body: JSON.stringify(newCountry),
-                            },
-                          );
-
-                          if (!addCountry.ok) {
-                            alert(
-                              `Error adding country: ${addCountry.statusText}`,
-                            );
-                            return;
-                          }
-                          const addedCountry = await addCountry.json();
-
-                          if (!addedCountry) return;
-                          //@ts-expect-error ts-ignore
-                          setCountriesState([
-                            ...(countriesState as any[]),
-                            addedCountry,
-                          ]);
-                          form.reset();
-                        }}
-                      >
-                        <input
-                          type="text"
-                          name="name"
-                          placeholder="Country name"
-                          className={inputClassNames}
-                          required
-                        />
-                        <input
-                          type="text"
-                          name="code"
-                          placeholder="Country code"
-                          className={inputClassNames}
-                          required
-                        />
-                        <input
-                          type="text"
-                          name="emoji"
-                          placeholder="Emoji"
-                          className={inputClassNames}
-                        />
-                        <button type="submit" className={buttonClassNames}>
-                          Add Country
-                        </button>
-                      </form>
-                    </>
-                  )}
                   <h3 className="my-1 text-lg font-medium">Select Country</h3>
                   <ul className="flex flex-wrap items-start gap-2">
                     {(countriesState as any[]).map((country: any) => (
