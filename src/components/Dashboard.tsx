@@ -1,6 +1,10 @@
 import { Link, Outlet } from "react-router";
 
-export default function Dashboard({h1 = "Data of Parliame.com"}: {h1?: string}) {
+export default function Dashboard({
+  h1 = "Data of Parliame.com",
+}: {
+  h1?: string;
+}) {
   return (
     <div className="py-4">
       <h1 className={"mb-1 text-2xl font-bold"}>
