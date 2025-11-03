@@ -18,7 +18,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { countries } from "@/data/countries";
 import { defaultLocale, translate } from "@/i18n/i18n";
 import {
   BearState,
