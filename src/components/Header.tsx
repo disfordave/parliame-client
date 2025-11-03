@@ -38,7 +38,7 @@ export default function Header() {
             </div>
           </Link>
         </div>
-        <nav className="flex flex-wrap items-center justify-center gap-2 text-lg font-semibold">
+        <nav className="flex flex-wrap items-center justify-center gap-2 text-lg font-medium leading-5">
           <Link to="/" className="mx-2 hover:underline">
             Home
           </Link>
@@ -47,7 +47,7 @@ export default function Header() {
             Data
           </Link>
           <div className="h-4 w-1 border-x-2 border-gray-300 dark:border-gray-600"></div>
-          <Link to="/about" className="mx-2 hover:underline">
+          <Link to="/about" className="mx-2 hover:underline ">
             About
           </Link>
         </nav>
