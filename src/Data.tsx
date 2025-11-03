@@ -416,6 +416,7 @@ export default function Data() {
                         totalSeats: parseInt(totalSeats, 10),
                       };
                       const addChamber = await fetch(API_BASE + "/chambers", {
+                        credentials: "include",
                         method: "POST",
                         headers: {
                           "Content-Type": "application/json",
