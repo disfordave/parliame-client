@@ -22,19 +22,11 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Link } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import About from "./About.tsx";
-import Dashboard from "./components/Dashboard.tsx";
-import {
-  Polls,
-  Parties,
-  Chambers,
-  User,
-  Countries,
-} from "./components/data/index.ts";
 import Layout from "./components/Layout.tsx";
-import DataHome from "./components/data/DataHome.tsx";
+import Data from "./Data.tsx";
 
 const router = createBrowserRouter([
   {
@@ -44,34 +36,24 @@ const router = createBrowserRouter([
       { index: true, element: <App /> },
       {
         path: "/data",
-        element: <Dashboard />,
-        children: [
-          { index: true, element: <DataHome /> },
-          {
-            path: "polls",
-            element: <Polls />,
-          },
-          {
-            path: "parties",
-            element: <Parties />,
-          },
-          {
-            path: "chambers",
-            element: <Chambers />,
-          },
-          {
-            path: "user",
-            element: <User />,
-          },
-          {
-            path: "countries",
-            element: <Countries />,
-          },
-        ],
+        element: <Data />,
       },
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "*",
+        element: (
+          <div className="flex w-full flex-col items-center justify-center gap-1 text-center">
+            <p className="py-4 text-center text-2xl font-medium">
+              404 Not Found
+            </p>
+            <Link to="/" className="underline hover:no-underline">
+              Go to Home
+            </Link>
+          </div>
+        ),
       },
     ],
   },
