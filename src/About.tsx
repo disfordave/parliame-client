@@ -1,15 +1,11 @@
-import Footer from "./components/Footer";
-import Header from "./components/Header";
 import { useI18n } from "./lib/zustandStore";
 
 export default function About() {
   const { i } = useI18n();
   return (
-    <div className="min-h-screen bg-white text-gray-950 transition-colors duration-300 dark:bg-gray-900 dark:text-white">
-      <div className="mx-auto flex min-h-screen max-w-6xl flex-col p-4">
-        <Header />
+    
         <div className={"flex-1 py-4"}>
-          <h1 className={"mb-4 text-2xl font-bold"}>About Parliament Seats</h1>
+          <h1 className={"mb-4 text-2xl font-bold"}>About Parliame.com</h1>
           <p className={"mb-4"}>
             Parliament Seats is a tool for visualizing and calculating the
             distribution of seats in a parliamentary system.
@@ -52,8 +48,6 @@ export default function About() {
             .
           </p>
         </div>
-        <Footer />
-      </div>
-    </div>
+        
   );
 }

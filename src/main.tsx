@@ -24,21 +24,37 @@ import "./index.css";
 import App from "./App.tsx";
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
-import Data from "./Data.tsx";
 import About from "./About.tsx";
+import Dashboard from "./components/Dashboard.tsx";
+import { Polls, Parties, Chambers, User, Countries } from "./components/data/index.ts";
+import Layout from "./components/Layout.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
-  },
-  {
-    path: "/data",
-    element: <Data />,
-  },
-  {
-    path: "/about",
-    element: <About />,
+    element: <Layout />,
+    children: [{ index: true, element: <App /> }, {
+      path: "/data",
+      element: <Dashboard />,
+    }, {
+      path: "/data/polls",
+      element: <Polls />,
+    }, {
+      path: "/data/parties",
+      element: <Parties />,
+    }, {
+      path: "/data/chambers",
+      element: <Chambers />,
+    }, {
+      path: "/data/user",
+      element: <User />,
+    }, {
+      path: "/data/countries",
+      element: <Countries />,
+    }, {
+      path: "/about",
+      element: <About />,
+    }],
   },
 ]);
 
