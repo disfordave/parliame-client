@@ -82,7 +82,7 @@ const useI18n = create<I18nState>((set, get) => ({
 }));
 
 const useSelectedCountry = create<SelectedCountryState>((set) => ({
-  selectedCountry: countries.find((c) => c.name === "European Union") ?? null,
+  selectedCountry: null,
   setSelectedCountry: (by) => {
     set(() => ({ selectedCountry: by }));
   },
