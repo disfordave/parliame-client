@@ -29,6 +29,7 @@ import { useEffect, useRef, useState } from "react";
 import { ChevronDownIcon } from "@/components/icons/Icons";
 import { Country } from "@/types";
 import { AnimatePresence, motion } from "motion/react";
+import { Link } from "react-router";
 
 export default function CountryListDropdown() {
   const { selectedCountry, setSelectedCountry } = useSelectedCountry();
@@ -126,6 +127,16 @@ export default function CountryListDropdown() {
                 className="absolute top-0 z-[75] max-h-[50vh] w-full overflow-auto rounded-lg border-2 border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-900"
                 ref={dropdownRef}
               >
+                <p className="px-2 py-1 opacity-75">
+                  More countries and data can be found on{" "}
+                  <Link
+                    to="/data"
+                    className="text-violet-600 underline hover:no-underline dark:text-violet-400"
+                  >
+                    the data page
+                  </Link>
+                  .
+                </p>
                 <ul>
                   <li>
                     <span className="px-2 py-1 text-sm opacity-75">

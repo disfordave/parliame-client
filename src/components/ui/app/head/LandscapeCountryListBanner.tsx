@@ -26,6 +26,7 @@ import {
   useSelectedParties,
 } from "@/lib/zustandStore";
 import { Country } from "@/types";
+import { Link } from "react-router";
 
 export default function LandscapeCountryListBanner() {
   const { i } = useI18n();
@@ -35,7 +36,19 @@ export default function LandscapeCountryListBanner() {
   return (
     <>
       <div className="sticky top-4 h-[80vh] w-full overflow-auto rounded-lg border-2 border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-900">
-        <h2 className="p-2 text-xl font-semibold">{i("header.countries")}</h2>
+        <h2 className="px-2 pt-2 text-xl font-semibold">
+          {i("header.countries")}
+        </h2>
+        <p className="px-2 text-sm opacity-75">
+          More countries and data can be found on{" "}
+          <Link
+            to="/data"
+            className="text-violet-600 underline hover:no-underline dark:text-violet-400"
+          >
+            the data page
+          </Link>
+          .
+        </p>
         <ul>
           <li>
             <span className="px-2 py-1 text-sm opacity-75">

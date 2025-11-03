@@ -141,10 +141,13 @@ export default function Data() {
           <div className="mb-4 block lg:hidden">
             <div className="overflow-auto rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900">
               <h2 className="mb-2 text-xl font-bold">User Information</h2>
-              <div style={{ textAlign: "center", marginTop: "50px" }}>
+              <div style={{ textAlign: "center" }}>
                 {!user ? (
-                  <a href={`${API_BASE}/auth/github`}>
-                    <button>Login with GitHub</button>
+                  <a
+                    href={`${API_BASE}/auth/github`}
+                    className={buttonClassNames}
+                  >
+                    Login with GitHub
                   </a>
                 ) : (
                   <div>
@@ -152,11 +155,16 @@ export default function Data() {
                       <img
                         src={user.avatarUrl}
                         alt="User Avatar"
-                        className="mx-auto mb-4 h-16 w-16 rounded-full"
+                        className="mx-auto mb-2 size-20 rounded-full"
                       />
                     )}
-                    <h2>Welcome, {user.username}</h2>
-                    <button onClick={handleLogout}>Logout</button>
+                    <h2 className="text-lg">
+                      Welcome,{" "}
+                      <span className="font-medium">{user.username}</span>
+                    </h2>
+                    <button onClick={handleLogout} className={buttonClassNames}>
+                      Logout
+                    </button>
                   </div>
                 )}
               </div>
@@ -167,71 +175,79 @@ export default function Data() {
               <h2 className="mb-1 text-xl font-bold">Countries & Regions</h2>
               {countriesState && (countriesState as any[]).length > 0 && (
                 <>
-                  <h3 className="my-1 text-lg font-medium">Add new country</h3>
-                  <form
-                    onSubmit={async (e) => {
-                      e.preventDefault();
-                      const form = e.target as HTMLFormElement;
-                      const formData = new FormData(form);
-                      const name = formData.get("name") as string;
-                      const code = formData.get("code") as string;
-                      const emoji = formData.get("emoji") as string;
-                      const newCountry = {
-                        name,
-                        code,
-                        emoji,
-                      };
-                      const addCountry = await fetch(
-                        "http://localhost:3000/countries",
-                        {
-                          credentials: "include",
-                          method: "POST",
-                          headers: {
-                            "Content-Type": "application/json",
-                          },
-                          body: JSON.stringify(newCountry),
-                        },
-                      );
+                  {user && (
+                    <>
+                      <h3 className="my-1 text-lg font-medium">
+                        Add new country
+                      </h3>
+                      <form
+                        onSubmit={async (e) => {
+                          e.preventDefault();
+                          const form = e.target as HTMLFormElement;
+                          const formData = new FormData(form);
+                          const name = formData.get("name") as string;
+                          const code = formData.get("code") as string;
+                          const emoji = formData.get("emoji") as string;
+                          const newCountry = {
+                            name,
+                            code,
+                            emoji,
+                          };
+                          const addCountry = await fetch(
+                            "http://localhost:3000/countries",
+                            {
+                              credentials: "include",
+                              method: "POST",
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify(newCountry),
+                            },
+                          );
 
-                      if (!addCountry.ok) {
-                        alert(`Error adding country: ${addCountry.statusText}`);
-                        return;
-                      }
-                      const addedCountry = await addCountry.json();
+                          if (!addCountry.ok) {
+                            alert(
+                              `Error adding country: ${addCountry.statusText}`,
+                            );
+                            return;
+                          }
+                          const addedCountry = await addCountry.json();
 
-                      if (!addedCountry) return;
-                      //@ts-expect-error ts-ignore
-                      setCountriesState([
-                        ...(countriesState as any[]),
-                        addedCountry,
-                      ]);
-                      form.reset();
-                    }}
-                  >
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="Country name"
-                      className={inputClassNames}
-                      required
-                    />
-                    <input
-                      type="text"
-                      name="code"
-                      placeholder="Country code"
-                      className={inputClassNames}
-                      required
-                    />
-                    <input
-                      type="text"
-                      name="emoji"
-                      placeholder="Emoji"
-                      className={inputClassNames}
-                    />
-                    <button type="submit" className={buttonClassNames}>
-                      Add Country
-                    </button>
-                  </form>
+                          if (!addedCountry) return;
+                          //@ts-expect-error ts-ignore
+                          setCountriesState([
+                            ...(countriesState as any[]),
+                            addedCountry,
+                          ]);
+                          form.reset();
+                        }}
+                      >
+                        <input
+                          type="text"
+                          name="name"
+                          placeholder="Country name"
+                          className={inputClassNames}
+                          required
+                        />
+                        <input
+                          type="text"
+                          name="code"
+                          placeholder="Country code"
+                          className={inputClassNames}
+                          required
+                        />
+                        <input
+                          type="text"
+                          name="emoji"
+                          placeholder="Emoji"
+                          className={inputClassNames}
+                        />
+                        <button type="submit" className={buttonClassNames}>
+                          Add Country
+                        </button>
+                      </form>
+                    </>
+                  )}
                   <h3 className="my-1 text-lg font-medium">Select Country</h3>
                   <ul className="flex flex-wrap items-start gap-2">
                     {(countriesState as any[]).map((country: any) => (
@@ -251,7 +267,7 @@ export default function Data() {
                       </li>
                     ))}
                   </ul>
-                  {selectedCountryState && (
+                  {user && selectedCountryState && (
                     <>
                       <h3 className="my-1 text-lg font-medium">
                         Add Party for {(selectedCountryState as any).name}
@@ -388,7 +404,7 @@ export default function Data() {
             </div>
             <div className="mb-4 overflow-auto rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900">
               <h2 className="mb-2 text-xl font-bold">Chambers</h2>
-              {selectedCountryState && (
+              {user && selectedCountryState && (
                 <>
                   <h3 className="my-1 text-lg font-medium">
                     Add Chamber for {(selectedCountryState as any).name}
@@ -544,14 +560,18 @@ export default function Data() {
                       selectedCountryPartyData.length > 0 ? (
                         selectedCountryPartyData.map((party: any) => (
                           <div key={party.id} className="">
-                            <label className="me-2 flex flex-wrap items-center justify-start">
-                              <span
-                                className="mr-2 inline-block h-4 w-4 flex-shrink-0 rounded-full"
-                                style={{
-                                  backgroundColor: party.colour || "#999999",
-                                }}
-                              ></span>
-                              <span className="me-2">{party.name}</span>
+                            <label className="me-2 flex flex-wrap items-center">
+                              <p className="flex w-full items-center sm:w-auto">
+                                <span
+                                  className="mr-2 inline-block h-4 w-4 flex-shrink-0 rounded-full"
+                                  style={{
+                                    backgroundColor: party.colour || "#999999",
+                                  }}
+                                ></span>
+                                <span className="me-2 text-wrap">
+                                  {party.name}
+                                </span>
+                              </p>
                               <input
                                 type="number"
                                 min="0"
@@ -640,7 +660,10 @@ export default function Data() {
                     );
                   })}
                 </ul>
-                <Link to="/" className="mt-2 inline-block text-violet-600 hover:underline dark:text-violet-400">
+                <Link
+                  to="/"
+                  className="mt-2 inline-block text-violet-600 hover:underline dark:text-violet-400"
+                >
                   Go to Seat Simulator
                 </Link>
               </div>
@@ -651,10 +674,13 @@ export default function Data() {
           <div className="sticky top-4 h-[80vh] w-full overflow-auto rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900">
             <div className="">
               <h2 className="mb-2 text-xl font-bold">User Information</h2>
-              <div style={{ textAlign: "center", marginTop: "50px" }}>
+              <div style={{ textAlign: "center" }}>
                 {!user ? (
-                  <a href={`${API_BASE}/auth/github`}>
-                    <button>Login with GitHub</button>
+                  <a
+                    href={`${API_BASE}/auth/github`}
+                    className={buttonClassNames}
+                  >
+                    Login with GitHub
                   </a>
                 ) : (
                   <div>
@@ -662,11 +688,16 @@ export default function Data() {
                       <img
                         src={user.avatarUrl}
                         alt="User Avatar"
-                        className="mx-auto mb-4 h-16 w-16 rounded-full"
+                        className="mx-auto mb-2 size-20 rounded-full"
                       />
                     )}
-                    <h2>Welcome, {user.username}</h2>
-                    <button onClick={handleLogout}>Logout</button>
+                    <h2 className="text-lg">
+                      Welcome,{" "}
+                      <span className="font-medium">{user.username}</span>
+                    </h2>
+                    <button onClick={handleLogout} className={buttonClassNames}>
+                      Logout
+                    </button>
                   </div>
                 )}
               </div>
