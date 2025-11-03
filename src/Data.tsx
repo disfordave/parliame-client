@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import { useParties, useSelectedParties } from "./lib/zustandStore";
+import { Link } from "react-router";
 
 export const API_BASE = "http://localhost:3000";
 
@@ -639,6 +640,9 @@ export default function Data() {
                     );
                   })}
                 </ul>
+                <Link to="/" className="mt-2 inline-block text-violet-600 hover:underline dark:text-violet-400">
+                  Go to Seat Simulator
+                </Link>
               </div>
             )}
           </div>
