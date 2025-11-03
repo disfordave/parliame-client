@@ -42,12 +42,12 @@ export default function Header() {
           <Link to="/" className="mx-2 hover:underline">
             Home
           </Link>
-          <div className="h-4 w-1 border-x-2 border-gray-300 dark:border-gray-600"></div>
+          <div className="h-4 w-1 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
           <Link to="/data" className="mx-2 hover:underline">
             Data
           </Link>
-          <div className="h-4 w-1 border-x-2 border-gray-300 dark:border-gray-600"></div>
-          <Link to="/about" className="mx-2 hover:underline ">
+          <div className="h-4 w-1 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+          <Link to="/about" className="mx-2 hover:underline">
             About
           </Link>
         </nav>

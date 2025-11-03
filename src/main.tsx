@@ -26,35 +26,54 @@ import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import About from "./About.tsx";
 import Dashboard from "./components/Dashboard.tsx";
-import { Polls, Parties, Chambers, User, Countries } from "./components/data/index.ts";
+import {
+  Polls,
+  Parties,
+  Chambers,
+  User,
+  Countries,
+} from "./components/data/index.ts";
 import Layout from "./components/Layout.tsx";
+import DataHome from "./components/data/DataHome.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    children: [{ index: true, element: <App /> }, {
-      path: "/data",
-      element: <Dashboard />,
-    }, {
-      path: "/data/polls",
-      element: <Polls />,
-    }, {
-      path: "/data/parties",
-      element: <Parties />,
-    }, {
-      path: "/data/chambers",
-      element: <Chambers />,
-    }, {
-      path: "/data/user",
-      element: <User />,
-    }, {
-      path: "/data/countries",
-      element: <Countries />,
-    }, {
-      path: "/about",
-      element: <About />,
-    }],
+    children: [
+      { index: true, element: <App /> },
+      {
+        path: "/data",
+        element: <Dashboard />,
+        children: [
+          { index: true, element: <DataHome /> },
+          {
+            path: "polls",
+            element: <Polls />,
+          },
+          {
+            path: "parties",
+            element: <Parties />,
+          },
+          {
+            path: "chambers",
+            element: <Chambers />,
+          },
+          {
+            path: "user",
+            element: <User />,
+          },
+          {
+            path: "countries",
+            element: <Countries />,
+          },
+        ],
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+    ],
   },
 ]);
 

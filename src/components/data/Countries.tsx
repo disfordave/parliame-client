@@ -1,3 +1,3 @@
 export default function Countries() {
-    return <div>Countries Component</div>;
+  return <div>Countries Component</div>;
 }

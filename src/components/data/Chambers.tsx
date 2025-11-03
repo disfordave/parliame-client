@@ -1,3 +1,3 @@
 export default function Chambers() {
-    return <div>Chambers Component</div>;
+  return <div>Chambers Component</div>;
 }
