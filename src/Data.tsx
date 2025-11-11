@@ -12,6 +12,7 @@ export interface User {
   username: string;
   displayName: string;
   avatarUrl: string;
+  role: "admin" | "editor" | "viewer";
 }
 
 export async function getUser() {
@@ -161,6 +162,17 @@ export default function Data() {
                       Welcome,{" "}
                       <span className="font-medium">{user.username}</span>
                     </h2>
+                    {
+                      user.role && (user.role === "admin" || user.role === "editor") ? (
+                        <p className="mb-2 text-sm font-semibold text-red-600 dark:text-red-400">
+                          Role: {user.role.toUpperCase()} ( You have edit access )
+                        </p>
+                      ) : (
+                        <p className="mb-2 text-sm font-semibold text-gray-600 dark:text-gray-400">
+                          Role: {user.role.toUpperCase()} ( You have view-only access )
+                        </p>
+                      )
+                    }
                     <button onClick={handleLogout} className={buttonClassNames}>
                       Logout
                     </button>
@@ -679,6 +691,17 @@ export default function Data() {
                       Welcome,{" "}
                       <span className="font-medium">{user.username}</span>
                     </h2>
+                    {
+                      user.role && (user.role === "admin" || user.role === "editor") ? (
+                        <p className="mb-2 text-sm font-semibold text-red-600 dark:text-red-400">
+                          Role: {user.role.toUpperCase()} ( You have edit access )
+                        </p>
+                      ) : (
+                        <p className="mb-2 text-sm font-semibold text-gray-600 dark:text-gray-400">
+                          Role: {user.role.toUpperCase()} ( You have view-only access )
+                        </p>
+                      )
+                    }
                     <button onClick={handleLogout} className={buttonClassNames}>
                       Logout
                     </button>
