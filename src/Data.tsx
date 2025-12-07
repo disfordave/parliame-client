@@ -63,7 +63,7 @@ type LoadingKey = "countries" | "parties" | "chambers" | "polls";
 
 type LoadingState = Record<LoadingKey, boolean>;
 
-export async function getUser() {
+async function getUser() {
   try {
     return await fetchJson<User>("/auth/user");
   } catch {
