@@ -1,98 +1,8 @@
-import type { FormEvent, ReactNode } from "react";
-import { useCallback, useEffect, useState } from "react";
+import type { ReactNode } from "react";
 import { Link } from "react-router";
-import { useParties, useSelectedParties } from "./lib/zustandStore";
-
-export const API_BASE = "https://api.parliame.com";
-
-export interface User {
-  githubId: string;
-  username: string;
-  displayName: string;
-  avatarUrl: string;
-  role: "admin" | "editor" | "viewer";
-}
-
-type Country = {
-  code: string;
-  name: string;
-  emoji?: string;
-};
-
-type Chamber = {
-  id: string;
-  name: string;
-  shortName?: string;
-  totalSeats?: number;
-};
-
-type CountryParty = {
-  id: string;
-  name: string;
-  shortName: string;
-  colour?: string;
-};
-
-type PollSummary = {
-  id: string;
-  name: string;
-  date: string;
-};
-
-type PollResultInput = {
-  partyId: string;
-  seats: number;
-};
-
-type PollResult = {
-  seats: number;
-  party: {
-    name: string;
-    shortName: string;
-    colour?: string;
-    position: number;
-  };
-};
-
-type PollDetails = {
-  id: string;
-  results: PollResult[];
-};
-
-type LoadingKey = "countries" | "parties" | "chambers" | "polls";
-
-type LoadingState = Record<LoadingKey, boolean>;
-
-async function getUser() {
-  try {
-    return await fetchJson<User>("/auth/user");
-  } catch {
-    return null;
-  }
-}
-
-async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
-  const url = path.startsWith("http") ? path : `${API_BASE}${path}`;
-  const response = await fetch(url, {
-    credentials: "include",
-    ...init,
-  });
-
-  if (!response.ok) {
-    const message = await response.text();
-    throw new Error(message || response.statusText);
-  }
-
-  return (await response.json()) as T;
-}
-
-const handleLogout = async () => {
-  await fetch(`${API_BASE}/auth/logout`, {
-    method: "GET",
-    credentials: "include",
-  });
-  window.location.href = "/data";
-};
+import { useDataAdmin } from "./hooks/useDataAdmin";
+import { API_BASE, logoutUser } from "./lib/apiClient";
+import type { User } from "./types/dataAdmin";
 
 const inputClassNames =
   "me-2 my-1 rounded-md border border-gray-300 p-1 dark:border-gray-600 dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-violet-600 dark:focus:ring-violet-400";
@@ -118,6 +28,11 @@ const SectionCard = ({
 );
 
 const UserInformationPanel = ({ user }: { user: User | null }) => {
+  const handleLogoutClick = async () => {
+    await logoutUser();
+    window.location.href = "/data";
+  };
+
   if (!user) {
     return (
       <div className="text-center">
@@ -151,7 +66,7 @@ const UserInformationPanel = ({ user }: { user: User | null }) => {
           Role: {user.role.toUpperCase()} (You have view-only access)
         </p>
       )}
-      <button onClick={handleLogout} className={buttonClassNames}>
+      <button onClick={handleLogoutClick} className={buttonClassNames}>
         Logout
       </button>
     </div>
@@ -159,383 +74,27 @@ const UserInformationPanel = ({ user }: { user: User | null }) => {
 };
 
 export default function Data() {
-  const { parties, setParties } = useParties();
-  const { setSelectedParties } = useSelectedParties();
-
-  const [user, setUser] = useState<User | null>(null);
-  const [countries, setCountries] = useState<Country[]>([]);
-  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
-  const [countryParties, setCountryParties] = useState<CountryParty[]>([]);
-  const [chambers, setChambers] = useState<Chamber[]>([]);
-  const [selectedChamber, setSelectedChamber] = useState<Chamber | null>(null);
-  const [polls, setPolls] = useState<PollSummary[]>([]);
-  const [selectedPoll, setSelectedPoll] = useState<PollSummary | null>(null);
-  const [newPollResults, setNewPollResults] = useState<PollResultInput[]>([]);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [loading, setLoading] = useState<LoadingState>({
-    countries: false,
-    parties: false,
-    chambers: false,
-    polls: false,
-  });
-
-  const updateLoading = useCallback((key: LoadingKey, value: boolean) => {
-    setLoading((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  }, []);
-
-  const handleApiError = useCallback((error: unknown, fallbackMessage: string) => {
-    const message = error instanceof Error ? error.message : fallbackMessage;
-    setErrorMessage(message);
-    console.error(error);
-  }, []);
-
-  useEffect(() => {
-    getUser().then(setUser);
-  }, []);
-
-  useEffect(() => {
-    let active = true;
-    const loadCountries = async () => {
-      setErrorMessage(null);
-      updateLoading("countries", true);
-      try {
-        const data = await fetchJson<Country[]>("/countries");
-        if (!active) return;
-        setCountries(data);
-      } catch (error) {
-        if (active) {
-          handleApiError(error, "Failed to load countries.");
-        }
-      } finally {
-        if (active) {
-          updateLoading("countries", false);
-        }
-      }
-    };
-
-    loadCountries();
-
-    return () => {
-      active = false;
-    };
-  }, [handleApiError, updateLoading]);
-
-  useEffect(() => {
-    if (!selectedCountry) {
-      setCountryParties([]);
-      return;
-    }
-
-    let active = true;
-    const loadParties = async () => {
-      updateLoading("parties", true);
-      try {
-        const data = await fetchJson<CountryParty[]>(
-          `/parties?country=${selectedCountry.code}`,
-        );
-        if (!active) return;
-        setCountryParties(data);
-      } catch (error) {
-        if (active) {
-          handleApiError(error, "Failed to load parties for this country.");
-        }
-      } finally {
-        if (active) {
-          updateLoading("parties", false);
-        }
-      }
-    };
-
-    loadParties();
-
-    return () => {
-      active = false;
-    };
-  }, [handleApiError, selectedCountry, updateLoading]);
-
-  useEffect(() => {
-    if (!selectedCountry) {
-      setChambers([]);
-      return;
-    }
-
-    let active = true;
-    const loadChambers = async () => {
-      updateLoading("chambers", true);
-      try {
-        const data = await fetchJson<Chamber[]>(
-          `/chambers?country=${selectedCountry.code}`,
-        );
-        if (!active) return;
-        setChambers(data);
-      } catch (error) {
-        if (active) {
-          handleApiError(error, "Failed to load chambers.");
-        }
-      } finally {
-        if (active) {
-          updateLoading("chambers", false);
-        }
-      }
-    };
-
-    loadChambers();
-
-    return () => {
-      active = false;
-    };
-  }, [handleApiError, selectedCountry, updateLoading]);
-
-  useEffect(() => {
-    if (!selectedChamber) {
-      setPolls([]);
-      return;
-    }
-
-    let active = true;
-    const loadPolls = async () => {
-      updateLoading("polls", true);
-      try {
-        const data = await fetchJson<PollSummary[]>(
-          `/polls?type=election&chamber=${selectedChamber.id}&electionOnly=true`,
-        );
-        if (!active) return;
-        setPolls(data);
-      } catch (error) {
-        if (active) {
-          handleApiError(error, "Failed to load polls.");
-        }
-      } finally {
-        if (active) {
-          updateLoading("polls", false);
-        }
-      }
-    };
-
-    loadPolls();
-
-    return () => {
-      active = false;
-    };
-  }, [handleApiError, selectedChamber, updateLoading]);
-
-  useEffect(() => {
-    if (!selectedPoll) {
-      setParties([]);
-      setSelectedParties([]);
-      return;
-    }
-
-    let active = true;
-    const loadPollDetails = async () => {
-      try {
-        const data = await fetchJson<PollDetails>(`/polls/${selectedPoll.id}`);
-        if (!active) return;
-        const partyData = data.results.map((item) => ({
-          name: item.party.name,
-          shortName: item.party.shortName,
-          seats: item.seats,
-          colour: item.party.colour ?? "#999999",
-          position: item.party.position,
-          isIndependent: false,
-        }));
-        setParties(partyData);
-        setSelectedParties(partyData);
-      } catch (error) {
-        if (active) {
-          handleApiError(error, "Failed to load poll results.");
-        }
-      }
-    };
-
-    loadPollDetails();
-
-    return () => {
-      active = false;
-    };
-  }, [handleApiError, selectedPoll, setParties, setSelectedParties]);
-
-  const handleSelectCountry = useCallback(
-    (country: Country) => {
-      setSelectedCountry(country);
-      setSelectedChamber(null);
-      setSelectedPoll(null);
-      setChambers([]);
-      setPolls([]);
-      setCountryParties([]);
-      setNewPollResults([]);
-      setParties([]);
-      setSelectedParties([]);
-    },
-    [setParties, setSelectedParties],
-  );
-
-  const handleSelectChamber = useCallback(
-    (chamber: Chamber) => {
-      setSelectedChamber(chamber);
-      setSelectedPoll(null);
-      setPolls([]);
-      setNewPollResults([]);
-      setParties([]);
-      setSelectedParties([]);
-    },
-    [setParties, setSelectedParties],
-  );
-
-  const handleSeatChange = useCallback((partyId: string, seats: number) => {
-    setNewPollResults((prev) => {
-      if (!Number.isFinite(seats) || seats < 0) {
-        return prev.filter((item) => item.partyId !== partyId);
-      }
-
-      const exists = prev.some((item) => item.partyId === partyId);
-      return exists
-        ? prev.map((item) =>
-            item.partyId === partyId ? { ...item, seats } : item,
-          )
-        : [...prev, { partyId, seats }];
-    });
-  }, []);
-
-  const handleAddCountry = useCallback(
-    async (event: FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      const form = event.currentTarget;
-      const formData = new FormData(form);
-      const payload = {
-        name: formData.get("name") as string,
-        code: formData.get("code") as string,
-        emoji: (formData.get("emoji") as string) || undefined,
-      };
-
-      try {
-        setErrorMessage(null);
-        const addedCountry = await fetchJson<Country>("/countries", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        setCountries((prev) => [...prev, addedCountry]);
-        form.reset();
-      } catch (error) {
-        handleApiError(error, "Unable to add country.");
-      }
-    },
-    [handleApiError],
-  );
-
-  const handleAddParty = useCallback(
-    async (event: FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-
-      if (!selectedCountry) {
-        return;
-      }
-
-      const form = event.currentTarget;
-      const formData = new FormData(form);
-      const colour = (formData.get("colour") as string) || "";
-
-      if (colour && !colour.startsWith("#")) {
-        alert("Colour must be a valid hex code starting with #");
-        return;
-      }
-
-      const payload = {
-        name: formData.get("name") as string,
-        shortName: formData.get("shortName") as string,
-        colour,
-        position: Number(formData.get("position")),
-        country: selectedCountry.code,
-      };
-
-      try {
-        setErrorMessage(null);
-        const addedParty = await fetchJson<CountryParty>("/parties", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        setCountryParties((prev) => [...prev, addedParty]);
-        form.reset();
-      } catch (error) {
-        handleApiError(error, "Unable to add party.");
-      }
-    },
-    [handleApiError, selectedCountry],
-  );
-
-  const handleAddChamber = useCallback(
-    async (event: FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-
-      if (!selectedCountry) {
-        return;
-      }
-
-      const form = event.currentTarget;
-      const formData = new FormData(form);
-      const payload = {
-        name: formData.get("name") as string,
-        country: selectedCountry.code,
-        shortName: (formData.get("shortName") as string) || undefined,
-        totalSeats: Number(formData.get("totalSeats")),
-      };
-
-      try {
-        setErrorMessage(null);
-        const addedChamber = await fetchJson<Chamber>("/chambers", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        setChambers((prev) => [...prev, addedChamber]);
-        form.reset();
-      } catch (error) {
-        handleApiError(error, "Unable to add chamber.");
-      }
-    },
-    [handleApiError, selectedCountry],
-  );
-
-  const handleAddPoll = useCallback(
-    async (event: FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-
-      if (!selectedCountry || !selectedChamber) {
-        return;
-      }
-
-      const form = event.currentTarget;
-      const formData = new FormData(form);
-      const payload = {
-        name: formData.get("name") as string,
-        date: formData.get("date") as string,
-        country: selectedCountry.code,
-        chamber: selectedChamber.id,
-        type: "election",
-        results: newPollResults,
-      };
-
-      try {
-        setErrorMessage(null);
-        const addedPoll = await fetchJson<PollSummary>("/polls", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        setPolls((prev) => [...prev, addedPoll]);
-        setNewPollResults([]);
-        form.reset();
-      } catch (error) {
-        handleApiError(error, "Unable to add poll.");
-      }
-    },
-    [handleApiError, newPollResults, selectedChamber, selectedCountry],
-  );
+  const {
+    user,
+    parties,
+    errorMessage,
+    loading,
+    countries,
+    selectedCountry,
+    selectCountry,
+    handleAddCountry,
+    countryParties,
+    handleAddParty,
+    chambers,
+    selectedChamber,
+    selectChamber,
+    handleAddChamber,
+    polls,
+    selectedPoll,
+    selectPoll,
+    handleAddPoll,
+    handleSeatChange,
+  } = useDataAdmin();
 
   return (
     <div>
@@ -592,7 +151,7 @@ export default function Data() {
                     {countries.map((country) => (
                       <li key={country.code}>
                         <button
-                          onClick={() => handleSelectCountry(country)}
+                          onClick={() => selectCountry(country)}
                           className={`${
                             selectedCountry?.code === country.code
                               ? "bg-red-500 text-white"
@@ -727,7 +286,7 @@ export default function Data() {
                     {chambers.map((chamber) => (
                       <li key={chamber.id}>
                         <button
-                          onClick={() => handleSelectChamber(chamber)}
+                          onClick={() => selectChamber(chamber)}
                           className={`${
                             selectedChamber?.id === chamber.id
                               ? "bg-blue-500 text-white"
@@ -814,7 +373,7 @@ export default function Data() {
                     {polls.map((poll) => (
                       <li key={poll.id}>
                         <button
-                          onClick={() => setSelectedPoll(poll)}
+                          onClick={() => selectPoll(poll)}
                           className={`${
                             selectedPoll?.id === poll.id
                               ? "bg-green-500 text-white"
