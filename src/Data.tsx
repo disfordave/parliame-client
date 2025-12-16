@@ -221,7 +221,11 @@ export default function Data() {
                           required
                         />
                         <label className="mr-2">
-                          <input type="checkbox" name="isIndependent" className="mr-1" />
+                          <input
+                            type="checkbox"
+                            name="isIndependent"
+                            className="mr-1"
+                          />
                           Independent
                         </label>
                         <button type="submit" className={buttonClassNames}>
@@ -327,7 +331,8 @@ export default function Data() {
               {user && selectedChamber && (
                 <>
                   <h3 className="my-1 text-lg font-medium">
-                    Add Poll for {selectedCountry?.name} - {selectedChamber.name}
+                    Add Poll for {selectedCountry?.name} -{" "}
+                    {selectedChamber.name}
                   </h3>
                   <form onSubmit={handleAddPoll}>
                     <input
@@ -356,7 +361,9 @@ export default function Data() {
                                     backgroundColor: party.colour || "#999999",
                                   }}
                                 ></span>
-                                <span className="me-2 text-wrap">{party.name}</span>
+                                <span className="me-2 text-wrap">
+                                  {party.name}
+                                </span>
                               </p>
                               <input
                                 type="number"
@@ -365,7 +372,8 @@ export default function Data() {
                                 className={inputClassNames}
                                 onChange={(event) => {
                                   const value = event.target.value;
-                                  const seats = value === "" ? NaN : Number(value);
+                                  const seats =
+                                    value === "" ? NaN : Number(value);
                                   handleSeatChange(party.id, seats);
                                 }}
                               />
@@ -400,7 +408,8 @@ export default function Data() {
                               : "bg-gray-200 dark:bg-gray-700"
                           } text-nowrap rounded-full px-4 py-2`}
                         >
-                          {poll.name} - {new Date(poll.date).toLocaleDateString()}
+                          {poll.name} -{" "}
+                          {new Date(poll.date).toLocaleDateString()}
                         </button>
                       </li>
                     ))}
@@ -437,7 +446,10 @@ export default function Data() {
         </div>
         <div className="hidden lg:block">
           <div className="sticky top-4 h-[80vh] w-full overflow-auto rounded-lg border-2 border-gray-200 bg-white p-4 shadow-md dark:border-gray-700 dark:bg-gray-900">
-            <SectionCard title="User Information" className="mb-0 border-none p-0 shadow-none">
+            <SectionCard
+              title="User Information"
+              className="mb-0 border-none p-0 shadow-none"
+            >
               <UserInformationPanel user={user} />
             </SectionCard>
           </div>

@@ -73,11 +73,14 @@ export function useDataAdmin() {
     setLoading((prev) => ({ ...prev, [key]: value }));
   }, []);
 
-  const handleApiError = useCallback((error: unknown, fallbackMessage: string) => {
-    const message = error instanceof Error ? error.message : fallbackMessage;
-    setErrorMessage(message);
-    console.error(error);
-  }, []);
+  const handleApiError = useCallback(
+    (error: unknown, fallbackMessage: string) => {
+      const message = error instanceof Error ? error.message : fallbackMessage;
+      setErrorMessage(message);
+      console.error(error);
+    },
+    [],
+  );
 
   useEffect(() => {
     getUser().then(setUser);

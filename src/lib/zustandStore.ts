@@ -20,7 +20,6 @@
 
 import { defaultLocale, translate } from "@/i18n/i18n";
 import {
-  BearState,
   DefaultCountryValueState,
   PartiesState,
   IsEditModeState,
@@ -31,12 +30,6 @@ import {
   I18nState,
 } from "@/types";
 import { create } from "zustand";
-
-const useBear = create<BearState>((set) => ({
-  bears: 0,
-  increase: (by) => set((state) => ({ bears: state.bears + by })),
-  removeAllBears: () => set({ bears: 0 }),
-}));
 
 const useDefaultCountryValue = create<DefaultCountryValueState>((set) => ({
   defaultCountryValue: null,
@@ -88,7 +81,6 @@ const useSelectedCountry = create<SelectedCountryState>((set) => ({
 }));
 
 export {
-  useBear,
   useDefaultCountryValue,
   useParties,
   useSelectedParties,
